@@ -103,3 +103,21 @@ Not yet implemented.
 ### Status
 
 Investigating
+
+---
+
+---
+
+Termux session terminated unexpectedly
+↓
+Debian/XFCE stopped
+↓
+Termux:X11 server remained active (process phantom killing)
+↓
+subsequent startup returned "Server already running"
+↓
+resolved by (aumentando limite do phantom killer)
+
+resolved
+
+---
