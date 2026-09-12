@@ -16,6 +16,19 @@ O Linudex v0.1 roda em um **Samsung Galaxy S10+ (SM-G975F)** com a tela integrad
 | Saída desktop externa | Samsung DeX através da conexão de vídeo USB-C |
 | Tela integrada        | Fisicamente danificada                        |
 
+<p align="center">
+  <img src="../images/build/s10-front.png"
+       alt="Samsung Galaxy S10+ frente"
+       width="263">
+  <img src="../images/build/s10-back.png"
+       alt="Samsung Galaxy S10+ trás"
+       width="263">
+    <img src="../images/build/s10-damaged-display.png"
+    alt="Samsung Galaxy S10+ damaged display"
+    width = "250"
+    style="transform: rotate(270deg); margin-top: -30px;">
+</p>
+
 ## Ambiente de teste da v0.1
 
 O marco de software foi validado utilizando monitor externo através do Samsung DeX e periféricos externos conforme necessário. Os modelos exatos dos periféricos não foram registrados nas anotações da v0.1 e, portanto, não são inventados nesta documentação.

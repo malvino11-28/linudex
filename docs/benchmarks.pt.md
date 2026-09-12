@@ -26,6 +26,8 @@ A temperatura da bateria não corresponde à temperatura do SoC.
 
 A RAM total reportada durante estes testes foi de aproximadamente 7.2 GiB.
 
+![YouTube workload and RAM monitoring](../images/benchmarks/youtube-1440p-ram.png)
+
 ## Observações
 
 - Todas as cargas registradas na v0.1 permaneceram estáveis.

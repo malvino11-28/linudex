@@ -16,6 +16,19 @@ Linudex v0.1 runs on a **Samsung Galaxy S10+ (SM-G975F)** with a damaged built-i
 | External desktop output | Samsung DeX over USB-C display connection |
 | Built-in display        | Physically damaged                        |
 
+<p align="center">
+  <img src="../images/build/s10-front.png"
+       alt="Samsung Galaxy S10+ frente"
+       width="263">
+  <img src="../images/build/s10-back.png"
+       alt="Samsung Galaxy S10+ trás"
+       width="263">
+    <img src="../images/build/s10-damaged-display.png"
+    alt="Samsung Galaxy S10+ damaged display"
+    width = "250"
+    style="transform: rotate(270deg); margin-top: -30px;">
+</p>
+
 ## v0.1 test setup
 
 The software milestone was validated using an external display through Samsung DeX and external input devices as needed. Exact peripheral models were not documented in the v0.1 notes, so they are intentionally not invented here.

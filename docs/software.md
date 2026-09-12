@@ -56,6 +56,8 @@ apt upgrade
 apt install -y sudo git curl wget nano ca-certificates locales procps htop file unzip zip
 ```
 
+![Debian 13 installed through PRoot-Distro](../images/screenshots/debian-13-installed.png)
+
 ## 3. Non-root desktop user
 
 A dedicated user named `linudex` was created for normal desktop use.
@@ -123,6 +125,8 @@ mkdir -p "$XDG_RUNTIME_DIR"
 chmod 700 "$XDG_RUNTIME_DIR"
 dbus-launch --exit-with-session xfce4-session
 ```
+
+![Linudex running XFCE and Firefox through Termux:X11](../images/screenshots/linudex-xfce-firefox.png)
 
 ## 7. Android host tuning
 
