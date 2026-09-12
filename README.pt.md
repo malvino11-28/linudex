@@ -98,3 +98,10 @@ Linudex é um projeto experimental de reaproveitamento. O objetivo não é subst
        alt="Linudex v0.1 executando Samsung DeX em um monitor externo"
        width="800">
 </p>
+
+## Licença
+
+Este projeto é um software livre: você pode redistribuí-lo e/ou modificá-lo sob os termos da Licença Pública Geral GNU (GNU GPL) conforme publicada pela Free Software Foundation, seja a versão 3 da Licença, ou qualquer versão posterior.
+
+Os diagramas, imagens e documentação textual contidos neste repositório também estão protegidos sob os mesmos termos da GNU GPL v3.
+
