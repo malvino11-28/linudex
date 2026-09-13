@@ -4,9 +4,9 @@
 
 Linudex is a repurposing project that turns a Samsung Galaxy S10+ with a damaged display into a compact ARM desktop environment. The current software stack keeps Samsung DeX and Android as the hardware/driver layer, while Termux, PRoot-Distro, Debian and XFCE provide a Linux desktop environment.
 
-## v0.1 — Linux Desktop Boot
+## v0.1.0 — Functional Linux Desktop 
 
-Version `v0.1` marks the first stable graphical Linux milestone. At this stage, Linudex can boot Debian 13 ARM64 with XFCE through Termux:X11 and remain stable under the tested desktop workloads.
+Version `v0.1.0` marks the first stable graphical Linux milestone. At this stage, Linudex can boot Debian 13 ARM64 with XFCE through Termux:X11 and remain stable under the tested desktop workloads.
 
 ### Completed
 
@@ -37,7 +37,7 @@ This design intentionally keeps Android because it provides mature hardware supp
 
 ## Current status
 
-Linudex `v0.1` is a functional proof of concept and a stable Linux desktop baseline. It is not yet the final daily-driver configuration.
+Linudex `v0.1.0` is a functional proof of concept and a stable Linux desktop baseline. It is not yet the final daily-driver configuration.
 
 Planned work for the next milestone includes shared storage integration, audio validation, display/input tuning, final application selection, improved start/stop automation and the physical enclosure/cooling build.
 
