@@ -54,6 +54,16 @@ log "Starting Termux:X11 on display $DISPLAY_NUMBER..."
 termux-x11 "$DISPLAY_NUMBER" &
 sleep 2
 
+if command -v am >/dev/null 2>&1; then
+    log 'Opening Termux:X11 Android activity...'
+    am start \
+        --user 0 \
+        -n com.termux.x11/com.termux.x11.MainActivity \
+        >/dev/null 2>&1 || true
+fi
+
+sleep 3
+
 log "Starting Debian '$DISTRO_NAME' as user '$LINUX_USER'..."
 proot-distro login "$DISTRO_NAME" \
     --user "$LINUX_USER" \
