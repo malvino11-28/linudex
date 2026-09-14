@@ -13,18 +13,20 @@ External display / keyboard / mouse
         Samsung Galaxy S10+
                 │
        Android 12 / One UI
-        ┌───────┴────────┐
-        │                │
-   Samsung DeX        Termux
-                         │
-              ┌──────────┴──────────┐
-              │                     │
-        Termux:X11             PRoot-Distro
-                                      │
-                                 Debian 13
-                                      │
-                                    XFCE
+        ┌───────┴──────────────┐
+        │                      │
+   Samsung DeX              Termux
+                               │
+              ┌────────────────┼────────────────┐
+              │                │                │
+         PulseAudio       Termux:X11       PRoot-Distro
+              │                                  │
+        Android audio                         Debian 13
+                                                 │
+                                               XFCE
 ```
+
+Termux:Boot and Termux:Widget provide automatic and manual control of this stack but do not replace any of the runtime layers shown above.
 
 ## Layer responsibilities
 
@@ -38,7 +40,11 @@ Provides the Android desktop environment and reliable external-display support o
 
 ### Termux
 
-Provides the command-line environment used to install and launch PRoot-Distro and Termux:X11.
+Provides the command-line environment used to install and launch PRoot-Distro, PulseAudio and Termux:X11.
+
+### PulseAudio
+
+Runs on the Termux side as an audio bridge. Debian applications connect to the local PulseAudio server through `tcp:127.0.0.1`, allowing Linux application audio to reach Android/DeX.
 
 ### PRoot-Distro
 
@@ -54,7 +60,48 @@ Provides the X11 display server that bridges Linux graphical applications to And
 
 ### XFCE
 
-Provides the lightweight graphical desktop used for the v0.1 proof of concept.
+Provides the lightweight graphical desktop used by the v0.2.0 daily-driver environment.
+
+### Termux:Boot and Termux:Widget
+
+Termux:Boot launches the Linudex startup script after Android has completed booting. Termux:Widget provides manual start and stop shortcuts for cases where the Linux environment needs to be controlled from Android/DeX.
+
+## Data and control paths
+
+The graphical path is:
+
+```text
+XFCE / Linux applications
+          │
+          ▼
+      Termux:X11
+          │
+          ▼
+   Android display stack
+          │
+          ▼
+     Samsung DeX
+```
+
+The audio path is:
+
+```text
+Debian application
+       │
+       ▼
+PulseAudio client
+       │
+       ▼
+tcp:127.0.0.1
+       │
+       ▼
+Termux PulseAudio
+       │
+       ▼
+ Android / DeX audio
+```
+
+Android shared storage is also exposed to the Debian environment for normal file exchange between both sides of the system.
 
 ## Why this architecture
 
@@ -65,5 +112,6 @@ The Galaxy S10+ already has mature Android drivers for its Exynos platform, USB-
 - Debian does not own the kernel; it shares Android's kernel.
 - PRoot is not a VM and does not provide hardware virtualization.
 - Some `/proc` metrics are restricted by Android SELinux, which is why CPU data is collected through ADB rather than `htop` inside Debian.
-- Traditional `systemd`, kernel module management and container workloads such as standard Docker are outside the current v0.1 scope.
+- Traditional `systemd`, kernel module management and container workloads such as standard Docker are outside the current v0.2.0 scope.
 - Android process-management policies can terminate the PRoot process tree unless the Phantom Process Killer behavior is mitigated.
+- The current Phantom Process Killer workaround used by the project is still temporary across device reboots.
