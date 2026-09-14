@@ -19,4 +19,7 @@ if command -v am >/dev/null 2>&1; then
         >/dev/null 2>&1 || true
 fi
 
+log 'Stopping PulseAudio...'
+pulseaudio -k 2>/dev/null || true
+
 log 'Linudex stop request completed.'
