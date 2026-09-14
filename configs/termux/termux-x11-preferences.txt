@@ -35,7 +35,7 @@
 "displayResolutionCustom"="1280x1024"
 "stylusIsMouse"="false"
 "clipboardEnable"="true"
-"extra_keys_config"="[['ESC','/',{key: '-', popup: '|'},'HOME','UP',{key: 'END', popup: 'ZOOM_IN'}, {key: 'PGUP', popup: 'ZOOM_OUT'}, {key: 'PREFERENCES', popup: 'ZOOM_RESET'}], ['TAB', 'CTRL', 'ALT', 'LEFT', 'DOWN', 'RIGHT', 'PGDN', 'KEYBOARD']]"
+"extra_keys_config"="[['ESC','/',{key: '-', popup: '|'},'HOME','UP',{key: 'END', popup: 'ZOOM_IN'},{key: 'PGUP', popup: 'ZOOM_OUT'},{key: 'PREFERENCES', popup: 'ZOOM_RESET'}], ['TAB','CTRL','ALT','LEFT','DOWN','RIGHT','PGDN','KEYBOARD']]"
 "mediaKeysAction"="no action"
 "storeSecondaryDisplayPreferencesSeparately"="false"
 "useTermuxEKBarBehaviour"="false"
