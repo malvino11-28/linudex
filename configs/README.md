@@ -26,10 +26,23 @@ configs/
 ├── debian/
 │   └── .bashrc
 │
-└── termux/
-    ├── .bashrc
-    ├── termux.properties
-    └── README.md
+├── termux/
+│   ├── .bashrc
+│   ├── termux.properties
+│   ├── termux-x11-preferences.txt
+│   ├── README.md
+│   └── README.pt.md
+│
+└── xfce/
+    ├── xfconf/
+    │   ├── xfce4-desktop.xml
+    │   ├── xfce4-keyboard-shortcuts.xml
+    │   ├── xfce4-panel.xml
+    │   ├── xfwm4.xml
+    │   └── xsettings.xml
+    │
+    └── panel/
+        └── whiskermenu-*.rc
 ```
 
 ## Debian configuration
@@ -61,8 +74,15 @@ They may contain:
 - Termux interface settings
 - Extra keyboard keys
 - Terminal behavior settings
+- Termux:X11 preferences
 
 See [`termux/README.md`](termux/README.md) for details.
+
+## XFCE configuration
+
+Files under `xfce/` store the configuration used by the v0.2.0 graphical environment.
+
+They include desktop, panel, keyboard shortcut, window manager, DPI and Whisker Menu settings.
 
 ## Important
 
