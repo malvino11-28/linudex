@@ -12,6 +12,10 @@ Version `v0.1.0` marks the first stable graphical Linux milestone. At this stage
 
 Version `v0.2.0` builds on the stable Linux desktop established in v0.1.0 and turns it into a more practical daily-use environment. Audio, shared storage, desktop tuning, essential applications and startup automation are now integrated into the Linudex workflow.
 
+## v0.2.1 - Automatic Startup Fix
+
+Version `v0.2.1` is an update that fixes an auto-start bug in Linudex caused by an error when trying to run PulseAudio during a cold boot.
+
 ### Completed
 
 - Android shared storage integrated with Debian.

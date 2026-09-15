@@ -6,11 +6,15 @@ Linudex é um projeto de reaproveitamento que transforma um Samsung Galaxy S10+ 
 
 ## v0.1.0 — Linux Desktop Boot
 
-A versão `v0.1` marca o primeiro estágio gráfico estável do Linux. Neste ponto, o Linudex consegue iniciar o Debian 13 ARM64 com XFCE através do Termux:X11 e permanecer estável nas cargas de desktop testadas.
+A versão `v0.1.0` marca o primeiro estágio gráfico estável do Linux. Neste ponto, o Linudex consegue iniciar o Debian 13 ARM64 com XFCE através do Termux:X11 e permanecer estável nas cargas de desktop testadas.
 
 ## v0.2.0 — Ambiente Daily Driver
 
 A versão `v0.2.0` parte do desktop Linux estável estabelecido na v0.1.0 e o transforma em um ambiente mais prático para uso diário. Áudio, armazenamento compartilhado, ajustes do desktop, aplicativos essenciais e automação de inicialização agora fazem parte do fluxo do Linudex.
+
+## v0.2.1 — Correção da Inicialização Automática
+
+A versão `v0.2.1` é uma atualização que corrige um bug da inicialização automática do Linudex causado por um erro ao tentar rodar o PulseAudio durante um cold boot.
 
 ### Concluído
 
