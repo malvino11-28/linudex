@@ -38,13 +38,35 @@ log 'Clearing stale PulseAudio server...'
 pulseaudio -k 2>/dev/null || true
 sleep 1
 
-log 'Starting PulseAudio bridge...'
-pulseaudio \
-    --start \
-    --load="module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1" \
-    --exit-idle-time=-1
+log 'Clearing stale PulseAudio runtime state...'
+rm -rf "$TMPDIR/pulse"
 
-sleep 1
+log 'Starting PulseAudio bridge...'
+
+PULSE_STARTED=false
+
+for attempt in 1 2 3; do
+    log "PulseAudio attempt $attempt/3..."
+
+    pulseaudio -k 2>/dev/null || true
+    rm -rf "$TMPDIR/pulse"
+
+    if pulseaudio \
+        --start \
+        --load="module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1" \
+        --exit-idle-time=-1
+    then
+        PULSE_STARTED=true
+        break
+    fi
+
+    sleep 3
+done
+
+if [ "$PULSE_STARTED" != true ]; then
+    log 'Error: PulseAudio failed to start.'
+    exit 1
+fi
 
 log 'Clearing any stale Termux:X11 server...'
 pkill termux-x11 2>/dev/null || true
