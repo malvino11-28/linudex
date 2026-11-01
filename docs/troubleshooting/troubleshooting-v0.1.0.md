@@ -1,6 +1,6 @@
 # Troubleshooting
 
-[Português](troubleshooting.pt.md)
+[Português](troubleshooting-v0.1.0.pt.md)
 
 Problems encountered during Linudex development and their confirmed diagnoses, workarounds or current status.
 

@@ -66,7 +66,7 @@ Ajustes finais de teclado/mouse, validação de cold boot diretamente no Samsung
 - [Configuração de software](docs/software.pt.md)
 - [Hardware](docs/hardware.pt.md)
 - [Benchmarks](docs/benchmarks.pt.md)
-- [Troubleshooting](docs/troubleshooting.pt.md)
+- [Troubleshooting](docs/troubleshooting/README.pt.md)
 - [Lista de materiais](bom/components.pt.md)
 
 ## Estrutura do repositório
@@ -76,13 +76,14 @@ linudex/
 ├── README.md
 ├── README.pt.md
 ├── docs/
+|   ├── troubleshooting/
+|   ├──── troubleshooting.md
 │   ├── architecture.md
 │   ├── baseline.md
 │   ├── benchmarks.md
 │   ├── debloat.md
 │   ├── hardware.md
-│   ├── software.md
-│   └── troubleshooting.md
+│   └── software.md
 ├── images/
 │   ├── benchmarks/
 │   ├── build/
@@ -102,7 +103,6 @@ Use as pastas de imagens conforme a finalidade:
 - `images/build/` — progresso da montagem física, gabinete, hub e refrigeração.
 - `images/screenshots/` — capturas do DeX, Termux, Debian e XFCE.
 - `images/benchmarks/` — capturas e gráficos dos benchmarks.
-- `images/diagrams/` — diagramas de arquitetura, fluxo de ar e conexões.
 
 Evite colocar capturas diretamente em `docs/`; a documentação deve referenciar o arquivo correspondente dentro de `images/`.
 

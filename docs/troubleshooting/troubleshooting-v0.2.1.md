@@ -1,3 +1,7 @@
+# Troubleshooting — v0.2.1
+
+[Português](troubleshooting-v0.2.1.pt.md)
+
 ## PulseAudio failed during cold boot and interrupted automatic startup
 
 ### Symptoms

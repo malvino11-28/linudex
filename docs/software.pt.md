@@ -89,7 +89,7 @@ Resultado esperado:
 root
 ```
 
-Consulte [Troubleshooting](troubleshooting.pt.md) para entender por que isso foi necessário.
+Consulte [Troubleshooting](troubleshooting/README.pt.md) para entender por que isso foi necessário.
 
 ## 4. XFCE
 
@@ -221,7 +221,7 @@ Para o ambiente da v0.2.0:
 - O carregamento está limitado a 85% para reduzir desgaste da bateria durante uso estacionário.
 - Nas Opções do desenvolvedor do Android, **Tamanho de buffer de logger** está definido como **Desativado**.
 - Nas Opções do desenvolvedor do Android, **Processamento acelerado** está ativado.
-- O limite de processos phantom do Android 12 é aumentado durante os testes após encerramentos repetidos por `signal 9`. Consulte [Troubleshooting](troubleshooting.pt.md).
+- O limite de processos phantom do Android 12 é aumentado durante os testes após encerramentos repetidos por `signal 9`. Consulte [Troubleshooting](troubleshooting/README.pt.md).
 
 As opções de buffer do logger e processamento acelerado são documentadas como ajustes do host; não foi realizado um benchmark isolado para atribuir ganho de desempenho quantificado a nenhuma das duas.
 

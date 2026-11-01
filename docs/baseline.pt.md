@@ -77,4 +77,4 @@ A temperatura informada corresponde ao sensor da bateria, e não à temperatura 
 - Inicialmente a internet aparecia indisponível mesmo com o Wi-Fi conectado; a causa era data/hora incorretas e foi resolvida ativando data e hora automáticas.
 - O comportamento térmico ainda precisava ser validado antes dos testes de carga de desktop.
 
-Consulte [Troubleshooting](troubleshooting.pt.md) e [Benchmarks](benchmarks.pt.md) para os resultados obtidos após este baseline.
+Consulte [Troubleshooting](troubleshooting/README.pt.md) e [Benchmarks](benchmarks.pt.md) para os resultados obtidos após este baseline.

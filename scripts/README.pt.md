@@ -34,19 +34,19 @@ scripts/
 
 ## Mapa de execução
 
-| Script                                  | Executar em                | Finalidade                                                                                   |
-| --------------------------------------- | -------------------------- | -------------------------------------------------------------------------------------------- |
-| `termux/setup-termux.sh`                | Termux                     | Instala os pacotes necessários no Termux, incluindo PRoot-Distro, PulseAudio e Termux:X11.   |
-| `termux/install-debian.sh`              | Termux                     | Instala Debian 13 ARM64 através do PRoot-Distro usando o nome local.                         |
-| `debian/setup-debian.sh`                | Debian como root           | Atualiza o Debian, instala ferramentas básicas, cria o usuário `linudex` e configura `sudo`. |
-| `debian/install-desktop.sh`             | Debian                     | Instala XFCE, suporte D-Bus/X11 e componentes necessários à sessão gráfica e ao áudio.       |
-| `debian/install-apps.sh`                | Debian                     | Instala os aplicativos essenciais usados no ambiente Daily Driver da v0.2.0.                 |
-| `termux/start-linudex.sh`               | Termux                     | Inicia PulseAudio, Termux:X11, Debian e a sessão XFCE.                                       |
-| `termux/stop-linudex.sh`                | Termux                     | Encerra XFCE, Termux:X11 e PulseAudio.                                                       |
-| `termux/boot/20-start-linudex`          | Termux:Boot                | Aguarda a inicialização do Android e executa automaticamente o Linudex.                      |
-| `termux/widget/Start-Linudex`           | Termux:Widget              | Permite iniciar o Linudex manualmente através de um atalho do Android/DeX.                   |
-| `termux/widget/Stop-Linudex`            | Termux:Widget              | Permite encerrar o Linudex manualmente através de um atalho do Android/DeX.                  |
-| `android/android12-phantom-process.ps1` | Windows PowerShell com ADB | Aplica o workaround para o Phantom Process Killer do Android 12.                             |
+| Script                                  | Executar em                | Finalidade                                                                                   | Status     |
+| --------------------------------------- | -------------------------- | -------------------------------------------------------------------------------------------- | ---------- |
+| `termux/setup-termux.sh`                | Termux                     | Instala os pacotes necessários no Termux, incluindo PRoot-Distro, PulseAudio e Termux:X11.   | Pendente   |
+| `termux/install-debian.sh`              | Termux                     | Instala Debian 13 ARM64 através do PRoot-Distro usando o nome local.                         | Pendente   |
+| `debian/setup-debian.sh`                | Debian como root           | Atualiza o Debian, instala ferramentas básicas, cria o usuário `linudex` e configura `sudo`. | Pendente   |
+| `debian/install-desktop.sh`             | Debian                     | Instala XFCE, suporte D-Bus/X11 e componentes necessários à sessão gráfica e ao áudio.       | Pendente   |
+| `debian/install-apps.sh`                | Debian                     | Instala os aplicativos essenciais usados no ambiente Daily Driver da v0.2.0.                 | Pendente   |
+| `termux/start-linudex.sh`               | Termux                     | Inicia PulseAudio, Termux:X11, Debian e a sessão XFCE.                                       | Pendente   |
+| `termux/stop-linudex.sh`                | Termux                     | Encerra XFCE, Termux:X11 e PulseAudio.                                                       | Pendente   |
+| `termux/boot/20-start-linudex`          | Termux:Boot                | Aguarda a inicialização do Android e executa automaticamente o Linudex.                      | Disponível |
+| `termux/widget/Start-Linudex`           | Termux:Widget              | Permite iniciar o Linudex manualmente através de um atalho do Android/DeX.                   | Disponível |
+| `termux/widget/Stop-Linudex`            | Termux:Widget              | Permite encerrar o Linudex manualmente através de um atalho do Android/DeX.                  | Disponível |
+| `android/android12-phantom-process.ps1` | Windows PowerShell com ADB | Aplica o workaround para o Phantom Process Killer do Android 12.                             | Pendente   |
 
 ## Ordem recomendada de instalação
 
@@ -155,14 +155,6 @@ Com ADB configurado em um computador Windows:
 ```
 
 O script aumenta o limite de processos phantom utilizado durante os testes do Linudex.
-
-A implementação atual usa uma alteração temporária com:
-
-```text
-until_reboot -------------------------------------------------------------------------
-```
-
-portanto ela pode precisar ser reaplicada após reiniciar o aparelho.
 
 ## Iniciar o Linudex manualmente
 
