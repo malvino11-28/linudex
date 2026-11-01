@@ -16,6 +16,10 @@ Version `v0.2.0` builds on the stable Linux desktop established in v0.1.0 and tu
 
 Version `v0.2.1` is an update that fixes an auto-start bug in Linudex caused by an error when trying to run PulseAudio during a cold boot.
 
+## v0.3.0 — Experimental x86/x86-64 Compatibility
+
+Version `v0.3.0` adds optional execution paths for Linux and Windows x86-64 software using Box64, Wine, WineD3D and VirGL/ANGLE. Xonotic and Seraph's Last Stand launched in the tested environment, but demanding 3D workloads remained slow and several games did not run. The compatibility layer is experimental; the Debian/XFCE desktop from v0.2.1 remains the stable base.
+
 ### Completed
 
 - Android shared storage integrated with Debian.
@@ -28,6 +32,11 @@ Version `v0.2.1` is an update that fixes an auto-start bug in Linudex caused by 
 - Termux:Boot configured for automatic Linudex startup after Android boot.
 - Termux:Widget configured for manual start/stop control when needed.
 - Termux:X11 configured to open automatically when Linudex starts.
+- Tested Linux x86-64 execution with Box64 and the OpenGL graphics bridge.
+- Tested Windows x86-64 execution with Wine 9.18-staging and WineD3D 9.2.
+- Validated DepotDownloader 3.4.0 ARM64 as an alternative to running SteamWebHelper for downloading authorized game files.
+- Documented graphics performance, memory limitations and unsuccessful compatibility tests.
+- Kept compatibility launchers separate from the existing automatic XFCE startup.
 
 ## Architecture
 
@@ -46,9 +55,11 @@ Samsung Galaxy S10+
 
 This design intentionally keeps Android because it provides mature hardware support for the Galaxy S10+, including USB-C video output, audio routing and Samsung DeX. Debian runs as a userspace environment over the Android kernel rather than as a virtual machine.
 
+The x86-64 compatibility paths use Box64 and an optional graphics bridge in addition to the desktop architecture shown above. See the architecture and benchmarks documents for details.
+
 ## Current status
 
-Linudex `v0.2.0` is the daily-driver software milestone. The Linux environment can start automatically after Android boot and now provides storage integration, audio, office applications, web browsing and the basic utilities expected from a lightweight desktop.
+The daily-driver environment established in v0.2.1 remains the stable base. Version v0.3.0 adds an experimental x86/x86-64 compatibility layer, without changing the normal automatic desktop startup. Its gaming results are limited and are documented rather than presented as general playability.
 
 Final keyboard/mouse tuning, cold-boot validation directly into Samsung DeX over the final HDMI setup, and the physical enclosure/cooling build remain dependent on the final hardware configuration.
 
@@ -76,18 +87,21 @@ linudex/
 ├── README.md
 ├── README.pt.md
 ├── docs/
-|   ├── troubleshooting/
-|   ├──── troubleshooting.md
 │   ├── architecture.md
 │   ├── baseline.md
 │   ├── benchmarks.md
 │   ├── debloat.md
 │   ├── hardware.md
-│   └── software.md
+│   ├── software.md
+│   └── troubleshooting/
+│       ├── README.md
+│       ├── troubleshooting-v0.1.0.md
+│       ├── troubleshooting-v0.2.0.md
+│       ├── troubleshooting-v0.2.1.md
+│       └── troubleshooting-v0.3.0.md
 ├── images/
 │   ├── benchmarks/
 │   ├── build/
-│   ├── diagrams/
 │   └── screenshots/
 ├── scripts/
 ├── configs/
