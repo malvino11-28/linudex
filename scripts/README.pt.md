@@ -325,3 +325,24 @@ A v0.2.0 expande a automação de scripts da v0.1.0 com:
 - gerenciamento mais completo de processos durante start/stop.
 
 Configurações visuais do XFCE e preferências específicas do Termux:X11 são mantidas separadamente no diretório `configs/`.
+
+## Scripts experimentais de compatibilidade — v0.3.0
+
+Os scripts auxiliares abaixo foram utilizados durante o desenvolvimento, mas **ainda não foram publicados** neste repositório. Eles precisam ser exportados do aparelho de testes, revisados e versionados antes que as instruções possam ser consideradas um procedimento de instalação reproduzível.
+
+| Script | Executar em | Finalidade | Status |
+| --- | --- | --- | --- |
+| `start-linux-gpu.sh` | Termux | Selecionar o perfil Linux OpenGL do VirGL/ANGLE | Pendente de publicação |
+| `start-wine-gpu.sh` | Termux | Selecionar o perfil Direct3D do VirGL/ANGLE | Pendente de publicação |
+| `run-x86_64.sh` | Debian | Executar programas Linux x86-64 com o Box64 compilado manualmente | Pendente de publicação |
+| `stop-xow64-wine.sh` | Debian | Encerrar processos Wine do prefixo ativo sem desligar XFCE/X11 | Pendente de publicação |
+| `depotdownloader.sh` | Debian | Iniciar o DepotDownloader ARM64 com a variável de ambiente .NET necessária | Pendente de publicação |
+| `xow64` | Debian | Executar programas Windows x86-64 no ambiente Wine configurado | Pendente de publicação |
+
+Os nomes correspondem a arquivos locais dos diretórios pessoais e não significam que esses scripts já existam em `scripts/` no repositório. Quando um script for publicado, atualize seu status e inclua o caminho correspondente. Não adicione links para arquivos inexistentes.
+
+A configuração funcional do Wine usa Box64 0.3.4, Wine 9.18-staging e WineD3D 9.2. As builds experimentais do Box64 utilizadas na investigação de consumo da Steam não são necessárias para a configuração validada.
+
+**Segurança:** o comando experimental `~/xow64 q` pode encerrar processos não relacionados do desktop e não deve ser documentado como encerramento seguro. Utilize `~/stop-xow64-wine.sh` somente depois que sua implementação testada for revisada e publicada.
+
+Consulte [Configuração de software](../docs/software.pt.md) e [Arquitetura](../docs/architecture.pt.md) para detalhes.
