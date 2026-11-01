@@ -350,3 +350,24 @@ v0.2.0 expands upon the v0.1.0 script automation with:
 - more comprehensive process management during start/stop.
 
 XFCE visual configurations and Termux:X11 specific preferences are kept separately in the `configs/` directory.
+
+## Experimental compatibility helpers — v0.3.0
+
+The following helper scripts were used during development but are **not yet published** in this repository. They must be exported from the tested device, reviewed and committed before the instructions can be treated as a reproducible installation procedure.
+
+| Script | Run from | Purpose | Status |
+| --- | --- | --- | --- |
+| `start-linux-gpu.sh` | Termux | Select the VirGL/ANGLE Linux OpenGL profile | Pending publication |
+| `start-wine-gpu.sh` | Termux | Select the VirGL/ANGLE Direct3D profile | Pending publication |
+| `run-x86_64.sh` | Debian | Launch Linux x86-64 programs using the manually built Box64 | Pending publication |
+| `stop-xow64-wine.sh` | Debian | Stop Wine processes for the active prefix without shutting down XFCE/X11 | Pending publication |
+| `depotdownloader.sh` | Debian | Start the native ARM64 DepotDownloader with the required .NET environment setting | Pending publication |
+| `xow64` | Debian | Launch Windows x86-64 programs in the configured Wine environment | Pending publication |
+
+These names refer to files in the local home directories and do not imply that they exist under `scripts/` in this repository. Once a script has been published, update its status and add its repository location. Do not link to nonexistent files.
+
+The working Wine baseline uses Box64 0.3.4, Wine 9.18-staging and WineD3D 9.2. Experimental Box64 builds used in Steam memory investigations are not required for the validated configuration.
+
+**Safety:** the experimental `~/xow64 q` shutdown command can terminate unrelated desktop processes and should not be documented as a safe stop procedure. Use the prefix-scoped `~/stop-xow64-wine.sh` only after its tested implementation has been reviewed and published.
+
+See [Software Setup](../docs/software.md) and [Architecture](../docs/architecture.md) for more details.
