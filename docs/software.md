@@ -232,3 +232,74 @@ The logger-buffer and accelerated-processing options are documented as host tuni
 - Final mouse tuning and display scaling should be validated again with the definitive monitor/hub setup.
 - Automatic cold boot directly into the final Samsung DeX HDMI setup still requires hardware validation.
 - The physical enclosure and active-cooling build belong to the hardware phase.
+
+## 13. Experimental x86/x86-64 compatibility (v0.3.0)
+
+The v0.2.1 desktop remains the stable base. Version v0.3.0 adds optional compatibility components for Linux and Windows x86-64 software, without changing the normal XFCE boot sequence.
+
+### Tested software
+
+| Component | Tested version | Notes |
+| --- | --- | --- |
+| Box64, Wine baseline | 0.3.4 (`/usr/bin/box64`) | Working baseline for Windows applications |
+| Box64, Linux programs | Manually compiled 0.4.5 | Local wrapper `~/run-x86_64.sh` |
+| Wine | 9.18-staging | Selected prefix `.xow64_test` |
+| WineD3D | 9.2 | Direct3D compatibility |
+| VirGL / ANGLE | OpenGL and Direct3D profiles | Android-facing Vulkan bridge |
+| DepotDownloader | 3.4.0 Linux ARM64 | Steam depot downloader, without SteamWebHelper |
+
+These are versions used during development, not an automated clean-install recipe. The locally tested GPU and compatibility wrappers are not yet all published in the repository.
+
+### Linux x86-64 graphics profile
+
+Run in **Termux** when the desktop is already active:
+
+```bash
+~/start-linux-gpu.sh
+```
+
+The helper selects the `gl` profile and `vulkan` ANGLE mode. Inside **Debian**, Linux x86-64 applications are launched through the locally configured Box64 wrapper. Xonotic was tested with this route.
+
+### Windows x86-64 graphics profile
+
+Run in **Termux**:
+
+```bash
+~/start-wine-gpu.sh
+```
+
+Enter Debian with the shared X11 temporary directory when necessary:
+
+```bash
+proot-distro login linudex --user linudex --shared-tmp --env DISPLAY=:1 --env PULSE_SERVER=tcp:127.0.0.1
+```
+
+Run in **Debian**, using the already configured Wine prefix:
+
+```bash
+cd "$HOME/xow64_prefix/.xow64_test/drive_c/Games/Seraph-Depot"
+~/xow64 r "Seraph's Last Stand.exe"
+```
+
+For shutdown, use `~/stop-xow64-wine.sh` from Debian. Avoid the experimental `~/xow64 q` command because it may also terminate unrelated X11/desktop processes. Do not restart the whole desktop just to switch the compatibility profile unless needed.
+
+### DepotDownloader
+
+The native ARM64 DepotDownloader 3.4.0 release was installed in `~/opt/depotdownloader-3.4.0`. Under the tested Android/PRoot environment, its .NET runtime required the following environment setting to start:
+
+```bash
+DOTNET_GCHeapHardLimit=1C0000000
+```
+
+This value is a .NET GC heap limit, not a requirement for 7 GiB of physically available RAM. The local `~/depotdownloader.sh` helper exports it before launching the application. User credentials and Steam Guard codes must be entered interactively and must not be committed to the repository.
+
+DepotDownloader can download files for owned games without running the full Steam UI. It does not ensure a game works without the Steam client or bypass DRM/Steamworks requirements.
+
+### Compatibility status
+
+- Linux x86-64: Xonotic ran with the Box64/OpenGL graphics route.
+- Windows x86-64: Seraph's Last Stand ran without keeping Steam open, with low observed performance.
+- Windows x86-64: 9 Kings initialized Unity but did not reach gameplay; graphics feature limitations and Steam launch behavior were observed.
+- Linux x86-64: Terraria started its binary through Box64 but requested launching through the Steam client.
+
+Measured performance and reproducibility limitations are documented in [Benchmarks](benchmarks.md), with diagnostic details in [Troubleshooting](troubleshooting/README.md).

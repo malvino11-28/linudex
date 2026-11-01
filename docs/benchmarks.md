@@ -48,99 +48,68 @@ Stability: Stable / Unstable
 
 Use the final `XX% TOTAL` line from `adb shell dumpsys cpuinfo` for CPU and the `temperature:` field from `adb shell dumpsys battery`, divided by 10, for battery temperature.
 
----
 
-Xonotic 0.8.6 — Linux x86_64 via Box64
+## v0.3.0 — x86-64 compatibility and graphics tests
 
-Architecture:
-x86_64 Linux → Box64 → ARM64
+Version v0.3.0 introduced Box64, WineD3D and VirGL/ANGLE graphics experiments. Results were measured on the Galaxy S10+ with Debian ARM64 through PRoot-Distro. These figures describe the specific tested configuration; they are not general performance claims for the physical Mali-G76 GPU.
 
-GPU path:
-OpenGL → virpipe → VirGL → ANGLE → Vulkan → Mali-G76
+### OpenGL benchmark — GLMark2
 
-Box64:
-0.4.5 PRoot build (`BAD_SIGNAL=ON`)
+| Renderer / resolution | Score | Notes |
+| --- | ---: | --- |
+| VirGL/ANGLE at 1280×720 | 67 | OpenGL accelerated bridge |
+| VirGL/ANGLE at 1920×1080 | 40 | Higher output resolution |
+| llvmpipe at 1280×720 | 51 | Software rendering comparison |
 
----
+The VirGL/ANGLE path improved the 720p score over the llvmpipe comparison but remained slow for demanding 3D workloads. Testing `vulkan-null` instead of `vulkan` did not improve the observed 720p score.
 
-Resolution:
-1280x720
+### Xonotic — Linux x86-64
 
-VSync: Disabled
+Xonotic 0.8.6 ran through the manually compiled Box64 0.4.5 and the Linux OpenGL graphics profile. The timedemo used `demos/the-big-keybench.dem`, with VSync disabled and a 60 FPS cap.
 
-FPS cap: 60
+| Metric | 1280×720 | 1920×1080 |
+| --- | ---: | ---: |
+| Timedemo overall average FPS | 14 | Not recorded |
+| One-second minimum FPS | 14 | 8 |
+| One-second average FPS | 17 | 11 |
+| One-second maximum FPS | 20 | 15 |
+| Maximum battery temperature | 32.3 °C | 28.3 °C |
+| Typical Android total CPU | ~16% | ~16% |
+| Observed crashes | 0 | 0 |
 
-Timedemo: timedemo demos/the-big-keybench.dem
+### Additional Xonotic test conditions
 
-Run: 1 minute
+| Metric | 1280×720 | 1920×1080 |
+| --- | ---: | ---: |
+| Run duration | 1 minute | 1 minute |
+| Initial battery level | 84% | 84% |
+| Final battery level | 84% | 84% |
+| Initial battery temperature | 28.2 °C | 27.9 °C |
+| Peak Android total CPU | ~33% (17% user + 15% kernel) | ~29% (15% user + 14% kernel) |
+| Typical CPU breakdown | ~7% user + 9% kernel | ~7% user + 9% kernel |
+| Available RAM before test | ~3.1–3.2 GiB | ~3.8 GiB |
+| Available RAM during test | ~2.4–2.5 GiB | ~2.4 GiB |
+| Rendering issues | 0 | 0 |
+| Audio issues | 0 | 0 |
 
-- Average FPS: 14
-- 1s min: 14
-- 1s avg: 17
-- 1s max: 20
+The one-second average is not interchangeable with the overall timedemo average. Approximately 2.4–2.5 GiB of available RAM was observed during the 720p run. No rendering or audio failures were reported in these runs. The battery readings are not SoC temperatures.
 
-Battery (Charging in PC):
+### Windows x86-64 games and Steam
 
-- Initial level: 84
-- Final level: 84
-- Initial temperature: 28.2
-- Maximum temperature: 32.3
+| Test | Result | Limitation |
+| --- | --- | --- |
+| Seraph's Last Stand | Started and played without Steam UI | Approximately 10 FPS by visual observation, not an instrumented benchmark |
+| 9 Kings | Unity 6 launched and initialized a Direct3D 11 device | Feature level 10_1, unsupported shaders and Steam launch behavior; no gameplay |
+| Terraria (Linux x86-64) | Box64 launched the executable | Game required launch through the Steam client |
+| Windows Steam client | Installed, updated and logged in | SteamWebHelper caused substantial memory pressure and very slow startup |
 
-Android CPU:
+For Seraph, the earlier Unity resolution parameters did not preserve the lower resolution during gameplay. The `GALLIUM_HUD=fps` attempt triggered a shader compilation failure and was therefore excluded from FPS measurements. The approximate gameplay FPS must not be presented as a measured average.
 
-- Typical TOTAL: ~16% (7% user + 9% kernel)
-- Peak TOTAL: ~33% (17% user + 15% kernel)
+During a test without Steam running, available RAM decreased from approximately 3.7 GiB to 2.2 GiB while Seraph was running with Firefox open. Steam caused a substantially larger memory impact, so the full client was excluded from further game tests.
 
-RAM (In game):
+### Interpretation
 
-- Before: 3.1gb ~ 3.2gb
-- During: 2.4gb ~ 2.5gb
-
-Stability:
-
-- Crashes: 0
-- Rendering issues: 0
-- Audio issues: 0
-
-----------------
-
-Resolution:
-1920x1080
-
-VSync: Disabled
-
-FPS cap: 60
-
-Timedemo: timedemo demos/the-big-keybench.dem
-
-Run: 1 minute
-
-- Average FPS:
-- 1s min: 8
-- 1s avg: 11
-- 1s max: 15
-
-Battery (Charging in PC):
-
-- Initial level: 84
-- Final level: 84
-- Initial temperature: 27.9
-- Maximum temperature: 28.3
-
-Android CPU:
-
-- Typical TOTAL: 16% (7% user + 9% kernel)
-- Peak TOTAL: 29% (15% user + 14% kernel)
-
-RAM (In game):
-
-- Before: ~3.8gb
-- During: ~2.4gb
-
-Stability:
-
-- Crashes: 0
-- Rendering issues: 0
-- Audio issues: 0
-
----
+- Application startup and playable performance are different criteria.
+- The primary limitation observed in these tests was the multi-layer graphics path rather than a confirmed thermal bottleneck.
+- Compatibility is experimental; no general claim of smooth Windows gaming is supported.
+- The hardware enclosure, fans and final peripheral setup remain outside the v0.3.0 benchmark scope.

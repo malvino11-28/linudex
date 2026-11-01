@@ -115,3 +115,81 @@ The Galaxy S10+ already has mature Android drivers for its Exynos platform, USB-
 - Traditional `systemd`, kernel module management and container workloads such as standard Docker are outside the current v0.2.0 scope.
 - Android process-management policies can terminate the PRoot process tree unless the Phantom Process Killer behavior is mitigated.
 - The current Phantom Process Killer workaround used by the project is still temporary across device reboots.
+
+## Experimental x86/x86-64 compatibility — v0.3.0
+
+Version v0.3.0 adds a separate compatibility path to the established Debian ARM64 desktop. The Android, Termux, PRoot-Distro, Termux:X11 and XFCE layers described above remain unchanged. The compatibility components are started on demand and do not replace the native ARM64 environment.
+
+### Linux x86-64 applications
+
+```text
+Linux x86-64 application
+          │
+          ▼
+        Box64
+          │
+          ▼
+    Debian 13 ARM64
+          │
+          ▼
+     Mesa virpipe
+          │
+          ▼
+         VirGL
+          │
+          ▼
+    ANGLE / Vulkan
+          │
+          ▼
+ Android Vulkan / Mali-G76
+```
+
+Box64 translates x86-64 userspace instructions to ARM64; it does not emulate a complete PC. Linux x86-64 tests used the manually compiled Box64 0.4.5 build through the local `~/run-x86_64.sh` wrapper. The `~/start-linux-gpu.sh` helper on Termux selects the OpenGL profile (`vgl cfg=gl` and `vgl angle=vulkan`).
+
+### Windows x86-64 applications
+
+```text
+Windows x86-64 executable
+          │
+          ▼
+      Box64 0.3.4
+          │
+          ▼
+    Wine 9.18-staging
+          │
+          ▼
+      WineD3D 9.2
+          │
+          ▼
+    Mesa / VirGL
+          │
+          ▼
+    ANGLE / Vulkan
+          │
+          ▼
+ Android Vulkan / Mali-G76
+```
+
+The tested Windows path uses `/usr/bin/box64`, the local `~/xow64` launcher and the `.xow64_test` Wine prefix. WineD3D translates Direct3D calls to OpenGL. The Termux `~/start-wine-gpu.sh` helper selects `vgl cfg=d3d` and `vgl angle=vulkan-null`; the latter is the profile name used by the tested configuration, not a claim of direct Windows Vulkan support.
+
+### Component versions
+
+| Component | Version / configuration | Role |
+| --- | --- | --- |
+| Box64 for Wine | 0.3.4 | x86-64 translation for the working Wine baseline |
+| Box64 for Linux | Manual 0.4.5 build | Linux x86-64 execution experiments |
+| Wine | 9.18-staging | Windows API compatibility |
+| WineD3D | 9.2 | Direct3D-to-OpenGL translation |
+| Mesa / VirGL / ANGLE | Virtual GPU / Android Vulkan bridge | Graphics translation |
+| DepotDownloader | 3.4.0 ARM64 | Download authorized Steam depots without Steam UI |
+
+### Limitations
+
+- The virtual renderer can appear as `Red Hat VirtIO GPU` rather than Mali-G76. Graphics features exposed to applications can be more limited than those supported by the physical GPU.
+- Multiple translation layers introduce considerable overhead. A game opening successfully does not imply playable performance.
+- The complete Windows Steam client caused substantial memory pressure from SteamWebHelper. DepotDownloader avoids running that interface, but does not bypass Steamworks, DRM or licensing requirements.
+- `9 Kings` initialized Direct3D 11 at feature level 10_1 and reported unsupported shaders. Forcing OpenGL 4.1 failed to initialize Unity graphics. This does not establish a hardware limitation of the Mali-G76.
+- Do not use the experimental `~/xow64 q` shutdown command: it can terminate unrelated desktop processes. Use the validated, prefix-scoped `~/stop-xow64-wine.sh` helper instead.
+- A complete installation of the v0.3.0 compatibility stack from a clean device has not yet been validated. The scripts used during testing must be reviewed before publication.
+
+See [Software Setup](software.md), [Benchmarks](benchmarks.md) and [Troubleshooting](troubleshooting/README.md) for the respective setup, results and known problems.

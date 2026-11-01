@@ -55,4 +55,4 @@ O baseline original registrou **477 pacotes Android instalados**. A contagem fin
 
 ## Ajustes relacionados em tempo de execução
 
-Configurações como bateria sem restrições para Termux, RAM Plus e o workaround para processos phantom do Android são configurações do host/runtime, e não ações de debloat. Elas estão documentadas em [Software](software.pt.md) e [Troubleshooting](troubleshooting.pt.md).
+Configurações como bateria sem restrições para Termux, RAM Plus e o workaround para processos phantom do Android são configurações do host/runtime, e não ações de debloat. Elas estão documentadas em [Software](software.pt.md) e [Troubleshooting](troubleshooting/README.pt.md).

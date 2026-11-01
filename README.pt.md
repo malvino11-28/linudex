@@ -16,6 +16,10 @@ A versão `v0.2.0` parte do desktop Linux estável estabelecido na v0.1.0 e o tr
 
 A versão `v0.2.1` é uma atualização que corrige um bug da inicialização automática do Linudex causado por um erro ao tentar rodar o PulseAudio durante um cold boot.
 
+## v0.3.0 — Compatibilidade experimental x86/x86-64
+
+A versão `v0.3.0` acrescenta caminhos opcionais para executar programas Linux e Windows x86-64 com Box64, Wine, WineD3D e VirGL/ANGLE. Xonotic e Seraph's Last Stand abriram no ambiente testado, mas cargas 3D exigentes permaneceram lentas e alguns jogos não funcionaram. A camada de compatibilidade é experimental; o desktop Debian/XFCE da v0.2.1 continua sendo a base estável.
+
 ### Concluído
 
 - Armazenamento compartilhado do Android integrado ao Debian.
@@ -28,6 +32,11 @@ A versão `v0.2.1` é uma atualização que corrige um bug da inicialização au
 - Termux:Boot configurado para iniciar o Linudex automaticamente após o boot do Android.
 - Termux:Widget configurado para controle manual de start/stop quando necessário.
 - Termux:X11 configurado para abrir automaticamente quando o Linudex é iniciado.
+- Testada a execução de software Linux x86-64 com Box64 e a ponte gráfica OpenGL.
+- Testada a execução de software Windows x86-64 com Wine 9.18-staging e WineD3D 9.2.
+- Validado o DepotDownloader 3.4.0 ARM64 como alternativa ao SteamWebHelper para baixar arquivos autorizados pela conta.
+- Documentados desempenho gráfico, limitações de memória e testes de compatibilidade malsucedidos.
+- Mantidos os launchers de compatibilidade separados da inicialização automática existente do XFCE.
 
 ## Arquitetura
 
@@ -46,9 +55,11 @@ Samsung Galaxy S10+
 
 Esse desenho mantém o Android intencionalmente, pois ele fornece suporte ao hardware do Galaxy S10+, incluindo saída de vídeo USB-C, roteamento de áudio e Samsung DeX. O Debian roda como um ambiente de userspace sobre o kernel do Android, e não como uma máquina virtual.
 
+Os caminhos de compatibilidade x86-64 utilizam Box64 e uma ponte gráfica opcional, além da arquitetura desktop apresentada acima. Consulte os documentos de arquitetura e benchmarks para detalhes.
+
 ## Estado atual
 
-O Linudex `v0.2.0` representa o marco de software para uso diário. O ambiente Linux pode iniciar automaticamente após o boot do Android e agora oferece integração de armazenamento, áudio, aplicativos de escritório, navegação web e os utilitários básicos esperados de um desktop leve.
+O ambiente para uso diário estabelecido na v0.2.1 permanece como base estável. A v0.3.0 acrescenta uma camada experimental de compatibilidade x86/x86-64, sem alterar a inicialização automática normal do desktop. Os resultados com jogos são limitados e estão documentados, sem promessa de desempenho adequado.
 
 Ajustes finais de teclado/mouse, validação de cold boot diretamente no Samsung DeX através da configuração HDMI definitiva e a construção física do gabinete/refrigeração continuam dependentes do hardware final.
 
@@ -76,18 +87,21 @@ linudex/
 ├── README.md
 ├── README.pt.md
 ├── docs/
-|   ├── troubleshooting/
-|   ├──── troubleshooting.md
 │   ├── architecture.md
 │   ├── baseline.md
 │   ├── benchmarks.md
 │   ├── debloat.md
 │   ├── hardware.md
-│   └── software.md
+│   ├── software.md
+│   └── troubleshooting/
+│       ├── README.md
+│       ├── troubleshooting-v0.1.0.md
+│       ├── troubleshooting-v0.2.0.md
+│       ├── troubleshooting-v0.2.1.md
+│       └── troubleshooting-v0.3.0.md
 ├── images/
 │   ├── benchmarks/
 │   ├── build/
-│   ├── diagrams/
 │   └── screenshots/
 ├── scripts/
 ├── configs/

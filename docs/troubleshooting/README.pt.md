@@ -12,6 +12,8 @@ Este diretório reúne os registros de solução de problemas do Linudex, organi
 | v0.2.0 — Ambiente Daily Driver                | [Problemas da v0.2.0](troubleshooting-v0.2.0.pt.md) | Teclas mortas do teclado brasileiro, Termux:Boot e abertura automática do Termux:X11                           |
 | v0.2.1 — Correção da inicialização automática | [Problemas da v0.2.1](troubleshooting-v0.2.1.pt.md) | Estado residual do PulseAudio durante a inicialização a frio                                                   |
 
+| v0.3.0 — Compatibilidade experimental x86/x86-64 | [Troubleshooting v0.3.0](troubleshooting-v0.3.0.pt.md) | .NET CoreCLR, SteamWebHelper, shaders WineD3D, exigências da Steam e encerramento seguro |
+
 ## Documentação relacionada
 
 - [Configuração de software](../software.pt.md)
