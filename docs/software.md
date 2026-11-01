@@ -89,7 +89,7 @@ Expected result:
 root
 ```
 
-See [Troubleshooting](troubleshooting.md) for the reason this was necessary.
+See [Troubleshooting](troubleshooting/README.md) for the reason this was necessary.
 
 ## 4. XFCE
 
@@ -221,7 +221,7 @@ For the v0.2.0 environment:
 - Charging is capped at 85% to reduce battery wear during stationary use.
 - Android Developer Options **Logger buffer size** is set to **Disabled**.
 - Android Developer Options **Accelerated processing** is enabled.
-- Android 12's phantom-process limit is increased during testing after repeated `signal 9` process termination. See [Troubleshooting](troubleshooting.md).
+- Android 12's phantom-process limit is increased during testing after repeated `signal 9` process termination. See [Troubleshooting](troubleshooting/README.md).
 
 The logger-buffer and accelerated-processing options are documented as host tuning choices; no isolated benchmark was performed to attribute a quantified performance gain to either option.
 

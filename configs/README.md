@@ -39,10 +39,7 @@ configs/
     │   ├── xfce4-keyboard-shortcuts.xml
     │   ├── xfce4-panel.xml
     │   ├── xfwm4.xml
-    │   └── xsettings.xml
-    │
-    └── panel/
-        └── whiskermenu-*.rc
+    └── └── xsettings.xml
 ```
 
 ## Debian configuration

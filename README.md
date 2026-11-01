@@ -66,7 +66,7 @@ Final keyboard/mouse tuning, cold-boot validation directly into Samsung DeX over
 - [Software setup](docs/software.md)
 - [Hardware](docs/hardware.md)
 - [Benchmarks](docs/benchmarks.md)
-- [Troubleshooting](docs/troubleshooting.md)
+- [Troubleshooting](docs/troubleshooting/README.md)
 - [Bill of materials](bom/components.md)
 
 ## Repository layout
@@ -76,13 +76,14 @@ linudex/
 ├── README.md
 ├── README.pt.md
 ├── docs/
+|   ├── troubleshooting/
+|   ├──── troubleshooting.md
 │   ├── architecture.md
 │   ├── baseline.md
 │   ├── benchmarks.md
 │   ├── debloat.md
 │   ├── hardware.md
-│   ├── software.md
-│   └── troubleshooting.md
+│   └── software.md
 ├── images/
 │   ├── benchmarks/
 │   ├── build/
@@ -102,7 +103,6 @@ Use the image folders by purpose:
 - `images/build/` — physical build progress, enclosure, hub and cooling assembly.
 - `images/screenshots/` — DeX, Termux, Debian and XFCE screenshots.
 - `images/benchmarks/` — benchmark captures and charts.
-- `images/diagrams/` — architecture, airflow and wiring diagrams.
 
 Avoid placing screenshots directly in `docs/`; documentation should reference the corresponding file under `images/`.
 

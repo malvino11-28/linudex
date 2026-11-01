@@ -47,3 +47,100 @@ Stability: Stable / Unstable
 ```
 
 Use the final `XX% TOTAL` line from `adb shell dumpsys cpuinfo` for CPU and the `temperature:` field from `adb shell dumpsys battery`, divided by 10, for battery temperature.
+
+---
+
+Xonotic 0.8.6 — Linux x86_64 via Box64
+
+Architecture:
+x86_64 Linux → Box64 → ARM64
+
+GPU path:
+OpenGL → virpipe → VirGL → ANGLE → Vulkan → Mali-G76
+
+Box64:
+0.4.5 PRoot build (`BAD_SIGNAL=ON`)
+
+---
+
+Resolution:
+1280x720
+
+VSync: Disabled
+
+FPS cap: 60
+
+Timedemo: timedemo demos/the-big-keybench.dem
+
+Run: 1 minute
+
+- Average FPS: 14
+- 1s min: 14
+- 1s avg: 17
+- 1s max: 20
+
+Battery (Charging in PC):
+
+- Initial level: 84
+- Final level: 84
+- Initial temperature: 28.2
+- Maximum temperature: 32.3
+
+Android CPU:
+
+- Typical TOTAL: ~16% (7% user + 9% kernel)
+- Peak TOTAL: ~33% (17% user + 15% kernel)
+
+RAM (In game):
+
+- Before: 3.1gb ~ 3.2gb
+- During: 2.4gb ~ 2.5gb
+
+Stability:
+
+- Crashes: 0
+- Rendering issues: 0
+- Audio issues: 0
+
+----------------
+
+Resolution:
+1920x1080
+
+VSync: Disabled
+
+FPS cap: 60
+
+Timedemo: timedemo demos/the-big-keybench.dem
+
+Run: 1 minute
+
+- Average FPS:
+- 1s min: 8
+- 1s avg: 11
+- 1s max: 15
+
+Battery (Charging in PC):
+
+- Initial level: 84
+- Final level: 84
+- Initial temperature: 27.9
+- Maximum temperature: 28.3
+
+Android CPU:
+
+- Typical TOTAL: 16% (7% user + 9% kernel)
+- Peak TOTAL: 29% (15% user + 14% kernel)
+
+RAM (In game):
+
+- Before: ~3.8gb
+- During: ~2.4gb
+
+Stability:
+
+- Crashes: 0
+- Rendering issues: 0
+- Audio issues: 0
+
+---
