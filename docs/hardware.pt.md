@@ -2,58 +2,130 @@
 
 [English](hardware.md)
 
+O Linudex utiliza um Samsung Galaxy S10+ com a tela danificada como base de um ambiente desktop ARM. A v0.4.0 amplia a documentação original de hardware e registra a integração física do smartphone, do hub USB-C, das conexões externas e da refrigeração em um gabinete compacto.
+
 ## Dispositivo principal
 
-O Linudex v0.1 roda em um **Samsung Galaxy S10+ (SM-G975F)** com a tela integrada danificada, mas com o restante do hardware principal funcional.
+O dispositivo principal permanece o **Samsung Galaxy S10+ (SM-G975F)**, com tela integrada danificada, mas com o hardware necessário ao projeto funcional.
 
-| Componente            | Especificação / estado                        |
-| --------------------- | --------------------------------------------- |
-| SoC                   | Samsung Exynos 9820                           |
-| Arquitetura           | ARM64 / AArch64                               |
-| RAM                   | 8 GB nominal                                  |
-| Armazenamento interno | 128 GB                                        |
-| USB                   | USB-C                                         |
-| Saída desktop externa | Samsung DeX através da conexão de vídeo USB-C |
-| Tela integrada        | Fisicamente danificada                        |
+| Componente            | Especificação / estado                  |
+| --------------------- | --------------------------------------- |
+| SoC                   | Samsung Exynos 9820                     |
+| Arquitetura           | ARM64 / AArch64                         |
+| RAM                   | 8 GB nominal                            |
+| Armazenamento interno | 128 GB                                  |
+| USB                   | USB-C                                   |
+| Saída desktop externa | Samsung DeX pela conexão de vídeo USB-C |
+| Tela integrada        | Fisicamente danificada                  |
 
 <p align="center">
-  <img src="../images/build/s10-front.png"
-       alt="Samsung Galaxy S10+ frente"
-       width="263">
-  <img src="../images/build/s10-back.png"
-       alt="Samsung Galaxy S10+ trás"
-       width="263">
-    <img src="../images/build/s10-damaged-display.png"
-    alt="Samsung Galaxy S10+ damaged display"
-    width = "250"
-    style="transform: rotate(270deg); margin-top: -30px;">
+  <img src="../images/build/s10-front.png" alt="Galaxy S10+ visto pela frente" width="263">
+  <img src="../images/build/s10-back.png" alt="Galaxy S10+ visto por trás" width="263">
+  <img src="../images/build/s10-damaged-display.png" alt="Tela danificada do Galaxy S10+" width="250">
 </p>
 
-## Ambiente de teste da v0.1
+## Histórico de hardware e testes iniciais
 
-O marco de software foi validado utilizando monitor externo através do Samsung DeX e periféricos externos conforme necessário. Os modelos exatos dos periféricos não foram registrados nas anotações da v0.1 e, portanto, não são inventados nesta documentação.
+Na v0.1, o ambiente Linux foi validado com monitor externo através do Samsung DeX e dispositivos de entrada externos conforme necessário. Os modelos dos periféricos utilizados inicialmente não foram registrados.
 
-## Bateria e energia
+O Android reportou saúde da bateria `GOOD` durante o baseline; o limite de carga foi configurado em 85% para o uso estacionário. O RAM Plus estava configurado em 8 GB.
 
-- O estado de saúde da bateria reportado pelo Android estava como `GOOD` durante o baseline.
-- O carregamento foi limitado a 85% como medida de preservação da bateria para o uso estacionário como PC.
-- O RAM Plus foi configurado para 8 GB durante os ajustes do host Android. RAM Plus é memória virtual baseada no armazenamento.
+Os testes de desktop documentados anteriormente registraram temperaturas **da bateria** entre **27,8 °C e 33,0 °C**. O aquecimento mais evidente observado no início estava associado à tela integrada danificada quando permanecia acesa; com a tela apagada durante o DeX, o dispositivo esfriou. Essas medições não representam a temperatura do SoC e não comprovam o ganho térmico dos coolers da v0.4.
 
-## Resultados térmicos da v0.1
+## Integração física — v0.4.0
 
-Inicialmente havia suspeita de aquecimento anormal no aparelho. Os benchmarks posteriores de desktop permaneceram estáveis e registraram temperaturas da bateria entre **27.8 °C e 33.0 °C** nos testes documentados.
+A fase v0.4.0 integra o aparelho a um **mini gabinete Nano da Brothers Repair**. O objetivo é reunir o smartphone, o hub e a fiação de maneira organizada, mantendo as interfaces externas acessíveis e preparando um fluxo de ar ativo.
 
-O ponto quente inicialmente observado estava associado à tela integrada danificada quando ela permanecia acesa; com a tela do telefone desligada durante o uso do DeX, o aparelho esfriou consideravelmente. Portanto, refrigeração ativa e gabinete final continuam como tarefas da fase de hardware, e não como requisitos para o marco de software da v0.1.
+A montagem incorpora um hub USB-C 8 em 1, extensor USB-C, extensão de áudio P2, cabo HDMI, periféricos de entrada e dois fans de 80 mm. O monitor dedicado ainda não foi comprado; um dos monitores do PC está sendo utilizado temporariamente.
 
-## Construção física futura
+<!-- Imagens futuras: visão geral do gabinete, interior e painel traseiro (../images/build/). -->
 
-A montagem final em formato de PC está fora do escopo da v0.1. As áreas planejadas incluem:
+## Conectividade e hub USB-C
 
-- Gabinete compacto.
-- Integração do hub USB-C.
-- Fluxo de ar ativo/suporte para fan.
-- Organização de cabos.
-- Acesso conveniente às portas USB, vídeo, rede e alimentação.
-- Validação térmica prolongada após a montagem no gabinete.
+O hub concentra a conexão do Galaxy S10+ com os periféricos e a tela externa. Segundo seu manual, as interfaces incluem:
 
-Os modelos e preços finais dos componentes devem ser registrados na [lista de materiais](../bom/components.pt.md) após compra e validação.
+| Interface                      | Função / especificação informada                                     |
+| ------------------------------ | -------------------------------------------------------------------- |
+| USB-C para computador/telefone | Conexão com o Galaxy S10+                                            |
+| USB-C fêmea 1                  | Entrada PD, `20V@3A`; manual informa suporte a adaptador de até 87 W |
+| USB-C fêmea 2                  | Porta USB-C de dados, fornecimento para periféricos de até 4,5 W     |
+| USB-A (2 portas)               | Teclado, mouse, armazenamento e periféricos                          |
+| HDMI                           | Saída de vídeo para tela externa                                     |
+| Ethernet                       | Rede cabeada                                                         |
+| SD e TF/microSD                | Leitura de cartões de memória                                        |
+
+As portas do hub foram testadas com funcionamento simultâneo. A segunda USB-C **não é uma entrada de carregamento PD**.
+
+O hub e seu caminho de vídeo estão funcionais na montagem atual.
+
+<!-- Diagrama futuro: conexões e disposição física (../images/build/). -->
+
+## Posicionamento do smartphone e extensor USB-C
+
+A fixação original do S10+ colocava o botão de ligar/desligar voltado para o suporte interno do gabinete. O aperto podia manter o botão pressionado, criando risco de acionamentos involuntários.
+
+Um **extensor USB-C macho → fêmea** permitiu inverter o posicionamento do aparelho sem perder a conexão funcional com o hub e o Samsung DeX. Nessa posição, o botão Power ficou livre; entretanto, os botões de volume e Bixby podem permanecer parcialmente pressionados. O comportamento deve ser monitorado e corrigido se causar entradas involuntárias.
+
+O ajuste foi realizado para a geometria deste gabinete e não constitui uma exigência geral para utilizar o Linudex. Os detalhes da restrição mecânica serão registrados no [Troubleshooting](troubleshooting/README.pt.md) da v0.4.0.
+
+<!-- Imagens futuras: posicionamento antes/depois e passagem do extensor USB-C. -->
+
+## Saída de áudio P2 traseira
+
+A saída nativa de 3,5 mm do Galaxy S10+ foi prolongada por um **extensor P2 de 50 cm** até a abertura disponível na traseira do gabinete, acima da porta Ethernet.
+
+A primeira fixação com fita isolante não impedia que o jack recuasse para dentro ao conectar um fone. A solução definitiva utilizou arruelas de borracha de diferentes diâmetros, unidas com cianoacrilato. Um pincel serviu como mandril improvisado para ajustar gradualmente o diâmetro interno das arruelas até obter um encaixe por interferência no conector. O conjunto foi colado à parede interna, com cura de aproximadamente 24 horas, e o acabamento externo recebeu fita isolante para ocultar resíduos de cola.
+
+O jack agora fica firme durante a conexão, embora ainda possa ser removido com esforço. Essa extensão é **opcional**: o Linudex não depende dela para funcionar.
+
+<!-- Imagens futuras: materiais, montagem das arruelas, fixação interna e acabamento do jack P2. -->
+
+## Alimentação elétrica
+
+O conjunto utiliza um carregador multiportas com portas USB-C PD e USB-A QC. A conexão principal prevista é uma saída PD do carregador para a entrada PD do hub, que fornece energia ao smartphone.
+
+Para os fans, a cadeia planejada é:
+
+```text
+Carregador compatível
+        │
+Cabo USB → DC5521 12 V
+        │
+Adaptador DC5521 → Molex
+        │
+  2 fans de 80 mm
+```
+
+Os cabos destinados à alimentação dos fans foram comprados e ainda aguardam chegada e testes. **O funcionamento do circuito em 12 V ainda não está validado**. Antes da ligação definitiva, devem ser conferidas as especificações da fonte, a negociação de tensão do cabo, a polaridade do DC5521 e a corrente dos fans. O valor total anunciado da potência do carregador não confirma, por si só, a disponibilidade de um perfil de 12 V na porta utilizada.
+
+A extensão/filtro de linha é um acessório opcional de distribuição elétrica do setup, não parte do circuito interno do telefone.
+
+<!-- Diagrama elétrico futuro: PD do hub e alimentação dos fans (../images/build/). -->
+
+## Refrigeração ativa
+
+A montagem prevê **dois coolers de 80 mm** para promover circulação de ar no gabinete e reduzir o acúmulo de calor durante cargas prolongadas.
+
+Os fans já foram adquiridos, mas não há resultado final de funcionamento com os novos cabos. A direção do fluxo de ar e o posicionamento definitivo devem ser documentados após a instalação e os testes. Um esquema de entrada e exaustão poderá ser adotado conforme a geometria e as aberturas do gabinete, sem presumir ganho térmico antes da medição.
+
+Os benchmarks da v0.4 deverão comparar condições reproduzíveis, registrando temperaturas da bateria, estabilidade, carga aplicada e comportamento com e sem refrigeração. Consulte [Benchmarks](benchmarks.pt.md) para os resultados existentes de outras versões.
+
+<!-- Imagens futuras: pontos de fixação dos fans, fluxo de ar e cabeamento final. -->
+
+## Vídeo e periféricos
+
+O hub fornece saída HDMI para monitor externo. O **cabo HDMI de 2 metros já foi adquirido e testado com sucesso**, utilizando temporariamente um dos monitores do PC. Portanto, a saída de vídeo da montagem está funcional, mesmo sem monitor dedicado.
+
+O kit de teclado e mouse sem fio está em uso; o hub também permite periféricos USB com fio. Os leitores SD e microSD estão disponíveis no hub, mas a compra de cartões para expansão de armazenamento é opcional.
+
+## Pendências de validação da v0.4.0
+
+- Receber e conferir os novos cabos de alimentação dos fans.
+- Validar a conexão elétrica e o funcionamento simultâneo dos dois coolers.
+- Registrar disposição final dos fans, sentido de fluxo de ar e organização interna dos cabos.
+- Executar testes térmicos comparáveis aos já documentados, sem atribuir ganhos antes das medições.
+- Selecionar e adicionar as fotografias finais da montagem e os diagramas de conexões.
+
+A ausência de monitor próprio não impede o fechamento da integração física: a saída HDMI já foi testada com um monitor temporário.
+
+Os custos dos componentes estão na [lista de materiais](../bom/components.pt.md).
