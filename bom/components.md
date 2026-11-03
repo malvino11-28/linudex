@@ -2,38 +2,61 @@
 
 [Português](components.pt.md)
 
-The final physical Linudex build has not been assembled yet. For that reason, v0.1 does not invent product models or prices that have not been validated.
-
-The final desktop configuration is expected to require a USB-C hub or dock, preferably with multiple ports, as well as a keyboard, mouse, and monitor.
+This bill of materials (BOM) records the components purchased for the physical integration of Linudex v0.4.0, their purposes, validation status and costs. The build uses an already-owned Samsung Galaxy S10+, so the phone's value is excluded from the documented incremental spending.
 
 ## Main device
 
-| Component  | Model                          | Status        |              Cost |
-| ---------- | ------------------------------ | ------------- | ----------------: |
-| Smartphone | Samsung Galaxy S10+ (SM-G975F) | Already owned | Existing hardware |
+| Component  | Model                          | Status        | Incremental cost |
+| ---------- | ------------------------------ | ------------- | ---------------: |
+| Smartphone | Samsung Galaxy S10+ (SM-G975F) | Already owned |          R$ 0.00 |
 
-## Required / test peripherals
+## Purchased components
 
-| Component | Purpose                                                                             | v0.1 status |
-| --------- | ----------------------------------------------------------------------------------- | ----------- |
-| PC        | Device configuration, ADB access, debloating, diagnostics, and testing              | Used        |
-| USB cable | Communication between the Galaxy S10+ and the PC during configuration and debugging | Used        |
+| Component                                | Description / purpose                                | Classification | Status                                            |      Cost |
+| ---------------------------------------- | ---------------------------------------------------- | -------------- | ------------------------------------------------- | --------: |
+| 80 mm cooling fans (2 units)             | Active airflow inside the enclosure                  | v0.4 build     | Purchased; power setup not yet tested             |  R$ 31.30 |
+| Wireless keyboard and mouse kit          | Input peripherals with a USB receiver                | v0.4 build     | Purchased and in use                              |  R$ 39.98 |
+| 8-in-1 USB-C hub                         | Video, USB, network and card-reader connectivity     | v0.4 build     | Purchased and tested                              |  R$ 36.51 |
+| Power strip / surge-filter accessory     | Power distribution for the setup                     | **Optional**   | Purchased                                         |  R$ 32.24 |
+| Nano mini enclosure — Brothers Repair    | Physical housing and component organization          | **Optional**   | Purchased and in use                              | R$ 237.38 |
+| DC5521 → 12 V Molex adapter              | Connects the power cable to the cooling fans         | v0.4 build     | Replacement purchase; awaiting delivery and tests |  R$ 18.58 |
+| USB → 12 V DC5521 cable                  | Intended power supply connection for the fans        | v0.4 build     | Replacement purchase; awaiting delivery and tests |  R$ 17.59 |
+| Multiport PD/QC charger + two USB cables | System power; USB-C/USB-C and USB-A/USB-C cables     | v0.4 build     | Purchased                                         |  R$ 64.88 |
+| USB-C male-to-female extension cable     | Extends the smartphone USB-C connection              | **Optional**   | Purchased and tested with the hub                 |  R$ 44.98 |
+| 3.5 mm audio extension — 50 cm           | Accessible rear audio jack                           | **Optional**   | Purchased, installed and tested                   |  R$ 22.71 |
+| HDMI cable — 2 m                         | Video connection from the hub to an external display | v0.4 build     | Purchased and tested                              |  R$ 32.90 |
 
-## Planned physical-build components
+**Optional** means the component is not required for the basic operation of Linudex, although it is part of this documented physical build. Exact product models and purchase links will be added after the product listings are reviewed.
 
-These belong to a later hardware milestone and should only receive prices/models after purchase and validation:
+<!-- Add individual product links after reviewing the listings. -->
 
-- Compact enclosure.
-- Cooling fan(s).
-- Fan power/control hardware if required.
-- Final USB-C hub/dock.
-- Cable extensions/adapters.
+## Peripherals and expansions not purchased
 
-## Cost policy
+| Component                                  | Purpose                             | Status                                   |
+| ------------------------------------------ | ----------------------------------- | ---------------------------------------- |
+| Dedicated Full HD (1920×1080) HDMI monitor | Dedicated Linudex display           | Not purchased                            |
+| SD and/or microSD card                     | Storage expansion                   | Optional; not purchased                  |
+| Molex-to-Molex fan power switch            | Physical power control for the fans | Future improvement, outside v0.4.0 scope |
 
-Keep two values when the hardware phase begins:
+## Costs
 
-1. **Incremental project cost** — money actually spent to convert the already-owned phone.
-2. **Full replacement value** — optional comparison including the value of components that were already owned.
+| Metric                                            |        Amount |
+| ------------------------------------------------- | ------------: |
+| Purchased components — total incremental spending | **R$ 579.05** |
+| Portion corresponding to purchased optional items |     R$ 337.31 |
+| Portion corresponding to other purchased items    |     R$ 241.74 |
+| Already-owned smartphone                          |  Not included |
+| Dedicated monitor not yet purchased               |  Not included |
 
-This prevents the project cost from being distorted by treating existing hardware as a new purchase.
+The total includes the **replacement** fan power cables at the reported prices, but excludes earlier refunded purchases. Costs for reused mounting supplies or materials with no reported price have not been estimated.
+
+## Cost policy and reproducibility
+
+For build comparisons, the documentation distinguishes:
+
+1. **Incremental spending** — actual cost of adapting the already-owned phone.
+2. **Full replacement value** — a possible future estimate including the phone and other already-owned equipment.
+
+The enclosure, power strip, USB-C extension and audio extension are part of this build, but can be omitted or replaced in other implementations. Likewise, any compatible HDMI monitor or TV and equivalent input peripherals can be used.
+
+<!-- Future images: assembled components and completed build (images/build/). -->
