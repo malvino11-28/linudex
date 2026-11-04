@@ -8,6 +8,8 @@ Problemas de software documentados nas versões anteriores não são repetidos a
 
 ## Índice de problemas
 
+- [Conector do adaptador das fans era diferente do Molex grande](#adaptador-das-fans-usava-conector-diferente-do-molex-grande)
+- [Chiado baixo no carregador com os coolers desligados](#carregador-apresentava-chiado-em-condição-de-baixa-carga)
 - [Botão Power pressionado pelo suporte](#botão-power-pressionado-pelo-suporte-do-gabinete)
 - [Porta USB-C secundária do hub não carregava o smartphone](#porta-usb-c-secundária-do-hub-não-carregava-o-smartphone)
 - [Conector P2 recuava ao conectar um fone](#conector-p2-recuava-ao-conectar-um-fone)
@@ -144,3 +146,49 @@ Essa abordagem não substitui o acesso físico ao botão em situações de trava
 ### Estado
 
 **Limitação de projeto aceita na v0.4.0; possível melhoria futura.**
+
+---
+
+## Adaptador das fans usava conector diferente do Molex grande
+
+### Sintomas
+
+O adaptador adquirido para conectar o DC5521 à refrigeração possuía uma saída pequena de quatro pinos, incompatível fisicamente com o conector Molex periférico grande presente nos coolers.
+
+### Diagnóstico
+
+O anúncio descrevia o produto como DC5521 para conector de fan 4 pinos PWM, e não como DC5521 para Molex IDE/LP4. Os nomes comerciais confundem facilmente os dois padrões, embora tenham dimensões e pinagens diferentes.
+
+### Solução
+
+Foi identificado outro conector pequeno no conjunto dos coolers. Ele encaixou no adaptador adquirido, e os **dois motores passaram a girar alimentando apenas essa conexão**. Não foi necessário cortar fios, remover carcaças ou comprar um divisor externo. A interligação elétrica entre os fans vem da conexão entre os molex LP4.
+
+### Validação
+
+Ambos giraram por 20 minutos sem falhas relatadas. A tensão, polaridade e corrente reais da alimentação ainda não foram medidas; portanto, o teste demonstra funcionamento, não validação elétrica completa.
+
+### Estado
+
+**Incompatibilidade de encaixe contornada; validação elétrica instrumental pendente.**
+
+<!-- IMAGEM FUTURA: comparação dos conectores grande e pequeno + ligação que funcionou (images/build/). -->
+
+---
+
+## Carregador apresentava chiado em condição de baixa carga
+
+### Sintomas
+
+Foi percebido um chiado baixo no carregador em algumas condições. Em uma sequência de testes, o ruído não foi notado com o S10+ carregando, com os fans funcionando isoladamente ou com ambos ligados. O chiado ficou perceptível ao manter o cabo dos fans conectado, mas com as ventoinhas desligadas pelo interruptor do próprio cabo.
+
+### Diagnóstico
+
+Uma hipótese é ruído de componentes magnéticos da fonte chaveada em regime de carga muito baixa. O comportamento não comprova essa causa e não permite descartar irregularidade elétrica apenas pela observação auditiva.
+
+### Decisão adotada
+
+A montagem permaneceu em observação durante os testes. Foi decidido não classificar o ruído como defeito confirmado e adiar a verificação instrumental dos perfis PD e da saída do cabo 12 V. Em caso de estalos, cheiro, aquecimento anormal ou interrupções, a alimentação deve ser desligada.
+
+### Estado
+
+**Comportamento observado; causa não confirmada e medição elétrica pendente.**

@@ -8,6 +8,8 @@ Software issues already documented in previous releases are not repeated here un
 
 ## Issue index
 
+- [Fan adapter connector did not match the large Molex plug](#fan-adapter-connector-did-not-match-the-large-molex-plug)
+- [Faint charger noise with fans switched off](#charger-produced-noise-under-a-low-load-condition)
 - [Power button pressed by the mounting bracket](#power-button-was-pressed-by-the-enclosure-mount)
 - [Secondary hub USB-C port did not charge the phone](#secondary-hub-usb-c-port-did-not-charge-the-phone)
 - [Rear audio jack moved inward when inserting a plug](#rear-audio-jack-moved-inward-when-inserting-a-plug)
@@ -144,3 +146,49 @@ This does not replace physical Power button access for freezes, full shutdowns o
 ### Status
 
 **Accepted design limitation in v0.4.0; possible future enhancement.**
+
+---
+
+## Fan adapter connector did not match the large Molex plug
+
+### Symptoms
+
+The DC5521-to-fan adapter arrived with a small four-pin output, which did not mechanically mate with the fans' large peripheral Molex connectors.
+
+### Diagnosis
+
+The product was advertised as DC5521 to 4-pin PWM fan connector, not DC5521 to the larger IDE/LP4 peripheral Molex type. Both are sometimes called four-pin connectors, despite different dimensions and pinouts.
+
+### Solution
+
+Another small connector was identified on the fan assembly. It fit the purchased adapter, and **both fan motors spun when power was applied through that single connection**. No plastic shells were removed, wires cut or external splitter purchased. The electrical interconnection between the fans comes from the link between their LP4 Molex connectors.
+
+### Validation
+
+Both fans ran for 20 minutes without reported failures. Actual supply voltage, polarity and current remain unmeasured; this verifies operation, not complete electrical compliance.
+
+### Status
+
+**Mechanical mismatch bypassed; instrumented electrical verification pending.**
+
+<!-- FUTURE IMAGE: large and small connector comparison and working connection (images/build/). -->
+
+---
+
+## Charger produced noise under a low-load condition
+
+### Symptoms
+
+A faint high-pitched sound was noticed at the charger under certain conditions. In a subsequent test, the sound was not noticeable while charging the S10+, while supplying only running fans, or while supplying both. It was noticeable when the fan cable remained connected but its in-line switch turned the fans off.
+
+### Diagnosis
+
+One possible explanation is magnetic-component noise in a low-load operating mode of the switching supply. The observed sound does not establish this mechanism or rule out an electrical fault.
+
+### Decision
+
+The build was monitored during testing. The sound was not classified as a confirmed defect; instrumented verification of PD profiles and the nominal 12 V trigger output was deferred. Power should be disconnected if clicking, odor, abnormal heat or intermittent operation occurs.
+
+### Status
+
+**Observed behavior; cause unconfirmed and electrical measurements pending.**
