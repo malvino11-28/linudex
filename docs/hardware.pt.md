@@ -8,15 +8,15 @@ O Linudex utiliza um Samsung Galaxy S10+ com a tela danificada como base de um a
 
 O dispositivo principal permanece o **Samsung Galaxy S10+ (SM-G975F)**, com tela integrada danificada, mas com o hardware necessário ao projeto funcional.
 
-| Componente            | Especificação / estado                  |
-| --------------------- | --------------------------------------- |
-| SoC                   | Samsung Exynos 9820                     |
-| Arquitetura           | ARM64 / AArch64                         |
-| RAM                   | 8 GB nominal                            |
-| Armazenamento interno | 128 GB                                  |
-| USB                   | USB-C                                   |
-| Saída desktop externa | Samsung DeX pela conexão de vídeo USB-C |
-| Tela integrada        | Fisicamente danificada                  |
+| Componente            | Especificação / estado             |
+| --------------------- | ---------------------------------- |
+| SoC                   | Samsung Exynos 9820                |
+| Arquitetura           | ARM64 / AArch64                    |
+| RAM                   | 8 GB nominal                       |
+| Armazenamento interno | 128 GB                             |
+| USB                   | USB-C                              |
+| Saída de tela externa | Samsung DeX com HDMI em um monitor |
+| Tela integrada        | Fisicamente danificada             |
 
 <p align="center">
   <img src="../images/build/s10-front.png" alt="Galaxy S10+ visto pela frente" width="263">
@@ -28,7 +28,7 @@ O dispositivo principal permanece o **Samsung Galaxy S10+ (SM-G975F)**, com tela
 
 Na v0.1, o ambiente Linux foi validado com monitor externo através do Samsung DeX e dispositivos de entrada externos conforme necessário. Os modelos dos periféricos utilizados inicialmente não foram registrados.
 
-O Android reportou saúde da bateria `GOOD` durante o baseline; o limite de carga foi configurado em 85% para o uso estacionário. O RAM Plus estava configurado em 8 GB.
+O Android reportou saúde da bateria `GOOD` durante o baseline; o limite de carga foi configurado em 85% para o uso estacionário. O RAM Plus estava configurado em 8 GB e corresponde a memória virtual baseada em armazenamento, não a RAM física adicional.
 
 Os testes de desktop documentados anteriormente registraram temperaturas **da bateria** entre **27,8 °C e 33,0 °C**. O aquecimento mais evidente observado no início estava associado à tela integrada danificada quando permanecia acesa; com a tela apagada durante o DeX, o dispositivo esfriou. Essas medições não representam a temperatura do SoC e não comprovam o ganho térmico dos coolers da v0.4.
 
@@ -50,15 +50,15 @@ O hub concentra a conexão do Galaxy S10+ com os periféricos e a tela externa. 
 | USB-C fêmea 1                  | Entrada PD, `20V@3A`; manual informa suporte a adaptador de até 87 W |
 | USB-C fêmea 2                  | Porta USB-C de dados, fornecimento para periféricos de até 4,5 W     |
 | USB-A (2 portas)               | Teclado, mouse, armazenamento e periféricos                          |
-| HDMI                           | Saída de vídeo para tela externa                                     |
+| HDMI/HDTV                      | Saída de vídeo para tela externa                                     |
 | Ethernet                       | Rede cabeada                                                         |
 | SD e TF/microSD                | Leitura de cartões de memória                                        |
 
-As portas do hub foram testadas com funcionamento simultâneo. A segunda USB-C **não é uma entrada de carregamento PD**.
+As portas do hub foram testadas com funcionamento simultâneo. A segunda USB-C **não é uma entrada de carregamento PD**, é uma entrada MTP.
 
 O hub e seu caminho de vídeo estão funcionais na montagem atual.
 
-<!-- Diagrama futuro: conexões e disposição física (../images/build/). -->
+<!-- IMAGEM FUTURA: fotografia da conexão do hub (images/build/). Diagrama Mermaid já incluído em architecture.pt.md. -->
 
 ## Posicionamento do smartphone e extensor USB-C
 
@@ -84,48 +84,49 @@ O jack agora fica firme durante a conexão, embora ainda possa ser removido com 
 
 O conjunto utiliza um carregador multiportas com portas USB-C PD e USB-A QC. A conexão principal prevista é uma saída PD do carregador para a entrada PD do hub, que fornece energia ao smartphone.
 
-Para os fans, a cadeia planejada é:
+A cadeia utilizada para os fans é:
 
 ```text
-Carregador compatível
+Carregador USB-C PD
         │
-Cabo USB → DC5521 12 V
+Cabo USB-C PD → DC5521 (12 V nominal)
         │
-Adaptador DC5521 → Molex
+Adaptador DC5521 → conector pequeno de fan 4 pinos
         │
-  2 fans de 80 mm
+Conjunto de 2 fans de 80 mm
 ```
 
-Os cabos destinados à alimentação dos fans foram comprados e ainda aguardam chegada e testes. **O funcionamento do circuito em 12 V ainda não está validado**. Antes da ligação definitiva, devem ser conferidas as especificações da fonte, a negociação de tensão do cabo, a polaridade do DC5521 e a corrente dos fans. O valor total anunciado da potência do carregador não confirma, por si só, a disponibilidade de um perfil de 12 V na porta utilizada.
+O adaptador adquirido foi inicialmente confundido com um adaptador para Molex periférico grande (IDE/LP4), mas sua saída é um conector pequeno de ventoinha. Um dos conectores pequenos dos fans aceitou o adaptador e **ambos os motores giraram**, indicando interligação elétrica do conjunto; a ligação exata entre eles vem da conexão entre o molex LP4 deles.
+
+A alimentação funcionou por 20 minutos sem interrupções relatadas, aquecimento perceptível nos conectores ou cheiro anormal. O carregador apresentou **chiado discreto em uma condição de baixa carga**, principalmente com os fans desligados pelo interruptor do cabo e ainda conectados; sua causa não foi confirmada. O uso foi testado, mas **a tensão real de 12 V, polaridade e corrente ainda não foram medidas**. A potência total anunciada do carregador não comprova a presença de um perfil PD de 12 V.
 
 A extensão/filtro de linha é um acessório opcional de distribuição elétrica do setup, não parte do circuito interno do telefone.
 
-<!-- Diagrama elétrico futuro: PD do hub e alimentação dos fans (../images/build/). -->
+Veja os diagramas em [Arquitetura](architecture.pt.md). Nunca energize simultaneamente as duas interfaces de alimentação de um mesmo fan.
+
+<!-- IMAGEM FUTURA: conector pequeno compatível, adaptador DC5521 e cabeamento final (images/build/). -->
 
 ## Refrigeração ativa
 
-A montagem prevê **dois coolers de 80 mm** para promover circulação de ar no gabinete e reduzir o acúmulo de calor durante cargas prolongadas.
+A montagem utiliza **dois coolers de 80 mm**, instalados na parte inferior do gabinete. O teste com papel confirmou que ambos **puxam o ar do interior e o expulsam para o exterior** (exaustão). Existem aberturas passivas superiores, frontais e laterais.
 
-Os fans já foram adquiridos, mas não há resultado final de funcionamento com os novos cabos. A direção do fluxo de ar e o posicionamento definitivo devem ser documentados após a instalação e os testes. Um esquema de entrada e exaustão poderá ser adotado conforme a geometria e as aberturas do gabinete, sem presumir ganho térmico antes da medição.
+Ambos os coolers giraram e permaneceram ligados durante um teste de 20 minutos. Nos testes térmicos relatados com 20 minutos por configuração, a leitura durante YouTube 1080p foi de **35,2 °C com os fans ligados**, contra **40,2 °C com os fans desligados** (diferença observada de 5,0 °C). As condições iniciais não eram idênticas e não houve medição da temperatura do SoC, portanto esse valor não pode ser atribuído integralmente à refrigeração sem um ensaio mais controlado.
 
-Os benchmarks da v0.4 deverão comparar condições reproduzíveis, registrando temperaturas da bateria, estabilidade, carga aplicada e comportamento com e sem refrigeração. Consulte [Benchmarks](benchmarks.pt.md) para os resultados existentes de outras versões.
+Confira a tabela completa em [Benchmarks](benchmarks.pt.md). A configuração atual com ambos os fans em exaustão foi mantida após os testes.
 
-<!-- Imagens futuras: pontos de fixação dos fans, fluxo de ar e cabeamento final. -->
+<!-- IMAGENS FUTURAS: posicionamento dos fans, grade lateral, aberturas superiores e montagem final (images/build/). -->
 
 ## Vídeo e periféricos
 
 O hub fornece saída HDMI para monitor externo. O **cabo HDMI de 2 metros já foi adquirido e testado com sucesso**, utilizando temporariamente um dos monitores do PC. Portanto, a saída de vídeo da montagem está funcional, mesmo sem monitor dedicado.
 
-O kit de teclado e mouse sem fio está em uso; o hub também permite periféricos USB com fio. Os leitores SD e microSD estão disponíveis no hub, mas a compra de cartões para expansão de armazenamento é opcional.
+O kit de teclado e mouse sem fio está em uso; o hub também permite periféricos USB com fio. Os leitores SD e microSD estão disponíveis no hub, mas a compra de cartões para expansão de armazenamento permanece opcional.
 
 ## Pendências de validação da v0.4.0
 
-- Receber e conferir os novos cabos de alimentação dos fans.
-- Validar a conexão elétrica e o funcionamento simultâneo dos dois coolers.
-- Registrar disposição final dos fans, sentido de fluxo de ar e organização interna dos cabos.
-- Executar testes térmicos comparáveis aos já documentados, sem atribuir ganhos antes das medições.
-- Selecionar e adicionar as fotografias finais da montagem e os diagramas de conexões.
+- Medir com instrumento adequado a tensão efetiva, a polaridade e o consumo na linha dos fans (programado para uma etapa futura).
+- Realizar eventual repetição dos testes térmicos em condições ambientais e temperaturas iniciais controladas.
 
-A ausência de monitor próprio não impede o fechamento da integração física: a saída HDMI já foi testada com um monitor temporário.
+A ausência de monitor próprio não impede o fechamento da integração física: a saída HDMI já foi testada com um monitor emprestado do setup existente. Uma aquisição posterior pode ser documentada sem alterar retroativamente os resultados da v0.4.0.
 
 Os custos dos componentes estão na [lista de materiais](../bom/components.pt.md).

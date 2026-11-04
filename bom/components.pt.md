@@ -12,19 +12,19 @@ Esta lista de materiais (BOM) registra os componentes adquiridos para a integra�
 
 ## Componentes adquiridos
 
-| Componente                                    | Descrição / finalidade                                   | Classificação | Estado                                    |     Custo |
-| --------------------------------------------- | -------------------------------------------------------- | ------------- | ----------------------------------------- | --------: |
-| Coolers 80 mm (2 unidades)                    | Ventilação ativa do gabinete                             | Montagem v0.4 | Adquiridos; alimentação pendente de teste |  R$ 31,30 |
-| Kit teclado e mouse sem fio                   | Periféricos de entrada com receptor USB                  | Montagem v0.4 | Adquirido e utilizado                     |  R$ 39,98 |
-| Hub USB-C 8 em 1                              | Conectividade de vídeo, USB, rede e cartões de memória   | Montagem v0.4 | Adquirido e testado                       |  R$ 36,51 |
-| Extensão / filtro de linha                    | Distribuição elétrica do setup                           | **Opcional**  | Adquirido                                 |  R$ 32,24 |
-| Mini gabinete Nano — Brothers Repair          | Acomodação e organização física dos componentes          | **Opcional**  | Adquirido e utilizado                     | R$ 237,38 |
-| Adaptador DC5521 → Molex 12 V                 | Interligação do cabo de alimentação aos coolers          | Montagem v0.4 | Nova compra; aguardando chegada e testes  |  R$ 18,58 |
-| Cabo USB → DC5521 12 V                        | Alimentação prevista para os coolers                     | Montagem v0.4 | Nova compra; aguardando chegada e testes  |  R$ 17,59 |
-| Carregador multiportas PD/QC + dois cabos USB | Alimentação do conjunto; cabos USB-C/USB-C e USB-A/USB-C | Montagem v0.4 | Adquirido                                 |  R$ 64,88 |
-| Extensor USB-C macho → fêmea                  | Extensão da conexão USB-C do smartphone                  | **Opcional**  | Adquirido e testado com o hub             |  R$ 44,98 |
-| Extensão de áudio P2 3,5 mm — 50 cm           | Saída de áudio acessível na traseira do gabinete         | **Opcional**  | Adquirida, instalada e testada            |  R$ 22,71 |
-| Cabo HDMI — 2 m                               | Conexão do hub a uma tela externa                        | Montagem v0.4 | Adquirido e testado                       |  R$ 32,90 |
+| Componente                                    | Descrição / finalidade                                                     | Classificação | Estado                                                                 |     Custo |
+| --------------------------------------------- | -------------------------------------------------------------------------- | ------------- | ---------------------------------------------------------------------- | --------: |
+| Coolers 80 mm (2 unidades)                    | Ventilação ativa do gabinete                                               | Montagem v0.4 | Adquiridos; ambos girando em teste de 20 minutos                       |  R$ 31,30 |
+| Kit teclado e mouse sem fio                   | Periféricos de entrada com receptor USB                                    | Montagem v0.4 | Adquirido e utilizado                                                  |  R$ 39,98 |
+| Hub USB-C 8 em 1                              | Conectividade de vídeo, USB, rede e cartões de memória                     | Montagem v0.4 | Adquirido e testado                                                    |  R$ 36,51 |
+| Extensão / filtro de linha                    | Distribuição elétrica do setup                                             | **Opcional**  | Adquirido                                                              |  R$ 32,24 |
+| Mini gabinete Nano — Brothers Repair          | Acomodação e organização física dos componentes                            | **Opcional**  | Adquirido e utilizado                                                  | R$ 237,38 |
+| Adaptador DC5521 → conector de fan 4 pinos    | Ligação ao conector pequeno do conjunto de coolers; não é Molex IDE grande | Montagem v0.4 | Recebido e funcional na conexão testada; verificação elétrica pendente |  R$ 18,58 |
+| Cabo USB-C PD → DC5521 (12 V nominal)         | Alimentação dos coolers                                                    | Montagem v0.4 | Recebido e funcional na conexão testada; tensão ainda não medida       |  R$ 17,59 |
+| Carregador multiportas PD/QC + dois cabos USB | Alimentação do conjunto; cabos USB-C/USB-C e USB-A/USB-C                   | Montagem v0.4 | Adquirido                                                              |  R$ 64,88 |
+| Extensor USB-C macho → fêmea                  | Extensão da conexão USB-C do smartphone                                    | **Opcional**  | Adquirido e testado com o hub                                          |  R$ 44,98 |
+| Extensão de áudio P2 3,5 mm — 50 cm           | Saída de áudio acessível na traseira do gabinete                           | **Opcional**  | Adquirida, instalada e testada                                         |  R$ 22,71 |
+| Cabo HDMI — 2 m                               | Conexão do hub a uma tela externa                                          | Montagem v0.4 | Adquirido e testado                                                    |  R$ 32,90 |
 
 A classificação **opcional** indica que o item não é necessário ao funcionamento básico do Linudex; ainda assim, ele integra a montagem física documentada. Os modelos exatos e links de compra serão adicionados após a conferência dos anúncios.
 
@@ -32,11 +32,10 @@ A classificação **opcional** indica que o item não é necessário ao funciona
 
 ## Periféricos e expansões não adquiridos
 
-| Componente                                    | Finalidade                              | Situação                                  |
-| --------------------------------------------- | --------------------------------------- | ----------------------------------------- |
-| Monitor dedicado Full HD (1920×1080) com HDMI | Tela própria para o Linudex             | Não adquirido                             |
-| Cartão SD e/ou microSD                        | Expansão de armazenamento               | Opcional; compra não realizada            |
-| Interruptor Molex → Molex para coolers        | Controle físico da alimentação dos fans | Melhoria futura, fora do escopo da v0.4.0 |
+| Componente                                    | Finalidade                  | Situação                       |
+| --------------------------------------------- | --------------------------- | ------------------------------ |
+| Monitor dedicado Full HD (1920×1080) com HDMI | Tela própria para o Linudex | Não adquirido                  |
+| Cartão SD e/ou microSD                        | Expansão de armazenamento   | Opcional; compra não realizada |
 
 ## Custos
 
@@ -48,7 +47,7 @@ A classificação **opcional** indica que o item não é necessário ao funciona
 | Smartphone já possuído                                | Não contabilizado |
 | Monitor dedicado ainda não comprado                   | Não contabilizado |
 
-O total considera os **novos** cabos de alimentação dos coolers pelos valores informados, mas não inclui componentes anteriores já reembolsados. Custos de materiais de fixação reaproveitados e de itens sem preço informado não foram estimados.
+Custos de materiais de fixação reaproveitados e de itens sem preço informado não foram estimados.
 
 ## Política de custos e reprodução
 
@@ -59,4 +58,4 @@ Para comparar montagens, a documentação distingue:
 
 O gabinete, a extensão elétrica e os dois extensores de conexão/áudio fazem parte desta montagem, mas podem ser omitidos ou substituídos em outras implementações. Da mesma forma, qualquer monitor ou TV compatível com HDMI e periféricos de entrada equivalentes podem ser utilizados.
 
-<!-- Imagens futuras: componentes reunidos e montagem concluída (images/build/). -->
+<!-- IMAGENS FUTURAS: componentes reunidos, adaptador DC5521/conector pequeno e montagem concluída (images/build/). Não adicionar links antes dos arquivos. -->

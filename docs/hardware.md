@@ -8,15 +8,15 @@ Linudex uses a Samsung Galaxy S10+ with a damaged display as the foundation of a
 
 The main device remains a **Samsung Galaxy S10+ (SM-G975F)** with a damaged built-in display but functional core hardware for this project.
 
-| Component               | Specification / status                       |
-| ----------------------- | -------------------------------------------- |
-| SoC                     | Samsung Exynos 9820                          |
-| Architecture            | ARM64 / AArch64                              |
-| RAM                     | 8 GB nominal                                 |
-| Internal storage        | 128 GB                                       |
-| USB                     | USB-C                                        |
-| External desktop output | Samsung DeX through a USB-C video connection |
-| Built-in display        | Physically damaged                           |
+| Component               | Specification / status            |
+| ----------------------- | --------------------------------- |
+| SoC                     | Samsung Exynos 9820               |
+| Architecture            | ARM64 / AArch64                   |
+| RAM                     | 8 GB nominal                      |
+| Internal storage        | 128 GB                            |
+| USB                     | USB-C                             |
+| External display output | Samsung DeX via HDMI on a monitor |
+| Built-in display        | Physically damaged                |
 
 <p align="center">
   <img src="../images/build/s10-front.png" alt="Galaxy S10+ front view" width="263">
@@ -36,7 +36,7 @@ Previously documented desktop tests recorded **battery** temperatures between **
 
 Version v0.4.0 integrates the device into a **Brothers Repair Nano mini enclosure**. The goal is to house the smartphone, hub and wiring neatly while keeping external interfaces accessible and preparing active airflow.
 
-The build uses an 8-in-1 USB-C hub, USB-C extension, 3.5 mm audio extension, HDMI cable, input peripherals and two 80 mm fans. A dedicated monitor has not yet been purchased.
+The build uses an 8-in-1 USB-C hub, USB-C extension, 3.5 mm audio extension, HDMI cable, input peripherals and two 80 mm fans. A dedicated monitor has not yet been purchased; a monitor from the user's PC is being used temporarily.
 
 <!-- Future images: enclosure overview, internal layout and rear panel (../images/build/). -->
 
@@ -50,15 +50,15 @@ The hub connects the Galaxy S10+ to peripherals and the external display. Accord
 | USB-C female port 1                | PD input, `20V@3A`; manual states support for up to an 87 W adapter |
 | USB-C female port 2                | USB-C data port, up to 4.5 W supplied to peripherals                |
 | USB-A (2 ports)                    | Keyboard, mouse, storage and other peripherals                      |
-| HDMI                               | External display output                                             |
+| HDMI/HDTV                          | External display output                                             |
 | Ethernet                           | Wired network                                                       |
 | SD and TF/microSD                  | Memory card readers                                                 |
 
-The hub ports were tested working simultaneously. The second USB-C port is **not a PD charging input**: connecting a charger there may illuminate the hub's indicator without charging the phone.
+The hub ports were tested working simultaneously. The second USB-C port is **not a PD charging input**, it is a MTP input.
 
 The hub and its video path are functional in the current build.
 
-<!-- Future diagram: connection layout and physical placement (../images/build/). -->
+<!-- FUTURE IMAGE: hub connection photograph (images/build/). Mermaid diagram already included in architecture.md. -->
 
 ## Smartphone positioning and USB-C extension
 
@@ -84,48 +84,49 @@ The jack now stays in place during insertion, while remaining removable with som
 
 The build uses a multiport charger with USB-C PD and USB-A QC ports. The intended main connection is a charger PD output to the hub's PD input, supplying power to the smartphone.
 
-For the fans, the planned connection chain is:
+The fan supply was connected as follows:
 
 ```text
-Compatible charger
+USB-C PD charger
        │
-USB → 12 V DC5521 cable
+USB-C PD → DC5521 cable (nominal 12 V)
        │
-DC5521 → Molex adapter
+DC5521 → small 4-pin fan header adapter
        │
-   Two 80 mm fans
+Two connected 80 mm fans
 ```
 
-The fan power cables were purchased again and are awaiting delivery and testing. **The 12 V circuit is not yet validated.** Before connecting it permanently, the charger's specifications, the cable's voltage negotiation, DC5521 polarity and fan current ratings should be checked. The charger's advertised total wattage alone does not confirm that a 12 V profile is available on the chosen output.
+The purchased adapter was initially mistaken for a large peripheral Molex adapter (IDE/LP4), but its output is a small fan connector. One of the small fan connectors accepted the adapter and **both motors spun**, indicating an electrical interconnection within the assembly; the exact connection between them comes from the link between their LP4 Molex connectors.
+
+The fans operated for 20 minutes without reported interruptions, noticeable connector heat or unusual odor. The charger produced **a faint high-pitched noise in one low-load condition**, especially when the cable remained connected with the fans turned off by its switch; the cause was not established. Although operation was demonstrated, **actual output voltage, polarity and current have not been measured**. The charger's advertised aggregate wattage does not establish that its port supports a 12 V PD profile.
 
 The power strip/filter accessory is optional external power distribution equipment, not part of the phone's internal electrical circuit.
 
-<!-- Future electrical diagram: hub PD input and fan power connections (../images/build/). -->
+See [Architecture](architecture.md) for the connection diagrams. Never energize both power interfaces on the same fan at the same time.
+
+<!-- FUTURE IMAGE: compatible small fan connector, DC5521 adapter and final routing (images/build/). -->
 
 ## Active cooling
 
-The build includes **two 80 mm fans** intended to increase air movement inside the enclosure and reduce heat accumulation during sustained workloads.
+The build uses **two 80 mm fans**, installed at the bottom of the enclosure. A paper-strip test confirmed that both **pull air from inside and exhaust it outside**. Upper, frontal and side openings provide potential passive intake.
 
-The fans have been purchased, but the final functional test with the replacement power cables is pending. The airflow direction and definitive fan placement will be documented after installation and testing. An intake/exhaust arrangement may be used depending on case geometry and openings; no thermal improvement should be assumed before measurement.
+Both fans ran throughout a 20-minute functional test. In reported thermal tests lasting 20 minutes per configuration, YouTube 1080p playback resulted in **35.2 °C with fans on** versus **40.2 °C with fans off** (5.0 °C observed difference). Starting conditions differed and SoC temperature was not measured, so this gap cannot all be attributed to the fans without better-controlled testing.
 
-Version v0.4 benchmarking should compare repeatable workloads while recording battery temperatures, stability, workload conditions and fan-on/fan-off behavior. See [Benchmarks](benchmarks.md) for results from earlier versions.
+See [Benchmarks](benchmarks.md) for the full table. The present dual-exhaust arrangement was retained following these tests.
 
-<!-- Future images: fan mounting locations, airflow direction and final wiring. -->
+<!-- FUTURE IMAGES: fan locations, side grille, upper vents and final assembly (images/build/). -->
 
 ## Video and peripherals
 
-The hub provides HDMI output to an external monitor. The **2 m HDMI cable has already been purchased and tested successfully** using a temporary monitor. Video output is therefore functional even though a dedicated monitor has not yet been purchased.
+The hub provides HDMI output to an external monitor. The **2 m HDMI cable has already been purchased and tested successfully** using a monitor from the user's PC. Video output is therefore functional even though a dedicated monitor has not yet been purchased.
 
 The wireless keyboard and mouse kit is in use; the hub also supports wired USB input devices. Its SD and microSD slots are available, but purchasing memory cards remains an optional future storage expansion.
 
 ## Pending v0.4.0 validation
 
-- Receive and inspect the replacement fan power cables.
-- Validate the electrical connection and simultaneous operation of both fans.
-- Record the final fan layout, airflow direction and cable organization.
-- Run thermal tests comparable to the existing benchmarks, without claiming improvements before measurements.
-- Curate and add the final build photographs and connection diagrams.
+- Measure actual fan supply voltage, polarity and current using appropriate equipment (planned for a later stage).
+- Optionally repeat thermal tests under controlled ambient and starting temperatures.
 
-A dedicated monitor is not required to complete the physical integration: HDMI output has already been validated using an existing display.
+A dedicated monitor is not required to complete the physical integration: HDMI output has already been validated using an existing display. A later monitor purchase can be documented without retroactively changing v0.4.0 measurements.
 
 Component costs are recorded in the [bill of materials](../bom/components.md).
