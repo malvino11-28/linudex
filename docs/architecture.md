@@ -174,14 +174,14 @@ The tested Windows path uses `/usr/bin/box64`, the local `~/xow64` launcher and 
 
 ### Component versions
 
-| Component | Version / configuration | Role |
-| --- | --- | --- |
-| Box64 for Wine | 0.3.4 | x86-64 translation for the working Wine baseline |
-| Box64 for Linux | Manual 0.4.5 build | Linux x86-64 execution experiments |
-| Wine | 9.18-staging | Windows API compatibility |
-| WineD3D | 9.2 | Direct3D-to-OpenGL translation |
-| Mesa / VirGL / ANGLE | Virtual GPU / Android Vulkan bridge | Graphics translation |
-| DepotDownloader | 3.4.0 ARM64 | Download authorized Steam depots without Steam UI |
+| Component            | Version / configuration             | Role                                              |
+| -------------------- | ----------------------------------- | ------------------------------------------------- |
+| Box64 for Wine       | 0.3.4                               | x86-64 translation for the working Wine baseline  |
+| Box64 for Linux      | Manual 0.4.5 build                  | Linux x86-64 execution experiments                |
+| Wine                 | 9.18-staging                        | Windows API compatibility                         |
+| WineD3D              | 9.2                                 | Direct3D-to-OpenGL translation                    |
+| Mesa / VirGL / ANGLE | Virtual GPU / Android Vulkan bridge | Graphics translation                              |
+| DepotDownloader      | 3.4.0 ARM64                         | Download authorized Steam depots without Steam UI |
 
 ### Limitations
 
@@ -193,3 +193,65 @@ The tested Windows path uses `/usr/bin/box64`, the local `~/xow64` launcher and 
 - A complete installation of the v0.3.0 compatibility stack from a clean device has not yet been validated. The scripts used during testing must be reviewed before publication.
 
 See [Software Setup](software.md), [Benchmarks](benchmarks.md) and [Troubleshooting](troubleshooting/README.md) for the respective setup, results and known problems.
+
+## Physical integration — v0.4.0
+
+Version v0.4.0 adds a compact enclosure, USB-C hub and active cooling to the existing build. It does not replace the software stack described above. The following diagrams describe **physical connections**, not the Android/Debian software architecture.
+
+### Device connections
+
+```mermaid
+flowchart LR
+    subgraph Enclosure["Linudex enclosure"]
+        S["Galaxy S10+"]
+        E["Male-to-female USB-C extension"]
+        H["8-in-1 USB-C hub"]
+        P["3.5 mm audio extension"]
+        J["Rear audio jack"]
+        S -->|"USB-C"| E
+        E -->|"USB-C host"| H
+        S -->|"3.5 mm"| P
+        P --> J
+    end
+    C["Multiport charger"] -->|"Hub PD input"| H
+    H -->|"HDMI, 2 m cable"| M["Existing PC monitor"]
+    H -->|"USB-A"| R["Wireless kit USB receiver"]
+```
+
+The hub receives power through its PD input. HDMI operation was confirmed with an existing PC monitor; a dedicated display is not required to complete the v0.4.0 physical integration. The hub's additional interfaces, including Ethernet, SD, TF/microSD and USB-C data, remain accessible but are not shown as active connections.
+
+<!-- FUTURE IMAGE: finished enclosure and rear panel, under images/build/. -->
+
+### Fan power supply
+
+The working connection uses a nominal 12 V USB-C-to-DC5521 cable and the **small fan connector** on the cooling assembly. The adapter is sold as DC5521 to 4-pin PWM. The fans' large peripheral Molex connectors are not used in this path.
+
+```mermaid
+flowchart TD
+    C["Charger — USB-C PD port"]
+    T["USB-C PD → DC5521 cable, nominal 12 V"]
+    A["DC5521 → 4-pin fan header adapter"]
+    F["Small connector on fan assembly"]
+    F1["80 mm fan — 1"]
+    F2["80 mm fan — 2"]
+    C --> T --> A --> F
+    F --> F1
+    F --> F2
+```
+
+**Validation note:** The charger's 12 V profile and the PD trigger output still require instrumented confirmation. Do not feed power through the large Molex connectors and the small fan connector at the same time.
+
+### Airflow
+
+```mermaid
+flowchart TB
+    A["Upper, frontal and side passive vents"] -.->|"Assumed air intake"| I["Enclosure interior / Galaxy S10+"]
+    I -->|"Exhaust confirmed with paper test"| F1["Fan 1 — 80 mm"]
+    I -->|"Exhaust confirmed with paper test"| F2["Fan 2 — 80 mm"]
+    F1 --> E["Outside air"]
+    F2 --> E
+```
+
+Both fans expel air out of the enclosure, as verified with a paper strip on the inside and outside. Passive air intake through the other openings is plausible, but its precise path was not measured: the paper showed no noticeable movement at those vents. See [Hardware](hardware.md) and [Benchmarks](benchmarks.md) for test details.
+
+<!-- FUTURE IMAGE: installed fans and cable routing, under images/build/. -->

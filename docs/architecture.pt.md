@@ -174,14 +174,14 @@ O caminho Windows testado usa `/usr/bin/box64`, o lançador local `~/xow64` e o 
 
 ### Versões dos componentes
 
-| Componente | Versão / configuração | Função |
-| --- | --- | --- |
-| Box64 para Wine | 0.3.4 | Tradução x86-64 da configuração funcional do Wine |
-| Box64 para Linux | Build manual 0.4.5 | Testes de execução Linux x86-64 |
-| Wine | 9.18-staging | Compatibilidade com APIs Windows |
-| WineD3D | 9.2 | Tradução Direct3D para OpenGL |
-| Mesa / VirGL / ANGLE | GPU virtual / ponte Vulkan do Android | Tradução gráfica |
-| DepotDownloader | 3.4.0 ARM64 | Download de depots Steam autorizados sem interface Steam |
+| Componente           | Versão / configuração                 | Função                                                   |
+| -------------------- | ------------------------------------- | -------------------------------------------------------- |
+| Box64 para Wine      | 0.3.4                                 | Tradução x86-64 da configuração funcional do Wine        |
+| Box64 para Linux     | Build manual 0.4.5                    | Testes de execução Linux x86-64                          |
+| Wine                 | 9.18-staging                          | Compatibilidade com APIs Windows                         |
+| WineD3D              | 9.2                                   | Tradução Direct3D para OpenGL                            |
+| Mesa / VirGL / ANGLE | GPU virtual / ponte Vulkan do Android | Tradução gráfica                                         |
+| DepotDownloader      | 3.4.0 ARM64                           | Download de depots Steam autorizados sem interface Steam |
 
 ### Limitações
 
@@ -193,3 +193,65 @@ O caminho Windows testado usa `/usr/bin/box64`, o lançador local `~/xow64` e o 
 - Uma instalação completa da camada de compatibilidade v0.3.0 em um aparelho limpo ainda não foi validada. Os scripts utilizados nos testes precisam ser revisados antes da publicação.
 
 Consulte [Configuração de software](software.pt.md), [Benchmarks](benchmarks.pt.md) e [Troubleshooting](troubleshooting/README.pt.md) para instalação, resultados e problemas conhecidos.
+
+## Integração física — v0.4.0
+
+A v0.4.0 acrescenta um gabinete compacto, um hub USB-C e refrigeração ativa à configuração existente. A pilha de software descrita acima não é substituída. O objetivo do diagrama é representar as **conexões físicas**, não os caminhos lógicos entre Android e Debian.
+
+### Conexões do conjunto
+
+```mermaid
+flowchart LR
+    subgraph Gabinete["Gabinete Linudex"]
+        S["Galaxy S10+"]
+        E["Extensor USB-C macho/fêmea"]
+        H["Hub USB-C 8 em 1"]
+        P["Extensor P2 3,5 mm"]
+        J["Saída de áudio traseira"]
+        S -->|"USB-C"| E
+        E -->|"USB-C host"| H
+        S -->|"P2"| P
+        P --> J
+    end
+    C["Carregador multiportas"] -->|"PD-IN do hub"| H
+    H -->|"HDMI, cabo 2 m"| M["Monitor externo do PC"]
+    H -->|"USB-A"| R["Receptor USB do kit sem fio"]
+```
+
+A porta PD-IN do hub recebe alimentação do carregador. O HDMI já foi testado com um monitor do PC, sem que seja necessário adquirir um monitor exclusivo para fechar a v0.4.0. As demais portas do hub, como Ethernet, SD, TF/microSD e USB-C de dados, permanecem acessíveis, mas não devem ser confundidas com conexões em uso no diagrama.
+
+<!-- IMAGEM FUTURA: foto do conjunto montado e painel traseiro. Pasta images/build/. -->
+
+### Alimentação dos fans
+
+O caminho efetivamente utilizado conecta o cabo USB-C/12 V ao adaptador DC5521 e, em seguida, ao **conector pequeno de fan** do conjunto de coolers. O anúncio do adaptador descreve uma saída de 4 pinos PWM; os conectores Molex periféricos grandes dos fans não foram usados nesse caminho.
+
+```mermaid
+flowchart TD
+    C["Carregador — porta USB-C PD"]
+    T["Cabo USB-C PD → DC5521, nominal 12 V"]
+    A["Adaptador DC5521 → conector fan 4 pinos"]
+    F["Conector pequeno do conjunto de fans"]
+    F1["Fan 80 mm — 1"]
+    F2["Fan 80 mm — 2"]
+    C --> T --> A --> F
+    F --> F1
+    F --> F2
+```
+
+**Observação de validação:** O perfil de 12 V do carregador e do cabo trigger ainda precisa ser verificado com instrumento apropriado. Não se deve ligar o conector Molex grande e o conector pequeno à alimentação simultaneamente.
+
+### Fluxo de ar
+
+```mermaid
+flowchart TB
+    A["Aberturas passivas superiores, frontais e laterais"] -.->|"Entrada de ar presumida"| I["Interior do gabinete / Galaxy S10+"]
+    I -->|"Exaustão confirmada pelo teste do papel"| F1["Fan 1 — 80 mm"]
+    I -->|"Exaustão confirmada pelo teste do papel"| F2["Fan 2 — 80 mm"]
+    F1 --> E["Ar externo"]
+    F2 --> E
+```
+
+Os dois fans expulsam ar para fora do gabinete, conforme teste com papel realizado pelos lados interno e externo. A presença de múltiplas grades torna plausível a entrada passiva de ar, mas o caminho exato não foi medido: o papel não apresentou deslocamento perceptível nessas grades. Ver [Hardware](hardware.pt.md) e [Benchmarks](benchmarks.pt.md) para detalhes dos testes.
+
+<!-- IMAGEM FUTURA: posicionamento dos dois fans e passagem de cabos (images/build/). -->
