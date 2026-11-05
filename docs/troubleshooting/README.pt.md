@@ -6,16 +6,17 @@ Este diretório reúne os registros de solução de problemas do Linudex, organi
 
 ## Solução de problemas por versão
 
-| Versão                                        | Documento                                           | Principais assuntos                                                                                            |
-| --------------------------------------------- | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| v0.1.0 — Desktop Linux funcional              | [Problemas da v0.1.0](troubleshooting-v0.1.0.pt.md) | Rede e data/hora, pacotes Termux, sudo no PRoot, X11, Phantom Process Killer do Android e observações térmicas |
-| v0.2.0 — Ambiente Daily Driver                | [Problemas da v0.2.0](troubleshooting-v0.2.0.pt.md) | Teclas mortas do teclado brasileiro, Termux:Boot e abertura automática do Termux:X11                           |
-| v0.2.1 — Correção da inicialização automática | [Problemas da v0.2.1](troubleshooting-v0.2.1.pt.md) | Estado residual do PulseAudio durante a inicialização a frio                                                   |
-
+| Versão | Documento | Principais assuntos |
+| --- | --- | --- |
+| v0.1.0 — Desktop Linux funcional | [Problemas da v0.1.0](troubleshooting-v0.1.0.pt.md) | Rede e data/hora, pacotes Termux, sudo no PRoot, X11, Phantom Process Killer do Android e observações térmicas |
+| v0.2.0 — Ambiente Daily Driver | [Problemas da v0.2.0](troubleshooting-v0.2.0.pt.md) | Teclas mortas do teclado brasileiro, Termux:Boot e abertura automática do Termux:X11 |
+| v0.2.1 — Correção da inicialização automática | [Problemas da v0.2.1](troubleshooting-v0.2.1.pt.md) | Estado residual do PulseAudio durante a inicialização a frio |
 | v0.3.0 — Compatibilidade experimental x86/x86-64 | [Troubleshooting v0.3.0](troubleshooting-v0.3.0.pt.md) | .NET CoreCLR, SteamWebHelper, shaders WineD3D, exigências da Steam e encerramento seguro |
+| v0.4.0 — Integração física de hardware | [Troubleshooting v0.4.0](troubleshooting-v0.4.0.pt.md) | Botões laterais, portas USB-C, fixação do P2, conectores dos fans e ruído da alimentação |
 
 ## Documentação relacionada
 
 - [Configuração de software](../software.pt.md)
 - [Arquitetura](../architecture.pt.md)
+- [Hardware](../hardware.pt.md)
 - [Benchmarks](../benchmarks.pt.md)

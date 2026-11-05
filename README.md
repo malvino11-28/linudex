@@ -12,13 +12,21 @@ Version `v0.1.0` marks the first stable graphical Linux milestone. At this stage
 
 Version `v0.2.0` builds on the stable Linux desktop established in v0.1.0 and turns it into a more practical daily-use environment. Audio, shared storage, desktop tuning, essential applications and startup automation are now integrated into the Linudex workflow.
 
-## v0.2.1 - Automatic Startup Fix
+## v0.2.1 — Automatic Startup Fix
 
 Version `v0.2.1` is an update that fixes an auto-start bug in Linudex caused by an error when trying to run PulseAudio during a cold boot.
 
 ## v0.3.0 — Experimental x86/x86-64 Compatibility
 
 Version `v0.3.0` adds optional execution paths for Linux and Windows x86-64 software using Box64, Wine, WineD3D and VirGL/ANGLE. Xonotic and Seraph's Last Stand launched in the tested environment, but demanding 3D workloads remained slow and several games did not run. The compatibility layer is experimental; the Debian/XFCE desktop from v0.2.1 remains the stable base.
+
+## v0.4.0 — Physical Hardware Integration
+
+Version v0.4.0 brings the Galaxy S10+, an 8-in-1 USB-C hub and two 80 mm fans together in a compact Nano enclosure. HDMI, USB-C and 3.5 mm audio extensions were integrated alongside a wireless keyboard/mouse kit. HDMI output was verified with an existing PC monitor, without requiring a dedicated display for this milestone.
+
+Both fans operate as **exhaust fans** and were tested together. During YouTube 1080p playback, the reported temperatures were **35.2 °C with fans on** and **40.2 °C with fans off**, an observed gap of 5.0 °C. These results are preliminary and are not SoC temperature measurements. Instrumented verification of the cooling supply voltage and polarity is still pending.
+
+![Mounted Linudex](/images/build/mounted-linudex.png)
 
 ### Completed
 
@@ -37,6 +45,7 @@ Version `v0.3.0` adds optional execution paths for Linux and Windows x86-64 soft
 - Validated DepotDownloader 3.4.0 ARM64 as an alternative to running SteamWebHelper for downloading authorized game files.
 - Documented graphics performance, memory limitations and unsuccessful compatibility tests.
 - Kept compatibility launchers separate from the existing automatic XFCE startup.
+- Integrated enclosure, hub, video and external audio connections, and two 80 mm cooling fans with preliminary thermal testing in v0.4.0.
 
 ## Architecture
 
@@ -55,13 +64,13 @@ Samsung Galaxy S10+
 
 This design intentionally keeps Android because it provides mature hardware support for the Galaxy S10+, including USB-C video output, audio routing and Samsung DeX. Debian runs as a userspace environment over the Android kernel rather than as a virtual machine.
 
-The x86-64 compatibility paths use Box64 and an optional graphics bridge in addition to the desktop architecture shown above. See the architecture and benchmarks documents for details.
+The x86-64 compatibility paths use Box64 and an optional graphics bridge in addition to the desktop architecture shown above. Version v0.4.0 adds a physical assembly without replacing the software layers. See [Architecture](docs/architecture.md) for connection, power and airflow diagrams.
 
 ## Current status
 
-The daily-driver environment established in v0.2.1 remains the stable base. Version v0.3.0 adds an experimental x86/x86-64 compatibility layer, without changing the normal automatic desktop startup. Its gaming results are limited and are documented rather than presented as general playability.
+The daily-driver environment established in v0.2.1 remains the stable base. Version v0.3.0 adds an experimental x86/x86-64 compatibility layer without changing the normal automatic desktop startup. Its gaming results are limited and documented, not presented as general playability.
 
-Final keyboard/mouse tuning, cold-boot validation directly into Samsung DeX over the final HDMI setup, and the physical enclosure/cooling build remain dependent on the final hardware configuration.
+The v0.4.0 build has a functioning enclosure, hub, video output, rear audio extension and active cooling in the tested assembly. A dedicated monitor has not yet been purchased, but HDMI works with an existing display. The fans operated during practical testing, while instrumented confirmation of the nominal 12 V profile, polarity and current remains pending; the charger produced faint noise under some low-load conditions. Thermal results must be interpreted as preliminary comparisons.
 
 <p align="center">
   <img src="images/screenshots/linudex-v0.2-desktop.png"
@@ -98,7 +107,8 @@ linudex/
 │       ├── troubleshooting-v0.1.0.md
 │       ├── troubleshooting-v0.2.0.md
 │       ├── troubleshooting-v0.2.1.md
-│       └── troubleshooting-v0.3.0.md
+│       ├── troubleshooting-v0.3.0.md
+│       └── troubleshooting-v0.4.0.md
 ├── images/
 │   ├── benchmarks/
 │   ├── build/
