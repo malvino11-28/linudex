@@ -28,7 +28,23 @@ This bill of materials (BOM) records the components purchased for the physical i
 
 **Optional** means the component is not required for the basic operation of Linudex, although it is part of this documented physical build. Exact product models and purchase links will be added after the product listings are reviewed.
 
-<!-- Add individual product links after reviewing the listings. -->
+## Purchase Links
+
+The prices listed below reflect the amounts actually paid for the components during the v0.4.0 build. Product listings may change in price, availability, or specifications over time.
+
+| Component                                                                                                                                                                                                                         | Quantity |     Total |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------: | --------: |
+| [80 mm RGB PC Cooling Fan](https://shopee.com.br/Cooler-Fan-80mm-Ventoinha-Pc-Gamer-Gabinete-Cpu-Super-Silencioso-Led-RGB-i.268638963.22592642104)                                                                                |    2     |  R$ 31,30 |
+| [Wireless Keyboard and Mouse Kit — Rechargeable](https://shopee.com.br/Teclado-e-mouse-sem-fio%E2%80%94Compat%C3%ADvel-com-tablet%EF%BC%8CNotebook-e-celular-Recarreg%C3%A1vel-e-150h-de-Bateria-i.1331886707.23898664618)        |    1     |  R$ 39,98 |
+| [8-in-1 USB-C Hub with HDMI, Ethernet, USB and Card Reader](https://shopee.com.br/Porta-USB-Hub-8-Em-1-Leitor-SD-Type-C-%C3%81udio-3.5mm-HDMI-4K-RJ45-Rede-2xUSB3.0-2xUSB2.0-PD-Notebook-MacBook-i.1842644423.58214825723)        |    1     |  R$ 36,51 |
+| [Portable Power Outlet Extender with USB Ports](https://shopee.com.br/Conector-De-Extens%C3%A3o-Port%C3%A1til-3-Universal-Plug-Carregador-R%C3%A1pido-2-Usb-1-Tipe-C-Transformador-Conversor-De-Tomada-i.1351016330.22998580989)  |    1     |  R$ 32,24 |
+| [Nano Smartphone Mini Case — Brothers Repair](<https://shopee.com.br/Mini-Gabinete-Para-Celular-(Vers%C3%A3o-Nano)-Brothers-Repair-i.865492777.58258775338>)                                                                      |    1     | R$ 237,38 |
+| [5-Port USB-A/USB-C Multiport Charger — Advertised 176 W](https://shopee.com.br/5-Em-1-Fonte-De-Energia-Carregador-Turbo-USB-A-USB-C-com-TIPO-C-Cabo-Carregamento-r%C3%A1pido-176W-i.1485077747.58254472248)                      |    1     |  R$ 64,88 |
+| [ORICO 3.5 mm Male-to-Female Audio Extension Cable](https://shopee.com.br/Orico-Cabo-%C3%81udio-Extensor-P2-3.5mm-AM-MF3-Macho-x-F%C3%AAmea-%C3%81udio-Premium-Nylon-Tran%C3%A7ado-i.1552898174.22594635513)                      |    1     |  R$ 22,71 |
+| [USB-C Male-to-Female Extension Cable — USB 3.2 Gen 2](https://produto.mercadolivre.com.br/MLB-4674210855)                                                                                                                        |    1     |  R$ 44,98 |
+| [KOKO DC5521 to 4-Pin PWM Fan Power Adapter — 12 V](https://shopee.com.br/KOKO-DC5521-Para-4Pin-PWM-4Pins-Computador-PC-Roteador-Ventilador-Cabo-Adaptador-De-Alimenta%C3%A7%C3%A3o-12V-20CM-i.1053709299.42483640967)            |    1     |  R$ 18,58 |
+| [ZEIN USB-C PD 12 V Trigger Cable to DC5521 Barrel Connector](https://shopee.com.br/ZEIN-12V-PD-Gatilhos-Entrada-USB-C-5-5X2-1Mm-Barris-Plugues-Interruptores-Alimenta%C3%A7%C3%A3o-Linha-Para-Roteador-i.1502293884.51367808044) |    1     |  R$ 17,59 |
+| HDMI Cable — 2 m                                                                                                                                                                                                                  |    1     |  R$ 32,90 |
 
 ## Peripherals and expansions not purchased
 
