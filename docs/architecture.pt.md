@@ -220,7 +220,7 @@ flowchart LR
 
 A porta PD-IN do hub recebe alimentação do carregador. O HDMI já foi testado com um monitor do PC, sem que seja necessário adquirir um monitor exclusivo para fechar a v0.4.0. As demais portas do hub, como Ethernet, SD, TF/microSD e USB-C de dados, permanecem acessíveis, mas não devem ser confundidas com conexões em uso no diagrama.
 
-<!-- IMAGEM FUTURA: foto do conjunto montado e painel traseiro. Pasta images/build/. -->
+![Linudex montado](../images/build/mounted-linudex.png)
 
 ### Alimentação dos fans
 
@@ -253,5 +253,3 @@ flowchart TB
 ```
 
 Os dois fans expulsam ar para fora do gabinete, conforme teste com papel realizado pelos lados interno e externo. A presença de múltiplas grades torna plausível a entrada passiva de ar, mas o caminho exato não foi medido: o papel não apresentou deslocamento perceptível nessas grades. Ver [Hardware](hardware.pt.md) e [Benchmarks](benchmarks.pt.md) para detalhes dos testes.
-
-<!-- IMAGEM FUTURA: posicionamento dos dois fans e passagem de cabos (images/build/). -->

@@ -26,7 +26,7 @@ Version v0.4.0 brings the Galaxy S10+, an 8-in-1 USB-C hub and two 80 mm fans to
 
 Both fans operate as **exhaust fans** and were tested together. During YouTube 1080p playback, the reported temperatures were **35.2 °C with fans on** and **40.2 °C with fans off**, an observed gap of 5.0 °C. These results are preliminary and are not SoC temperature measurements. Instrumented verification of the cooling supply voltage and polarity is still pending.
 
-<!-- FUTURE IMAGE: finished build photo at images/build/v0.4-final-build.png, only after adding the image file. -->
+![Mounted Linudex](/images/build/mounted-linudex.png)
 
 ### Completed
 

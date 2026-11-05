@@ -138,4 +138,4 @@ A montagem v0.4.0 utiliza dois fans de 80 mm como **exaustores** na parte inferi
 
 Os resultados são **evidência preliminar de melhora térmica na montagem**, não uma certificação da eficiência da refrigeração. A confirmação elétrica dos 12 V do cabo trigger e de sua polaridade permanece pendente de instrumento de medição.
 
-<!-- IMAGEM FUTURA: fotos dos fans e gráfico comparativo das temperaturas, em images/build/ e images/benchmarks/. -->
+![Fans operando](../images/build/fans-working.png)

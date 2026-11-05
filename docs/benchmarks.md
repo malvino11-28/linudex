@@ -138,4 +138,4 @@ The v0.4.0 build uses two 80 mm fans as **exhaust fans** at the bottom of the en
 
 These results provide **preliminary evidence of a thermal benefit in the current enclosure**, not a certification of cooling efficiency. Instrumented measurement of the USB-C PD trigger's nominal 12 V output and polarity remains pending.
 
-<!-- FUTURE IMAGE: fan photos and thermal comparison chart under images/build/ and images/benchmarks/. -->
+![Fans working](../images/build/fans-working.png)

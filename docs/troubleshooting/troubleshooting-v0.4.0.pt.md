@@ -171,7 +171,7 @@ Ambos giraram por 20 minutos sem falhas relatadas. A tensão, polaridade e corre
 
 **Incompatibilidade de encaixe contornada; validação elétrica instrumental pendente.**
 
-<!-- IMAGEM FUTURA: comparação dos conectores grande e pequeno + ligação que funcionou (images/build/). -->
+![Conexão das fans](../../images/build/fan-connectors.png)
 
 ---
 

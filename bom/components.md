@@ -57,5 +57,3 @@ For build comparisons, the documentation distinguishes:
 2. **Full replacement value** — a possible future estimate including the phone and other already-owned equipment.
 
 The enclosure, power strip, USB-C extension and audio extension are part of this build, but can be omitted or replaced in other implementations. Likewise, any compatible HDMI monitor or TV and equivalent input peripherals can be used.
-
-<!-- FUTURE IMAGES: assembled components, DC5521/small fan connector and completed build (images/build/). Do not insert links before files exist. -->

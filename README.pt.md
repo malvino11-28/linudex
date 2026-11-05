@@ -26,7 +26,7 @@ A v0.4.0 reúne o Galaxy S10+, um hub USB-C 8 em 1 e dois fans de 80 mm em um ga
 
 Os dois fans funcionam como **exaustores** e foram testados em conjunto. Durante reproduções de YouTube 1080p, as temperaturas informadas foram **35,2 °C com os fans ligados** e **40,2 °C com eles desligados**, uma diferença observada de 5,0 °C. Os testes são preliminares e não medem temperatura do SoC. A verificação instrumental de tensão e polaridade da alimentação de refrigeração permanece pendente.
 
-<!-- IMAGEM FUTURA: fotografia da montagem final em images/build/v0.4-final-build.png, quando realmente adicionada ao repositório. -->
+![Linudex montado](/images/build/mounted-linudex.png)
 
 ### Concluído
 

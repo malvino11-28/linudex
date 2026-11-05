@@ -220,7 +220,7 @@ flowchart LR
 
 The hub receives power through its PD input. HDMI operation was confirmed with an existing PC monitor; a dedicated display is not required to complete the v0.4.0 physical integration. The hub's additional interfaces, including Ethernet, SD, TF/microSD and USB-C data, remain accessible but are not shown as active connections.
 
-<!-- FUTURE IMAGE: finished enclosure and rear panel, under images/build/. -->
+![Mounted linudex](../images/build/mounted-linudex.png)
 
 ### Fan power supply
 
@@ -253,5 +253,3 @@ flowchart TB
 ```
 
 Both fans expel air out of the enclosure, as verified with a paper strip on the inside and outside. Passive air intake through the other openings is plausible, but its precise path was not measured: the paper showed no noticeable movement at those vents. See [Hardware](hardware.md) and [Benchmarks](benchmarks.md) for test details.
-
-<!-- FUTURE IMAGE: installed fans and cable routing, under images/build/. -->

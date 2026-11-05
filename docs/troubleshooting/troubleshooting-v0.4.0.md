@@ -171,7 +171,7 @@ Both fans ran for 20 minutes without reported failures. Actual supply voltage, p
 
 **Mechanical mismatch bypassed; instrumented electrical verification pending.**
 
-<!-- FUTURE IMAGE: large and small connector comparison and working connection (images/build/). -->
+![Fan connectors](../../images/build/fan-connectors.png)
 
 ---
 

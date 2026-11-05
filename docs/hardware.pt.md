@@ -38,8 +38,6 @@ A fase v0.4.0 integra o aparelho a um **mini gabinete Nano da Brothers Repair**.
 
 A montagem incorpora um hub USB-C 8 em 1, extensor USB-C, extensão de áudio P2, cabo HDMI, periféricos de entrada e dois fans de 80 mm. O monitor dedicado ainda não foi comprado; um dos monitores do PC está sendo utilizado temporariamente.
 
-<!-- Imagens futuras: visão geral do gabinete, interior e painel traseiro (../images/build/). -->
-
 ## Conectividade e hub USB-C
 
 O hub concentra a conexão do Galaxy S10+ com os periféricos e a tela externa. Segundo seu manual, as interfaces incluem:
@@ -58,7 +56,7 @@ As portas do hub foram testadas com funcionamento simultâneo. A segunda USB-C *
 
 O hub e seu caminho de vídeo estão funcionais na montagem atual.
 
-<!-- IMAGEM FUTURA: fotografia da conexão do hub (images/build/). Diagrama Mermaid já incluído em architecture.pt.md. -->
+![Usb-Hub](../images/build/usb-hub.png)
 
 ## Posicionamento do smartphone e extensor USB-C
 
@@ -68,7 +66,7 @@ Um **extensor USB-C macho → fêmea** permitiu inverter o posicionamento do apa
 
 O ajuste foi realizado para a geometria deste gabinete e não constitui uma exigência geral para utilizar o Linudex. Os detalhes da restrição mecânica serão registrados no [Troubleshooting](troubleshooting/README.pt.md) da v0.4.0.
 
-<!-- Imagens futuras: posicionamento antes/depois e passagem do extensor USB-C. -->
+![Comparação do posicionamento do celular](../images/build/s10-position.png)
 
 ## Saída de áudio P2 traseira
 
@@ -78,7 +76,8 @@ A primeira fixação com fita isolante não impedia que o jack recuasse para den
 
 O jack agora fica firme durante a conexão, embora ainda possa ser removido com esforço. Essa extensão é **opcional**: o Linudex não depende dela para funcionar.
 
-<!-- Imagens futuras: materiais, montagem das arruelas, fixação interna e acabamento do jack P2. -->
+![Materiais de montagem do fixador do jack](../images/build/jack-fastener.png)
+![Fixador completo](../images/build/fastener.png)
 
 ## Alimentação elétrica
 
@@ -104,7 +103,7 @@ A extensão/filtro de linha é um acessório opcional de distribuição elétric
 
 Veja os diagramas em [Arquitetura](architecture.pt.md). Nunca energize simultaneamente as duas interfaces de alimentação de um mesmo fan.
 
-<!-- IMAGEM FUTURA: conector pequeno compatível, adaptador DC5521 e cabeamento final (images/build/). -->
+![Adaptadores](../images/build/fan-adapters.png)
 
 ## Refrigeração ativa
 
@@ -113,8 +112,6 @@ A montagem utiliza **dois coolers de 80 mm**, instalados na parte inferior do ga
 Ambos os coolers giraram e permaneceram ligados durante um teste de 20 minutos. Nos testes térmicos relatados com 20 minutos por configuração, a leitura durante YouTube 1080p foi de **35,2 °C com os fans ligados**, contra **40,2 °C com os fans desligados** (diferença observada de 5,0 °C). As condições iniciais não eram idênticas e não houve medição da temperatura do SoC, portanto esse valor não pode ser atribuído integralmente à refrigeração sem um ensaio mais controlado.
 
 Confira a tabela completa em [Benchmarks](benchmarks.pt.md). A configuração atual com ambos os fans em exaustão foi mantida após os testes.
-
-<!-- IMAGENS FUTURAS: posicionamento dos fans, grade lateral, aberturas superiores e montagem final (images/build/). -->
 
 ## Vídeo e periféricos
 

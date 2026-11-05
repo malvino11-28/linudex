@@ -38,8 +38,6 @@ Version v0.4.0 integrates the device into a **Brothers Repair Nano mini enclosur
 
 The build uses an 8-in-1 USB-C hub, USB-C extension, 3.5 mm audio extension, HDMI cable, input peripherals and two 80 mm fans. A dedicated monitor has not yet been purchased; a monitor from the user's PC is being used temporarily.
 
-<!-- Future images: enclosure overview, internal layout and rear panel (../images/build/). -->
-
 ## Connectivity and USB-C hub
 
 The hub connects the Galaxy S10+ to peripherals and the external display. According to its manual, its interfaces include:
@@ -58,7 +56,7 @@ The hub ports were tested working simultaneously. The second USB-C port is **not
 
 The hub and its video path are functional in the current build.
 
-<!-- FUTURE IMAGE: hub connection photograph (images/build/). Mermaid diagram already included in architecture.md. -->
+![Usb-Hub](../images/build/usb-hub.png)
 
 ## Smartphone positioning and USB-C extension
 
@@ -68,7 +66,7 @@ A **USB-C male-to-female extension cable** allowed the phone to be mounted in th
 
 The adjustment addresses this particular enclosure geometry and is not a general requirement for Linudex. Details of the mechanical constraint will be recorded in the v0.4.0 [Troubleshooting](troubleshooting/README.md).
 
-<!-- Future images: before/after positioning and USB-C extension routing. -->
+![Phone positioning comparison](../images/build/s10-position.png)
 
 ## Rear 3.5 mm audio jack
 
@@ -78,7 +76,8 @@ The initial electrical-tape mounting did not prevent the jack from being pushed 
 
 The jack now stays in place during insertion, while remaining removable with some force. The extension is **optional**: Linudex does not depend on it to operate.
 
-<!-- Future images: materials, washer assembly, internal mounting and finished jack. -->
+![Jack fastener mounting hardware](../images/build/jack-fastener.png)
+![Fastener complete](../images/build/fastener.png)
 
 ## Electrical power
 
@@ -104,7 +103,7 @@ The power strip/filter accessory is optional external power distribution equipme
 
 See [Architecture](architecture.md) for the connection diagrams. Never energize both power interfaces on the same fan at the same time.
 
-<!-- FUTURE IMAGE: compatible small fan connector, DC5521 adapter and final routing (images/build/). -->
+![Adapters](../images/build/fan-adapters.png)
 
 ## Active cooling
 
@@ -113,8 +112,6 @@ The build uses **two 80 mm fans**, installed at the bottom of the enclosure. A p
 Both fans ran throughout a 20-minute functional test. In reported thermal tests lasting 20 minutes per configuration, YouTube 1080p playback resulted in **35.2 °C with fans on** versus **40.2 °C with fans off** (5.0 °C observed difference). Starting conditions differed and SoC temperature was not measured, so this gap cannot all be attributed to the fans without better-controlled testing.
 
 See [Benchmarks](benchmarks.md) for the full table. The present dual-exhaust arrangement was retained following these tests.
-
-<!-- FUTURE IMAGES: fan locations, side grille, upper vents and final assembly (images/build/). -->
 
 ## Video and peripherals
 

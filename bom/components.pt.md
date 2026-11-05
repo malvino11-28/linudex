@@ -57,5 +57,3 @@ Para comparar montagens, a documentação distingue:
 2. **Valor total de reposição** — eventual estimativa futura incluindo smartphone e demais itens já possuídos.
 
 O gabinete, a extensão elétrica e os dois extensores de conexão/áudio fazem parte desta montagem, mas podem ser omitidos ou substituídos em outras implementações. Da mesma forma, qualquer monitor ou TV compatível com HDMI e periféricos de entrada equivalentes podem ser utilizados.
-
-<!-- IMAGENS FUTURAS: componentes reunidos, adaptador DC5521/conector pequeno e montagem concluída (images/build/). Não adicionar links antes dos arquivos. -->
