@@ -1,0 +1,10 @@
+[user]
+pinned=xfce4-terminal;thunar;chromium;chrome-eppojlglocelodeimnohnlnionkobfln-Default;chrome-agimnkijcaahngcdmfeangaknmldooml-Default;
+forceIconSize=true
+indicatorColorFromTheme=true
+iconSize=40
+noWindowsListIfSingle=false
+onlyDisplayVisible=false
+onlyDisplayScreen=false
+showPreviews=false
+showWindowCount=false

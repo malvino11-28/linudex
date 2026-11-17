@@ -9,7 +9,7 @@
 "opacityEKBar"="100"
 "screenIdleTimeout"="20 minutes"
 "pauseKeyInterceptingWithEsc"="false"
-"preferScancodes"="false"
+"preferScancodes"="true"
 "showIMEWhileExternalConnected"="true"
 "displayResolutionExact"="1920x1080"
 "touchMode"="Trackpad"

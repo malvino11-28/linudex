@@ -1,0 +1,6 @@
+Command=/home/linudex/.local/bin/linudex-status battery
+UseLabel=0
+Text=(genmon)
+UpdatePeriod=15000
+Font=Sans 8
+

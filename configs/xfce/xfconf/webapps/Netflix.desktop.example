@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Terminal=false
+Type=Application
+Name=Netflix
+# Example only: ChromeOS User-Agent was required in the reported Netflix playback tests.
+Exec=/usr/local/bin/chromium-gpu --user-data-dir=/home/linudex/.config/chromium-netflix --app=https://netflix.com/ --class=NetflixApp --user-agent="Mozilla/5.0 (X11; CrOS aarch64 15329.44.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+Icon=/home/linudex/.local/share/icons/hicolor/256x256/apps/chrome-eppojlglocelodeimnohnlnionkobfln-Default.png
+StartupWMClass=NetflixApp

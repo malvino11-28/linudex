@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Pesquisar
+Comment=Pesquisar aplicativos no Linudex
+Exec=xfce4-appfinder --collapsed
+Icon=system-search
+Terminal=false
+Categories=Utility;
+X-XFCE-Source=file:///home/linudex/.local/share/applications/linudex-search.desktop
+Path=
+StartupNotify=false
