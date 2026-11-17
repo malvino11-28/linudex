@@ -28,6 +28,10 @@ Os dois fans funcionam como **exaustores** e foram testados em conjunto. Durante
 
 ![Linudex montado](/images/build/mounted-linudex.png)
 
+## v0.5.0 — Interface inspirada no Windows 10
+
+A v0.5.0 moderniza a experiência do XFCE no Galaxy S10+, com tema e ícones Windows 10, logo LX no Whisker Menu, Docklike, pesquisa por Application Finder, indicadores de bateria/Wi-Fi do Android via Termux:API e botão Mostrar Área de Trabalho. O teclado ABNT2, os atalhos principais e a inicialização/persistência foram validados. A versão também documenta o Chromium ARM64 e WebApps Netflix/YouTube como recursos experimentais; a reprodução de um filme completo na Netflix foi observada no dispositivo testado.
+
 ### Concluído
 
 - Armazenamento compartilhado do Android integrado ao Debian.
