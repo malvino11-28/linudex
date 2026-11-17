@@ -239,14 +239,14 @@ O desktop da v0.2.1 continua sendo a base estável. A versão v0.3.0 adiciona co
 
 ### Software testado
 
-| Componente | Versão testada | Observações |
-| --- | --- | --- |
-| Box64, base Wine | 0.3.4 (`/usr/bin/box64`) | Configuração funcional para programas Windows |
-| Box64, aplicativos Linux | 0.4.5 compilado manualmente | Wrapper local `~/run-x86_64.sh` |
-| Wine | 9.18-staging | Prefixo selecionado `.xow64_test` |
-| WineD3D | 9.2 | Compatibilidade Direct3D |
-| VirGL / ANGLE | Perfis OpenGL e Direct3D | Ponte gráfica para Vulkan do Android |
-| DepotDownloader | 3.4.0 Linux ARM64 | Download de depots sem SteamWebHelper |
+| Componente               | Versão testada              | Observações                                   |
+| ------------------------ | --------------------------- | --------------------------------------------- |
+| Box64, base Wine         | 0.3.4 (`/usr/bin/box64`)    | Configuração funcional para programas Windows |
+| Box64, aplicativos Linux | 0.4.5 compilado manualmente | Wrapper local `~/run-x86_64.sh`               |
+| Wine                     | 9.18-staging                | Prefixo selecionado `.xow64_test`             |
+| WineD3D                  | 9.2                         | Compatibilidade Direct3D                      |
+| VirGL / ANGLE            | Perfis OpenGL e Direct3D    | Ponte gráfica para Vulkan do Android          |
+| DepotDownloader          | 3.4.0 Linux ARM64           | Download de depots sem SteamWebHelper         |
 
 Estas são versões utilizadas durante o desenvolvimento, não um procedimento automatizado de instalação a partir do zero. Nem todos os wrappers gráficos e de compatibilidade utilizados localmente estão publicados no repositório.
 
@@ -303,3 +303,50 @@ O DepotDownloader permite baixar arquivos de jogos da própria conta sem executa
 - Linux x86-64: Terraria iniciou o executável pelo Box64, mas solicitou inicialização pelo cliente Steam.
 
 As medições de desempenho e limitações de reprodução estão em [Benchmarks](benchmarks.pt.md), com detalhes dos erros em [Troubleshooting](troubleshooting/README.pt.md).
+
+## 14. Interface inspirada no Windows 10
+
+A v0.5.0 personaliza o XFCE do Debian 13 ARM64, preservando Termux:X11, PRoot-Distro e Samsung DeX como base. O resultado foi validado no Galaxy S10+ utilizado no desenvolvimento; os componentes visuais são opcionais e não alteram a base histórica da v0.2.x.
+
+### Interface e dependências
+
+- Tema GTK e ícones **Windows 10** de B00merang instalados no usuário (`~/.themes/Windows 10` e `~/.icons/Windows 10`).
+- Painel inferior do XFCE com 40 px de altura, 100% da largura, fundo escuro e borda configurada; painel superior com ocultação automática. O `xfwm4.xml` exportado indica `use_compositing=true` nesta configuração, diferentemente dos testes antigos.
+- **Whisker Menu** com imagem `~/share/icons/linudex/lx.png`, área de clique ajustada em `~/.config/gtk-3.0/gtk.css`; **Docklike** para aplicativos fixados e janelas abertas.
+- Launcher de pesquisa com `Exec=xfce4-appfinder --collapsed`, SVG em `~/.local/share/linudex/search.svg` e botão de 280 px. É um lançador clicável, não uma caixa de digitação direta.
+- Genmon de Wi-Fi e bateria do Android, plugin PulseAudio, systray e relógio digital com hora `%R` e data `%d/%m/%Y`.
+- Botão **Mostrar área de trabalho** implementado com Genmon, `xprop -root _NET_SHOWING_DESKTOP` e `wmctrl -k on|off`, substituindo o botão padrão.
+
+Os pacotes XFCE necessários incluem `xfce4-whiskermenu-plugin`, `xfce4-docklike-plugin`, `xfce4-genmon-plugin`, `xfce4-pulseaudio-plugin` e `xfce4-panel-profiles`; os comandos auxiliares incluem `wmctrl`, `x11-utils` (`xprop`) e Python 3. O uso de cada componente pressupõe que o Termux:X11 esteja iniciado no display `:1` e que a sessão XFCE tenha um barramento D-Bus de sessão.
+
+### Teclado brasileiro e atalhos
+
+Configuração XKB no XFCE: layout `br`, variante vazia (ABNT2 padrão). A sessão foi configurada para `LANG=pt_BR.UTF-8`. **Para que acentos sejam compostos corretamente com o teclado físico, é necessário ativar `Prefer scancodes when possible` nas preferências do aplicativo Android Termux:X11.** Esse ajuste não é aplicado automaticamente pela importação dos XML do XFCE.
+
+| Atalho    | Ação validada                                                                                              |
+| --------- | ---------------------------------------------------------------------------------------------------------- |
+| `Super`   | Whisker Menu                                                                                               |
+| `Super+E` | Thunar                                                                                                     |
+| `Super+R` | Application Finder recolhido                                                                               |
+| `Super+T` | XFCE Terminal                                                                                              |
+| `Super+D` | Mostrar área de trabalho (verificar a persistência no XML final; o backup enviado não contém a combinação) |
+| `Alt+Tab` | Alternar janelas                                                                                           |
+| `Alt+F4`  | Fechar janela                                                                                              |
+
+### Integração do estado Android
+
+O monitor Termux consulta `termux-battery-status` e `termux-wifi-connectioninfo` (pacote de comandos **Termux:API** e aplicativo Android correspondente). Os JSONs ficam em `$HOME/.linudex/status/` do Termux; o script `linudex-status` do Debian os lê pelo caminho compartilhado e produz texto/ícones do Genmon. O monitor consulta os dois serviços sequencialmente e espera 45 segundos ao fim do ciclo; os Genmon de bateria e Wi-Fi atualizam a cada 15 segundos. Dados com mais de 180 segundos ou inválidos são mostrados como indisponíveis. A inicialização e o encerramento do monitor devem ser integrados aos scripts Start/Stop e à limpeza da sessão. Consulte [Arquitetura](architecture.pt.md).
+
+### Chromium ARM64, Widevine e aplicações web
+
+No dispositivo foi testado o **Chromium 156.0.8078.79**, em Debian 13 ARM64. O wrapper local `/usr/local/bin/chromium-gpu` utiliza `GALLIUM_DRIVER=virpipe`, `--use-gl=egl`, `--ignore-gpu-blocklist` e, na configuração que iniciou, `--no-sandbox` e `--disable-gpu-sandbox`. É necessário propagar os argumentos com `"$@"` no comando `exec`. O Chromium atual **não iniciou com a sandbox habilitada** no PRoot testado; essa variante é **experimental e insegura para navegação geral**, não deve ser proposta como padrão seguro. Consulte [Troubleshooting](troubleshooting/troubleshooting-v0.5.0.pt.md).
+
+O User-Agent global que imitava ChromeOS impedia a conclusão de desafios Cloudflare nos sites testados; removê-lo do navegador geral corrigiu o problema. A Netflix dependeu de uma identificação ChromeOS separada e de Widevine. O DRM foi instalado usando o projeto externo [Asahi Linux Widevine Installer](https://github.com/AsahiLinux/widevine-installer), com ferramentas auxiliares como `squashfs-tools`.
+
+Para criar **Netflix** e **YouTube** como WebApps, no Chromium usar **⋮ → Cast, save and share → Install [site]**. Depois, localizar o `.desktop` gerado em `~/.local/share/applications/` e ajustar `Exec`, `--app=https://...`, `--class=NomeApp` e `StartupWMClass=NomeApp`; preservar `Icon=` gerado pelo navegador. Quando necessário, usar `--user-data-dir` próprio para isolar o perfil. No caso do YouTube, o método de fixação validado foi: **abrir o aplicativo, clicar com o botão direito no ícone da janela no Docklike e selecionar “Fixar no dock”**. Fixá-lo diretamente pelo Whisker não funcionou.
+
+A Netflix utiliza User-Agent próprio no lançador, de forma que o navegador geral mantenha o User-Agent padrão. Exemplo do sufixo para o script de inicialização do WebApp: `--user-agent="Mozilla/5.0 (X11; CrOS aarch64 15329.44.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" "$@"`. O `Exec` final do WebApp deve ser verificado na instalação antes de copiar para outro aparelho.
+
+### Recursos e instalação
+
+As configurações editáveis e recursos próprios do Linudex devem ser preservados em `configs/`. O wallpaper será disponibilizado separadamente em `images/`. Os ícones individuais de Netflix e YouTube são gerados pelo Chromium durante a instalação e não devem ser versionados como dependências fixas. Aplicar um CSS consolidado apenas depois de confirmar visualmente o resultado no dispositivo. Para instalação e recuperação das configurações, consulte [`configs/README.pt.md`](../configs/README.pt.md) e [`scripts/README.pt.md`](../scripts/README.pt.md).
