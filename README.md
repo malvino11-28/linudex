@@ -28,6 +28,10 @@ Both fans operate as **exhaust fans** and were tested together. During YouTube 1
 
 ![Mounted Linudex](/images/build/mounted-linudex.png)
 
+## v0.5.0 — Windows 10-inspired desktop experience
+
+v0.5.0 updates XFCE on the Galaxy S10+ with Windows 10-like GTK/icon themes, an LX-branded Whisker Menu, Docklike taskbar, Application Finder search launcher, Android Wi-Fi/battery indicators via Termux:API, and a custom Show Desktop button. Brazilian ABNT2 typing, core shortcuts, and startup/persistence were validated. The release also documents ARM64 Chromium and experimental Netflix/YouTube WebApps; one full Netflix movie was played on the tested device.
+
 ### Completed
 
 - Android shared storage integrated with Debian.

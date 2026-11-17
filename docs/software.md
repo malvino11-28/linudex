@@ -239,14 +239,14 @@ The v0.2.1 desktop remains the stable base. Version v0.3.0 adds optional compati
 
 ### Tested software
 
-| Component | Tested version | Notes |
-| --- | --- | --- |
-| Box64, Wine baseline | 0.3.4 (`/usr/bin/box64`) | Working baseline for Windows applications |
-| Box64, Linux programs | Manually compiled 0.4.5 | Local wrapper `~/run-x86_64.sh` |
-| Wine | 9.18-staging | Selected prefix `.xow64_test` |
-| WineD3D | 9.2 | Direct3D compatibility |
-| VirGL / ANGLE | OpenGL and Direct3D profiles | Android-facing Vulkan bridge |
-| DepotDownloader | 3.4.0 Linux ARM64 | Steam depot downloader, without SteamWebHelper |
+| Component             | Tested version               | Notes                                          |
+| --------------------- | ---------------------------- | ---------------------------------------------- |
+| Box64, Wine baseline  | 0.3.4 (`/usr/bin/box64`)     | Working baseline for Windows applications      |
+| Box64, Linux programs | Manually compiled 0.4.5      | Local wrapper `~/run-x86_64.sh`                |
+| Wine                  | 9.18-staging                 | Selected prefix `.xow64_test`                  |
+| WineD3D               | 9.2                          | Direct3D compatibility                         |
+| VirGL / ANGLE         | OpenGL and Direct3D profiles | Android-facing Vulkan bridge                   |
+| DepotDownloader       | 3.4.0 Linux ARM64            | Steam depot downloader, without SteamWebHelper |
 
 These are versions used during development, not an automated clean-install recipe. The locally tested GPU and compatibility wrappers are not yet all published in the repository.
 
@@ -303,3 +303,50 @@ DepotDownloader can download files for owned games without running the full Stea
 - Linux x86-64: Terraria started its binary through Box64 but requested launching through the Steam client.
 
 Measured performance and reproducibility limitations are documented in [Benchmarks](benchmarks.md), with diagnostic details in [Troubleshooting](troubleshooting/README.md).
+
+## 14. Windows 10-inspired desktop interface
+
+Linudex v0.5.0 customizes Debian 13 ARM64 XFCE without replacing the Termux:X11, PRoot-Distro, or Samsung DeX base. The result was validated on the development Galaxy S10+.
+
+### Desktop and dependencies
+
+- B00merang **Windows 10** GTK and icon themes installed per user in `~/.themes/Windows 10` and `~/.icons/Windows 10`.
+- Full-width dark bottom XFCE panel, configured height **40 px**, with border styling; upper panel automatically hidden. The exported current `xfwm4.xml` reports `use_compositing=true`, unlike earlier releases.
+- **Whisker Menu** uses `~/share/icons/linudex/lx.png` and a GTK CSS-sized clickable button. **Docklike** groups running windows and pinned applications.
+- **280 px** search launcher invoking `xfce4-appfinder --collapsed`; SVG at `~/.local/share/linudex/search.svg`. This is a clickable launcher, not an editable search field.
+- **Genmon** Wi-Fi and battery indicators, PulseAudio, system tray and digital clock (time `%R`, date `%d/%m/%Y`).
+- Custom Genmon **Show Desktop** button using `xprop -root _NET_SHOWING_DESKTOP` and `wmctrl -k on|off`, replacing the default XFCE panel widget.
+
+Required XFCE components include `xfce4-whiskermenu-plugin`, `xfce4-docklike-plugin`, `xfce4-genmon-plugin`, `xfce4-pulseaudio-plugin`, and `xfce4-panel-profiles`; utilities include `wmctrl`, `x11-utils` (for `xprop`), and Python 3. The desktop runs under Termux:X11 display `:1` with an XFCE D-Bus session.
+
+### Brazilian keyboard and shortcuts
+
+XFCE uses XKB layout `br` with **no variant**, corresponding to the regular ABNT2 keymap. The Debian graphical session sets `LANG=pt_BR.UTF-8`. Crucially, the Android **Termux:X11 app** must have **Prefer scancodes when possible** enabled for reliable dead-key composition; importing XFCE XML files does not set this Android preference.
+
+| Shortcut  | Validated action                                                                                      |
+| --------- | ----------------------------------------------------------------------------------------------------- |
+| `Super`   | Whisker Menu                                                                                          |
+| `Super+E` | Thunar                                                                                                |
+| `Super+R` | Collapsed Application Finder                                                                          |
+| `Super+T` | XFCE Terminal                                                                                         |
+| `Super+D` | Show Desktop (the final XML binding must still be checked; it was missing from the exported snapshot) |
+| `Alt+Tab` | Switch windows                                                                                        |
+| `Alt+F4`  | Close active window                                                                                   |
+
+### Android status integration
+
+A host Termux monitor runs `termux-battery-status` and `termux-wifi-connectioninfo` (the **Termux:API** command package and companion Android app). JSON data are written to the Termux `$HOME/.linudex/status/` directory, and Debian's `linudex-status` generates icons and labels for Genmon. The host monitor polls both commands sequentially and sleeps for 45 seconds per cycle; both panel Genmon instances refresh every 15 seconds. Data older than 180 seconds, or invalid data, are shown as unavailable. Start/Stop and session cleanup scripts should control the monitor. See [Architecture](architecture.md).
+
+### Chromium ARM64, Widevine and WebApps
+
+**Chromium 156.0.8078.79** was tested on Debian 13 ARM64. The local `/usr/local/bin/chromium-gpu` wrapper uses `GALLIUM_DRIVER=virpipe`, `--use-gl=egl`, `--ignore-gpu-blocklist`, and, in the only working configuration, `--no-sandbox` and `--disable-gpu-sandbox`. Its `exec` command must forward additional arguments with `"$@"`. **Chromium could not launch with its sandbox enabled** in the tested PRoot environment: this is an **experimental, insecure browser configuration**, not an appropriate default for unrestricted browsing. See [Troubleshooting](troubleshooting/troubleshooting-v0.5.0.md).
+
+A global ChromeOS User-Agent override interfered with Cloudflare challenges; restoring the regular User-Agent resolved those tested challenges. Netflix required a separate ChromeOS-like User-Agent and Widevine. DRM was installed through the external [Asahi Linux Widevine Installer](https://github.com/AsahiLinux/widevine-installer), with helper dependencies such as `squashfs-tools`.
+
+To install **Netflix** and **YouTube** WebApps, select **⋮ → Cast, save and share → Install [site]** in Chromium. Locate the generated `.desktop` under `~/.local/share/applications/`, then align its `Exec`, `--app=https://...`, `--class=AppClass` and `StartupWMClass=AppClass` values; retain Chromium's generated `Icon=`. A dedicated `--user-data-dir` can separate an app profile where appropriate. For YouTube, the successful Docklike pinning method was **open the WebApp, right-click its running-window icon, and choose Pin to Dock**; attempting to pin it via Whisker did not work.
+
+Netflix's User-Agent override is scoped to its own launcher, leaving the regular browser unmodified. The command suffix confirmed: `--user-agent="Mozilla/5.0 (X11; CrOS aarch64 15329.44.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" "$@"`. Verify the actual final `Exec` on-device before copying it elsewhere.
+
+### Assets and deployment
+
+Store reproducible configurations and original Linudex artwork under `configs/`. The wallpaper will be supplied later under `images/`; it was not present in the exported backup. Chromium generates Netflix and YouTube icons on installation; these are not repository-provided dependencies. Apply the consolidated GTK CSS only after a visual comparison on-device. See [`configs/README.md`](../configs/README.md) and [`scripts/README.md`](../scripts/README.md) for deployment guidance.

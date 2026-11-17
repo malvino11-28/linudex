@@ -139,3 +139,20 @@ A montagem v0.4.0 utiliza dois fans de 80 mm como **exaustores** na parte inferi
 Os resultados são **evidência preliminar de melhora térmica na montagem**, não uma certificação da eficiência da refrigeração. A confirmação elétrica dos 12 V do cabo trigger e de sua polaridade permanece pendente de instrumento de medição.
 
 ![Fans operando](../images/build/fans-working.png)
+
+## v0.5.0 — Validação prolongada de desktop e vídeo
+
+A validação da interface v0.5.0 foi conduzida no Galaxy S10+ com Debian 13 ARM64, XFCE/Termux:X11 e Chromium `156.0.8078.79`. A sessão observada durou aproximadamente **1 hora**, incluindo reprodução de um filme inteiro na Netflix com Widevine instalado e identificação ChromeOS restrita ao WebApp.
+
+| Medição / teste               | Resultado observado                                                         |
+| ----------------------------- | --------------------------------------------------------------------------- |
+| RAM disponível no dispositivo | 2,8–4,5 GB ao longo da observação                                           |
+| CPU: processo `proot`         | 7,3% em uma amostra de `ps`                                                 |
+| CPU: processo `main`          | 3,2% em uma amostra de `ps`                                                 |
+| CPU: processo `ps`            | 66,6% transitórios durante a própria coleta; não representam uso sustentado |
+| Outros processos na amostra   | 0,1% de CPU ou menos, conforme relato                                       |
+| Netflix (Chromium)            | Um filme completo reproduzido; sem travamento relatado                      |
+| Reprodução de vídeo           | Ocorreram recarregamentos breves do player; causa não diagnosticada         |
+| Inicialização / persistência  | Validadas após reinicialização do Linudex                                   |
+
+**Limites:** a faixa de RAM é **memória disponível**, não memória consumida pelo XFCE nem média de memória usada. Os percentuais de CPU são amostras instantâneas, não médias de uma hora, e `main` não foi identificado por caminho de executável. Não foram medidos FPS, temperatura do SoC, qualidade de Wi-Fi, frequência de CPU nem efeito isolado de aceleração gráfica.

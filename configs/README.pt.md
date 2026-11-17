@@ -81,6 +81,12 @@ Os arquivos dentro de `xfce/` armazenam as configurações utilizadas pelo ambie
 
 Eles incluem configurações do desktop, painel, atalhos de teclado, gerenciador de janelas, DPI e Whisker Menu.
 
+## Personalização do XFCE
+
+A v0.5.0 acrescenta a configuração opcional da interface inspirada no Windows 10: arquivos Xfconf (painéis, atalhos, teclado, janela e tema), ajustes GTK CSS, configurações locais de Docklike e Genmon, SVGs e logo LX. Os arquivos locais são instalados normalmente em `~/.config/xfce4/xfconf/xfce-perchannel-xml/`, `~/.config/xfce4/panel/`, `~/.config/gtk-3.0/`, `~/.local/share/linudex/`, `~/.local/share/applications/` e `~/share/icons/linudex/`. Referências absolutas a `/home/linudex` pressupõem esse nome de usuário; devem ser ajustadas se necessário.
+
+Antes de substituir qualquer arquivo, faça backup das configurações atuais e encerre o painel/ a sessão ao aplicar XMLs. Não copie arquivos de sessão, perfis de navegadores ou credenciais. O backup do desenvolvimento antecede ajustes finais do YouTube, Netflix e Chromium; compare o estado final do aparelho antes de publicar tais lançadores. A opção **Prefer scancodes when possible** pertence às preferências Android do Termux:X11 e deve ser ativada manualmente, além de configurar XKB como `br` (variante vazia). O CSS consolidado está sujeito à validação visual; wallpaper e ícones WebApps não fazem parte do backup exportado (os ícones são criados pelo Chromium).
+
 ## Importante
 
 Todas essas configurações são opcionais.

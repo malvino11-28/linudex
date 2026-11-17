@@ -253,3 +253,26 @@ flowchart TB
 ```
 
 Os dois fans expulsam ar para fora do gabinete, conforme teste com papel realizado pelos lados interno e externo. A presença de múltiplas grades torna plausível a entrada passiva de ar, mas o caminho exato não foi medido: o papel não apresentou deslocamento perceptível nessas grades. Ver [Hardware](hardware.pt.md) e [Benchmarks](benchmarks.pt.md) para detalhes dos testes.
+
+## Integração de interface e estado Android
+
+A personalização da v0.5.0 mantém as camadas Android → Termux → PRoot-Distro → Debian ARM64 → XFCE já descritas. A novidade é uma ponte **somente de leitura** de indicadores do Android para o painel XFCE. Não há comunicação direta do Genmon com as APIs do Android: o monitor executa no Termux e publica JSONs no diretório compartilhado.
+
+```mermaid
+flowchart TD
+    A["Android / Termux:API"] --> B["Monitor do Termux: battery e wifi"]
+    B --> C["$HOME/.linudex/status/*.json"]
+    C --> D["Debian PRoot: linudex-status"]
+    D --> E["XFCE Genmon: ícone e tooltip"]
+    F["Start/Stop Linudex"] -->|"start/stop"| B
+    G["Termux:X11 :1"] --> H["XFCE / Docklike / Whisker / Genmon"]
+    E --> H
+```
+
+- Host Termux: `android-monitor.sh` consulta os comandos `termux-battery-status` e `termux-wifi-connectioninfo`, com limite de 15 segundos por consulta, troca atômica do JSON temporário e espera de 45 segundos após cada ciclo; `android-monitor-control.sh` gerencia `start`, `stop`, `status` e arquivo PID.
+- Convidado Debian: `~/.local/bin/linudex-status` lê `/data/data/com.termux/files/home/.linudex/status/{battery,wifi}.json`, valida idade máxima de 180 segundos e imprime tags `<icon>`, `<txt>` e `<tool>` para o Genmon.
+- Os dois plugins Genmon atualizam a exibição a cada 15 segundos; os scripts do painel não consultam a API Android diretamente. Em caso de leitura ausente ou antiga, exibem indicador indisponível.
+- Um terceiro Genmon chama `linudex-desktop-button`, cuja ação `linudex-toggle-desktop` utiliza a propriedade X11 `_NET_SHOWING_DESKTOP` e `wmctrl`.
+- A sessão usa `DISPLAY=:1`, PulseAudio via `tcp:127.0.0.1` e D-Bus de sessão iniciado com `dbus-launch`. A preferência física de scancodes pertence ao aplicativo Android Termux:X11, fora dos XML do Debian.
+
+A correção do nome do monitor na rotina `cleanup()` do script de inicialização deve ser publicada e validada; o backup exportado ainda contém `adnroid-monitor-control.sh`. Os WebApps Chromium/Netflix/YouTube rodam no Debian e são identificados no Docklike pelas classes das janelas. Executar Chromium com `--no-sandbox` não cria isolamento de segurança no PRoot, mesmo quando aparece como uma janela independente no XFCE.
