@@ -25,16 +25,17 @@ pkg install -y \
 log 'Refreshing package indexes after enabling the X11 repository...'
 pkg update -y
 
-log 'Installing Termux:X11 and PulseAudio...'
+log 'Installing Termux:X11, PulseAudio and Termux:API CLI...'
 pkg install -y \
     termux-x11-nightly \
-    pulseaudio
+    pulseaudio \
+    termux-api
 
 printf '\n'
-
 log 'Termux host setup completed.'
 
 printf '%s\n' \
     'The Android Termux:X11 APK is a separate component and must be installed manually.' \
+    'The Android Termux:API APK is required for battery and Wi-Fi monitoring; grant the necessary permissions.' \
     'If Termux was installed from F-Droid, use the non-sharedUid Termux:X11 APK.' \
-    'Termux:Boot and Termux:Widget are optional Android plugins used by Linudex v0.2.0.'
+    'Termux:Boot and Termux:Widget are optional Android plugins used by Linudex.'
