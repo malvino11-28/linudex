@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Terminal=false
+Type=Application
+Name=YouTube
+# Example only: install the PWA with Chromium first; its icon is generated locally.
+Exec=/usr/local/bin/chromium-gpu --user-data-dir=/home/linudex/.config/chromium-youtube --app=https://www.youtube.com/ --class=YoutubeApp
+Icon=/home/linudex/.local/share/icons/hicolor/256x256/apps/chrome-agimnkijcaahngcdmfeangaknmldooml-Default.png
+StartupWMClass=YoutubeApp
