@@ -1,0 +1,6 @@
+Command=/home/linudex/.local/bin/linudex-desktop-button
+UseLabel=0
+Text=(genmon)
+UpdatePeriod=3600000
+Font=Sans 10
+

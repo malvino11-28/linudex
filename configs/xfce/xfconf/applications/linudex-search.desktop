@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Digite aqui para pesquisar
+Comment=Pesquisar aplicativos no Linudex
+Exec=xfce4-appfinder --collapsed
+Icon=system-search
+Terminal=false
+Categories=Utility;
