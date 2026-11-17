@@ -139,3 +139,20 @@ The v0.4.0 build uses two 80 mm fans as **exhaust fans** at the bottom of the en
 These results provide **preliminary evidence of a thermal benefit in the current enclosure**, not a certification of cooling efficiency. Instrumented measurement of the USB-C PD trigger's nominal 12 V output and polarity remains pending.
 
 ![Fans working](../images/build/fans-working.png)
+
+## v0.5.0 — Long-running desktop and video validation
+
+The v0.5.0 interface was exercised on the Galaxy S10+ running Debian 13 ARM64, XFCE/Termux:X11, and Chromium `156.0.8078.79`. The observed session lasted approximately **one hour** and included playing an entire Netflix movie with Widevine installed and a ChromeOS User-Agent confined to the WebApp.
+
+| Measurement / workload  | Observed result                                                   |
+| ----------------------- | ----------------------------------------------------------------- |
+| Device memory available | 2.8–4.5 GB across the observation                                 |
+| CPU: `proot` process    | 7.3% in one `ps` sample                                           |
+| CPU: `main` process     | 3.2% in one `ps` sample                                           |
+| CPU: `ps` process       | Transient 66.6% while measuring itself; not sustained utilization |
+| Other sampled processes | 0.1% CPU or less, as reported                                     |
+| Netflix (Chromium)      | One full movie played; no complete browser freeze reported        |
+| Video playback          | Occasional brief player reloads; cause undetermined               |
+| Startup / persistence   | Validated after restarting Linudex                                |
+
+**Limitations:** the memory range denotes **available memory**, not XFCE memory usage or average RAM consumption. CPU values were snapshots, not one-hour averages; the `main` process was not identified by executable path. FPS, SoC temperature, Wi-Fi quality, CPU frequency, and isolated GPU acceleration effects were not measured.
