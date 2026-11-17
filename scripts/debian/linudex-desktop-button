@@ -1,0 +1,4 @@
+#!/bin/sh
+
+printf '%s\n' \
+'<txt><span foreground="#888888" size="20000">│</span></txt><txtclick>/home/linudex/.local/bin/linudex-toggle-desktop</txtclick><tool>Mostrar área de trabalho</tool>'
