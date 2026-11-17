@@ -355,14 +355,14 @@ XFCE visual configurations and Termux:X11 specific preferences are kept separate
 
 The following helper scripts were used during development but are **not yet published** in this repository. They must be exported from the tested device, reviewed and committed before the instructions can be treated as a reproducible installation procedure.
 
-| Script | Run from | Purpose | Status |
-| --- | --- | --- | --- |
-| `start-linux-gpu.sh` | Termux | Select the VirGL/ANGLE Linux OpenGL profile | Pending publication |
-| `start-wine-gpu.sh` | Termux | Select the VirGL/ANGLE Direct3D profile | Pending publication |
-| `run-x86_64.sh` | Debian | Launch Linux x86-64 programs using the manually built Box64 | Pending publication |
-| `stop-xow64-wine.sh` | Debian | Stop Wine processes for the active prefix without shutting down XFCE/X11 | Pending publication |
-| `depotdownloader.sh` | Debian | Start the native ARM64 DepotDownloader with the required .NET environment setting | Pending publication |
-| `xow64` | Debian | Launch Windows x86-64 programs in the configured Wine environment | Pending publication |
+| Script               | Run from | Purpose                                                                           | Status              |
+| -------------------- | -------- | --------------------------------------------------------------------------------- | ------------------- |
+| `start-linux-gpu.sh` | Termux   | Select the VirGL/ANGLE Linux OpenGL profile                                       | Pending publication |
+| `start-wine-gpu.sh`  | Termux   | Select the VirGL/ANGLE Direct3D profile                                           | Pending publication |
+| `run-x86_64.sh`      | Debian   | Launch Linux x86-64 programs using the manually built Box64                       | Pending publication |
+| `stop-xow64-wine.sh` | Debian   | Stop Wine processes for the active prefix without shutting down XFCE/X11          | Pending publication |
+| `depotdownloader.sh` | Debian   | Start the native ARM64 DepotDownloader with the required .NET environment setting | Pending publication |
+| `xow64`              | Debian   | Launch Windows x86-64 programs in the configured Wine environment                 | Pending publication |
 
 These names refer to files in the local home directories and do not imply that they exist under `scripts/` in this repository. Once a script has been published, update its status and add its repository location. Do not link to nonexistent files.
 
@@ -371,3 +371,20 @@ The working Wine baseline uses Box64 0.3.4, Wine 9.18-staging and WineD3D 9.2. E
 **Safety:** the experimental `~/xow64 q` shutdown command can terminate unrelated desktop processes and should not be documented as a safe stop procedure. Use the prefix-scoped `~/stop-xow64-wine.sh` only after its tested implementation has been reviewed and published.
 
 See [Software Setup](../docs/software.md) and [Architecture](../docs/architecture.md) for more details.
+
+## Desktop integration and Android monitor — v0.5.0
+
+v0.5.0 adds two **Termux host** scripts (`android-monitor.sh`, `android-monitor-control.sh`) and three **Debian guest** helpers (`linudex-status`, `linudex-desktop-button`, `linudex-toggle-desktop`). Termux reads status through `Termux:API` and writes JSON under `$HOME/.linudex/status`, while Debian reads those files to populate Genmon. See [Architecture](../docs/architecture.md) and [Software Setup](../docs/software.md).
+
+| Environment                   | Component                    | Function                                    |
+| ----------------------------- | ---------------------------- | ------------------------------------------- |
+| Termux: `$HOME/.linudex/bin/` | `android-monitor.sh`         | Periodically fetches battery and Wi-Fi JSON |
+| Termux: `$HOME/.linudex/bin/` | `android-monitor-control.sh` | Starts/stops monitor and manages PID/status |
+| Debian: `~/.local/bin/`       | `linudex-status`             | Converts JSON into Genmon markup            |
+| Debian: `~/.local/bin/`       | `linudex-desktop-button`     | Declares the panel button's click action    |
+| Debian: `~/.local/bin/`       | `linudex-toggle-desktop`     | Toggles X11 desktop visibility via `wmctrl` |
+| Debian: `/usr/local/bin/`     | `chromium-gpu`               | Experimental Chromium launcher wrapper      |
+
+The local Start/Stop scripts already controlled the monitor during testing. The Debian desktop session uses `LANG=pt_BR.UTF-8`; the host requires both the `termux-api` package and the Android Termux:API app. The monitor and PulseAudio are separate components: Start/Stop controls the monitor; PulseAudio remains a loopback TCP bridge.
+
+**Security:** do not present Chromium's `--no-sandbox` wrapper as a secure general browsing option. XFCE configurations are managed under [`configs/`](../configs/README.md), not here.
