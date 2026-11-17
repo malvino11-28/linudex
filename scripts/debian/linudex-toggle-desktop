@@ -1,0 +1,8 @@
+#!/bin/sh
+
+STATE=$(xprop -root _NET_SHOWING_DESKTOP 2>/dev/null)
+
+case "$STATE" in
+    *"= 1"*) exec wmctrl -k off ;;
+    *)       exec wmctrl -k on ;;
+esac

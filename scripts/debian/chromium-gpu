@@ -1,0 +1,5 @@
+#!/bin/bash
+# Linudex v0.5.0 — Chromium (experimental): --no-sandbox disables browser process isolation.
+# Use only with the security implications understood; do not treat this as a secure browsing profile.
+export GALLIUM_DRIVER=virpipe
+exec /usr/bin/chromium --no-sandbox --test-type --use-gl=egl --ignore-gpu-blocklist --disable-gpu-sandbox "$@"
