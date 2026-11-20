@@ -54,4 +54,4 @@ The original baseline recorded **477 installed Android packages**. The final pos
 
 ## Related runtime tuning
 
-Settings such as unrestricted battery use for Termux, RAM Plus and the Android phantom-process workaround are runtime/host configuration rather than debloat actions. They are documented in [Software](software.md) and [Troubleshooting](troubleshooting.md).
+Settings such as unrestricted battery use for Termux, RAM Plus and the Android phantom-process workaround are runtime/host configuration rather than debloat actions. They are documented in [Software](software.md) and [Troubleshooting](troubleshooting/README.md).

@@ -4,6 +4,8 @@
 
 Este diretório contém scripts auxiliares usados para reproduzir e operar a pilha de software do Linudex.
 
+A partir da v0.2.0, os scripts cobrem não apenas a instalação inicial do Debian, mas também o ambiente desktop, áudio, aplicativos essenciais, inicialização automática pelo Android e atalhos manuais de controle.
+
 Os scripts são separados de acordo com o ambiente em que devem ser executados. **Não execute todos os scripts a partir do mesmo shell.**
 
 ## Estrutura
@@ -12,29 +14,39 @@ Os scripts são separados de acordo com o ambiente em que devem ser executados. 
 scripts/
 ├── README.md
 ├── README.pt.md
+├── android/
+│   └── android12-phantom-process.ps1
 ├── termux/
 │   ├── setup-termux.sh
 │   ├── install-debian.sh
 │   ├── start-linudex.sh
-│   └── stop-linudex.sh
-├── debian/
-│   ├── setup-debian.sh
-│   └── install-desktop.sh
-└── host/
-    └── android12-phantom-process.ps1
+│   ├── stop-linudex.sh
+│   ├── boot/
+│   │   └── 20-start-linudex
+│   └── widget/
+│       ├── Start-Linudex
+│       └── Stop-Linudex
+└── debian/
+    ├── setup-debian.sh
+    ├── install-desktop.sh
+    └── install-apps.sh
 ```
 
 ## Mapa de execução
 
-| Script                               | Executar em                | Finalidade                                                                             |
-| ------------------------------------ | -------------------------- | -------------------------------------------------------------------------------------- |
-| `termux/setup-termux.sh`             | Termux                     | Instala os pacotes do Termux necessários para o Linudex.                               |
-| `termux/install-debian.sh`           | Termux                     | Instala Debian 13 através do PRoot-Distro usando o nome local `linudex`.               |
-| `debian/setup-debian.sh`             | Debian como root           | Instala ferramentas básicas, cria o usuário `linudex` e configura o `sudo`.            |
-| `debian/install-desktop.sh`          | Debian                     | Instala XFCE, suporte D-Bus X11 e Firefox ESR.                                         |
-| `termux/start-linudex.sh`            | Termux                     | Inicia Termux:X11, entra no Debian e abre o XFCE.                                      |
-| `termux/stop-linudex.sh`             | Termux                     | Encerra a sessão XFCE e o servidor Termux:X11.                                         |
-| `host/android12-phantom-process.ps1` | Windows PowerShell com ADB | Aplica o workaround do Android 12 para processos phantom utilizado nos testes da v0.1. |
+| Script                                  | Executar em                | Finalidade                                                                                   | Status     |
+| --------------------------------------- | -------------------------- | -------------------------------------------------------------------------------------------- | ---------- |
+| `termux/setup-termux.sh`                | Termux                     | Instala os pacotes necessários no Termux, incluindo PRoot-Distro, PulseAudio e Termux:X11.   | Pendente   |
+| `termux/install-debian.sh`              | Termux                     | Instala Debian 13 ARM64 através do PRoot-Distro usando o nome local.                         | Pendente   |
+| `debian/setup-debian.sh`                | Debian como root           | Atualiza o Debian, instala ferramentas básicas, cria o usuário `linudex` e configura `sudo`. | Pendente   |
+| `debian/install-desktop.sh`             | Debian                     | Instala XFCE, suporte D-Bus/X11 e componentes necessários à sessão gráfica e ao áudio.       | Pendente   |
+| `debian/install-apps.sh`                | Debian                     | Instala os aplicativos essenciais usados no ambiente Daily Driver da v0.2.0.                 | Pendente   |
+| `termux/start-linudex.sh`               | Termux                     | Inicia PulseAudio, Termux:X11, Debian e a sessão XFCE.                                       | Pendente   |
+| `termux/stop-linudex.sh`                | Termux                     | Encerra XFCE, Termux:X11 e PulseAudio.                                                       | Pendente   |
+| `termux/boot/20-start-linudex`          | Termux:Boot                | Aguarda a inicialização do Android e executa automaticamente o Linudex.                      | Disponível |
+| `termux/widget/Start-Linudex`           | Termux:Widget              | Permite iniciar o Linudex manualmente através de um atalho do Android/DeX.                   | Disponível |
+| `termux/widget/Stop-Linudex`            | Termux:Widget              | Permite encerrar o Linudex manualmente através de um atalho do Android/DeX.                  | Disponível |
+| `android/android12-phantom-process.ps1` | Windows PowerShell com ADB | Aplica o workaround para o Phantom Process Killer do Android 12.                             | Pendente   |
 
 ## Ordem recomendada de instalação
 
@@ -50,6 +62,8 @@ chmod +x scripts/termux/*.sh
 O APK Android do Termux:X11 é um componente separado e ainda precisa ser instalado manualmente.
 
 Se o Termux foi instalado pelo F-Droid, utilize a variante do APK Termux:X11 sem `sharedUid`.
+
+Termux, Termux:X11, Termux:Boot e Termux:Widget devem utilizar fontes de instalação compatíveis entre si.
 
 ### 2. Instalar o Debian
 
@@ -74,7 +88,15 @@ chmod +x /caminho/para/setup-debian.sh
 /caminho/para/setup-debian.sh
 ```
 
-O script cria o usuário `linudex` de forma interativa e pede que você defina sua senha.
+O script:
+
+- atualiza os pacotes do Debian;
+- instala ferramentas básicas;
+- cria o usuário `linudex`;
+- adiciona o usuário ao grupo `sudo`;
+- cria uma regra explícita em `/etc/sudoers.d/linudex`.
+
+A regra explícita de `sudo` é necessária porque sessões PRoot podem não carregar os grupos suplementares do usuário da mesma maneira que uma instalação Linux convencional.
 
 ### 4. Instalar o desktop
 
@@ -84,17 +106,57 @@ Dentro do Debian:
 /caminho/para/install-desktop.sh
 ```
 
-### 5. Aplicar o workaround do Android 12 quando necessário
+Este script instala a base gráfica utilizada pelo Linudex:
 
-No computador Windows com ADB configurado:
+```text
+XFCE
+D-Bus X11
+PulseAudio utilities
+PulseAudio Volume Control
+```
+
+### 5. Instalar os aplicativos essenciais
+
+Ainda dentro do Debian:
+
+```bash
+/caminho/para/install-apps.sh
+```
+
+A v0.2.0 utiliza um conjunto enxuto de aplicativos para uso cotidiano:
+
+```text
+Firefox ESR
+LibreOffice Writer
+LibreOffice Calc
+LibreOffice Impress
+Evince
+VLC
+Ristretto
+Mousepad
+Galculator
+Xarchiver
+```
+
+Também são instalados utilitários de compactação, integração com o Thunar, idioma pt-BR, correção ortográfica e fontes com maior compatibilidade com documentos do Microsoft Office.
+
+## Phantom Process Killer — Android 12
+
+O Linudex executa diversos processos filhos. O Android 12 pode encerrar essa árvore de processos através do Phantom Process Killer, causando:
+
+```text
+[Process completed (signal 9) - press Enter]
+```
+
+Com ADB configurado em um computador Windows:
 
 ```powershell
 .\android12-phantom-process.ps1
 ```
 
-Na v0.1 esse workaround é intencionalmente temporário e pode precisar ser reaplicado depois que o telefone for reiniciado.
+O script aumenta o limite de processos phantom utilizado durante os testes do Linudex.
 
-### 6. Iniciar o Linudex
+## Iniciar o Linudex manualmente
 
 No Termux:
 
@@ -102,19 +164,19 @@ No Termux:
 ./scripts/termux/start-linudex.sh
 ```
 
-O script inicia:
+O script:
 
-```text
-Termux:X11
-    ↓
-PRoot-Distro
-    ↓
-Debian
-    ↓
-XFCE
-```
+1. encerra instâncias antigas do PulseAudio;
+2. inicia a ponte de áudio;
+3. remove instâncias residuais do Termux:X11;
+4. inicia o servidor X11;
+5. abre a Activity Android do Termux:X11;
+6. entra no Debian como o usuário `linudex`;
+7. inicia a sessão XFCE.
 
-### 7. Encerrar o Linudex
+O script também executa uma rotina de limpeza quando a sessão termina.
+
+## Encerrar o Linudex
 
 Em uma sessão do Termux:
 
@@ -122,25 +184,182 @@ Em uma sessão do Termux:
 ./scripts/termux/stop-linudex.sh
 ```
 
-Isso também ajuda a limpar instâncias residuais do Termux:X11 que poderiam gerar o erro `Server already running`.
+O script encerra:
+
+```text
+XFCE
+Termux:X11
+PulseAudio
+```
+
+## Inicialização automática com Termux:Boot
+
+O arquivo:
+
+```text
+termux/boot/20-start-linudex
+```
+
+deve ser instalado em:
+
+```text
+~/.termux/boot/20-start-linudex
+```
+
+Exemplo:
+
+```bash
+mkdir -p ~/.termux/boot
+
+cp scripts/termux/boot/20-start-linudex \
+   ~/.termux/boot/20-start-linudex
+
+chmod +x ~/.termux/boot/20-start-linudex
+```
+
+O Termux:Boot deve ser aberto manualmente pelo menos uma vez após a instalação.
+
+Durante a inicialização, o script:
+
+```text
+Android boot
+    ↓
+período de estabilização
+    ↓
+start-linudex.sh
+```
+
+Um log do processo é armazenado em:
+
+```text
+~/linudex-boot.log
+```
+
+Para visualizar:
+
+```bash
+cat ~/linudex-boot.log
+```
+
+### Abertura automática do Termux:X11
+
+O `start-linudex.sh` utiliza o Activity Manager do Android para abrir automaticamente a interface do Termux:X11.
+
+Em alguns dispositivos pode ser necessário permitir ao Termux:
+
+```text
+Configurações
+→ Aplicativos
+→ Acesso especial
+→ Aparecer sobre outros apps
+→ Termux
+```
+
+Sem essa permissão, o Android pode bloquear a abertura da Activity do Termux:X11 quando o Linudex é iniciado em segundo plano pelo Termux:Boot.
+
+## Controle pelo Termux:Widget
+
+Os arquivos:
+
+```text
+termux/widget/Start-Linudex
+termux/widget/Stop-Linudex
+```
+
+devem ser copiados para:
+
+```text
+~/.shortcuts/
+```
+
+Exemplo:
+
+```bash
+mkdir -p ~/.shortcuts
+
+cp scripts/termux/widget/Start-Linudex ~/.shortcuts/
+cp scripts/termux/widget/Stop-Linudex ~/.shortcuts/
+
+chmod 700 ~/.shortcuts/Start-Linudex
+chmod 700 ~/.shortcuts/Stop-Linudex
+```
+
+Depois disso, o Termux:Widget pode ser adicionado ao Android ou Samsung DeX para permitir controle manual do ambiente sem digitar comandos.
 
 ## Variáveis de configuração
 
-Os scripts do Termux aceitam algumas variáveis de ambiente opcionais:
+Os scripts aceitam algumas variáveis de ambiente opcionais:
 
 ```bash
 LINUDEX_DISTRO_NAME=linudex
 LINUDEX_USER=linudex
 LINUDEX_DISPLAY=:1
 LINUDEX_DEBIAN_IMAGE=debian:13
+LINUDEX_PULSE_SERVER=tcp:127.0.0.1
 ```
 
-Os valores padrão reproduzem o ambiente da v0.1, portanto normalmente não é necessário defini-los manualmente.
+Os valores padrão reproduzem o ambiente oficial utilizado no desenvolvimento da v0.2.0.
 
 ## Segurança e escopo
 
 - Nenhuma senha é armazenada no repositório.
 - Os scripts não fazem root no Android.
-- O script do Phantom Process Killer utiliza o mesmo comportamento temporário `until_reboot` validado durante os testes da v0.1.
-- Os scripts de instalação incluem apenas o software pertencente ao marco v0.1; aplicativos planejados para versões futuras foram deixados de fora intencionalmente.
-- Revise os scripts antes de executá-los em outro aparelho ou versão do Android.
+- O Debian é executado através do PRoot-Distro.
+- O usuário `root` dentro do PRoot não possui privilégios root reais sobre o Android.
+- O servidor PulseAudio aceita conexões apenas pelo endereço local utilizado pelo Linudex.
+- O workaround do Phantom Process Killer modifica uma configuração do Android através de ADB.
+- Scripts destinados ao Android 12 não devem ser aplicados automaticamente em outras versões sem validação.
+- Revise os scripts antes de executá-los em outro aparelho ou ambiente.
+
+## Escopo da v0.2.0
+
+A v0.2.0 expande a automação de scripts da v0.1.0 com:
+
+- áudio através do PulseAudio;
+- ambiente Daily Driver;
+- aplicativos essenciais;
+- inicialização automática;
+- integração com Termux:Boot;
+- integração com Termux:Widget;
+- abertura automática do Termux:X11;
+- gerenciamento mais completo de processos durante start/stop.
+
+Configurações visuais do XFCE e preferências específicas do Termux:X11 são mantidas separadamente no diretório `configs/`.
+
+## Scripts experimentais de compatibilidade — v0.3.0
+
+Os scripts auxiliares abaixo foram utilizados durante o desenvolvimento, mas **ainda não foram publicados** neste repositório. Eles precisam ser exportados do aparelho de testes, revisados e versionados antes que as instruções possam ser consideradas um procedimento de instalação reproduzível.
+
+| Script               | Executar em | Finalidade                                                                 | Status                 |
+| -------------------- | ----------- | -------------------------------------------------------------------------- | ---------------------- |
+| `start-linux-gpu.sh` | Termux      | Selecionar o perfil Linux OpenGL do VirGL/ANGLE                            | Pendente de publicação |
+| `start-wine-gpu.sh`  | Termux      | Selecionar o perfil Direct3D do VirGL/ANGLE                                | Pendente de publicação |
+| `run-x86_64.sh`      | Debian      | Executar programas Linux x86-64 com o Box64 compilado manualmente          | Pendente de publicação |
+| `stop-xow64-wine.sh` | Debian      | Encerrar processos Wine do prefixo ativo sem desligar XFCE/X11             | Pendente de publicação |
+| `depotdownloader.sh` | Debian      | Iniciar o DepotDownloader ARM64 com a variável de ambiente .NET necessária | Pendente de publicação |
+| `xow64`              | Debian      | Executar programas Windows x86-64 no ambiente Wine configurado             | Pendente de publicação |
+
+Os nomes correspondem a arquivos locais dos diretórios pessoais e não significam que esses scripts já existam em `scripts/` no repositório. Quando um script for publicado, atualize seu status e inclua o caminho correspondente. Não adicione links para arquivos inexistentes.
+
+A configuração funcional do Wine usa Box64 0.3.4, Wine 9.18-staging e WineD3D 9.2. As builds experimentais do Box64 utilizadas na investigação de consumo da Steam não são necessárias para a configuração validada.
+
+**Segurança:** o comando experimental `~/xow64 q` pode encerrar processos não relacionados do desktop e não deve ser documentado como encerramento seguro. Utilize `~/stop-xow64-wine.sh` somente depois que sua implementação testada for revisada e publicada.
+
+Consulte [Configuração de software](../docs/software.pt.md) e [Arquitetura](../docs/architecture.pt.md) para detalhes.
+
+## Integração de interface e monitor — v0.5.0
+
+A v0.5.0 adiciona dois scripts do lado **Termux** (`android-monitor.sh` e `android-monitor-control.sh`) e três auxiliares do lado **Debian** (`linudex-status`, `linudex-desktop-button` e `linudex-toggle-desktop`). O monitor consulta `Termux:API` no Android e publica JSON em `$HOME/.linudex/status`; o Debian consulta esses arquivos e mostra dados via Genmon. Consulte [Arquitetura](../docs/architecture.pt.md) e [Software](../docs/software.pt.md).
+
+| Local                         | Componente                   | Função                                               |
+| ----------------------------- | ---------------------------- | ---------------------------------------------------- |
+| Termux: `$HOME/.linudex/bin/` | `android-monitor.sh`         | Consulta bateria e Wi-Fi e grava JSON periodicamente |
+| Termux: `$HOME/.linudex/bin/` | `android-monitor-control.sh` | Controla start/stop/status e PID do monitor          |
+| Debian: `~/.local/bin/`       | `linudex-status`             | Traduz JSONs para tags do Genmon                     |
+| Debian: `~/.local/bin/`       | `linudex-desktop-button`     | Define o botão de painel com ação de clique          |
+| Debian: `~/.local/bin/`       | `linudex-toggle-desktop`     | Alterna visibilidade do desktop com X11/`wmctrl`     |
+| Debian: `/usr/local/bin/`     | `chromium-gpu`               | Wrapper experimental de execução do Chromium         |
+
+Os scripts Start/Stop locais já controlavam o monitor nos testes. A sessão Debian deve receber `LANG=pt_BR.UTF-8`; o Termux deve ter `termux-api` e o aplicativo Android Termux:API. O monitor e o serviço PulseAudio são recursos distintos: o primeiro é controlado pelos scripts Start/Stop, e o segundo continua sendo uma ponte TCP em loopback.
+
+**Segurança:** não publicar o wrapper Chromium como opção de navegação segura; `--no-sandbox` remove o isolamento de processos do navegador. A geração e aplicação de arquivos de configuração do XFCE pertencem ao diretório [`configs/`](../configs/README.pt.md), não a este README.

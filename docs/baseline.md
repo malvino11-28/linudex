@@ -77,4 +77,4 @@ The reported temperature is the battery sensor value, not the Exynos SoC tempera
 - Internet initially appeared unavailable even though Wi-Fi was connected; the cause was incorrect system date/time and was resolved by enabling automatic date and time.
 - Heating behavior required further validation before the desktop workload was tested.
 
-See [Troubleshooting](troubleshooting.md) and [Benchmarks](benchmarks.md) for the findings obtained after this baseline.
+See [Troubleshooting](troubleshooting/README.md) and [Benchmarks](benchmarks.md) for the findings obtained after this baseline.

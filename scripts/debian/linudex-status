@@ -1,0 +1,120 @@
+#!/usr/bin/env python3
+
+import json
+import sys
+import time
+from pathlib import Path
+from xml.sax.saxutils import escape
+
+BASE = Path("/data/data/com.termux/files/home/.linudex/status")
+MAX_AGE = 180
+
+def read_status(name):
+    path = BASE / f"{name}.json"
+    try:
+        if time.time() - path.stat().st_mtime > MAX_AGE:
+            return None
+        data = json.loads(path.read_text(encoding="utf-8"))
+        return data if isinstance(data, dict) else None
+    except (OSError, ValueError):
+        return None
+
+def render(icon, text="", tooltip=""):
+    print(
+        f"<icon>{escape(icon)}</icon>"
+        f"<txt>{escape(text)}</txt>"
+        f"<tool>{escape(tooltip)}</tool>"
+    )
+
+def battery():
+    data = read_status("battery")
+    if not data:
+        render("battery-caution-symbolic", "--%",
+               "Bateria: dados indisponíveis ou desatualizados")
+        return
+
+    value = data.get("percentage")
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        render("battery-caution-symbolic", "--%", "Bateria: leitura inválida")
+        return
+
+    if not 0 <= value <= 100:
+        render("battery-caution-symbolic", "--%", "Bateria: leitura inválida")
+        return
+
+    pct = round(value)
+    state = str(data.get("status", "UNKNOWN")).upper()
+
+    level = (pct // 10) * 10
+
+    if pct == 100 and state == "FULL":
+        icon = "battery-level-100-charged-symbolic"
+    elif state == "CHARGING" and pct < 100:
+        icon = f"battery-level-{level}-charging-symbolic"
+    else:
+        icon = f"battery-level-{level}-symbolic"
+
+    labels = {
+        "CHARGING": "Carregando",
+        "DISCHARGING": "Descarregando",
+        "FULL": "Carga completa",
+        "NOT_CHARGING": "Não está carregando",
+    }
+
+    status = labels.get(state, "Estado desconhecido")
+    render(icon, f"{pct}%", f"Bateria: {pct}%\n{status}")
+
+def wifi():
+    data = read_status("wifi")
+    if not data:
+        render("network-wireless-offline-symbolic",
+               tooltip="Wi-Fi: dados indisponíveis ou desatualizados")
+        return
+
+    state = str(data.get("supplicant_state", "")).upper()
+
+    if state != "COMPLETED":
+        render("network-wireless-offline-symbolic",
+               tooltip="Wi-Fi: sem conexão confirmada")
+        return
+
+    try:
+        rssi = int(data.get("rssi"))
+    except (ValueError, TypeError):
+        rssi = None
+
+    if rssi is None or not -110 < rssi < 0:
+        icon = "network-wireless-connected-symbolic"
+    elif rssi >= -55:
+        icon = "network-wireless-signal-excellent-symbolic"
+    elif rssi >= -65:
+        icon = "network-wireless-signal-good-symbolic"
+    elif rssi >= -75:
+        icon = "network-wireless-signal-ok-symbolic"
+    elif rssi >= -85:
+        icon = "network-wireless-signal-weak-symbolic"
+    else:
+        icon = "network-wireless-signal-none-symbolic"
+
+    ssid = str(data.get("ssid") or "Rede não identificada")
+    if ssid.lower() in ("<unknown ssid>", "unknown ssid"):
+        ssid = "Rede não identificada"
+
+    tooltip = f"Wi-Fi: {ssid}"
+    if rssi is not None and -110 < rssi < 0:
+        tooltip += f"\nSinal: {rssi} dBm"
+
+    speed = data.get("link_speed_mbps")
+    if isinstance(speed, (int, float)) and speed > 0:
+        tooltip += f"\nEnlace: {speed} Mb/s"
+
+    render(icon, tooltip=tooltip)
+
+if len(sys.argv) != 2 or sys.argv[1] not in ("wifi", "battery"):
+    print("Uso: linudex-status wifi|battery", file=sys.stderr)
+    sys.exit(2)
+
+if sys.argv[1] == "wifi":
+    wifi()
+else:
+    battery()
