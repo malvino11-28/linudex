@@ -15,6 +15,7 @@ This directory collects version-specific troubleshooting records for Linudex. Ea
 | v0.4.0 — Physical hardware integration         | [Troubleshooting v0.4.0](troubleshooting-v0.4.0.md) | Side buttons, USB-C port functions, rear audio jack, fan connectors and power-supply noise                                |
 | v0.5.0 — Windows 10-inspired desktop           | [Troubleshooting v0.5.0](troubleshooting-v0.5.0.md) | ABNT2, physical keyboard, ARM64 browsers, Chromium sandbox, Cloudflare, Netflix, YouTube and Android monitor              |
 | v0.5.1 — Desktop usability refinements         | [Troubleshooting v0.5.1](troubleshooting-v0.5.1.md) | AndroidStorage, search compilation and focus, GTK results, TermuxAm, QuickMenu, and Wi-Fi icon                            |
+| v0.5.2 — Secure Browsing & Android Integration | [Troubleshooting v0.5.2](troubleshooting-v0.5.2.md) | Linux browser sandbox, Bubblewrap, LibreWolf, Samsung Internet/DeX focus and F11, legacy search CSS                       |
 
 ## Related documentation
 
