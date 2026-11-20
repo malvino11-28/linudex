@@ -1,0 +1,9 @@
+[Xfce Panel]
+Type=X-XFCE-PanelPlugin
+Name=LinuDex Search
+Comment=Search installed applications with names and icons
+Icon=system-search
+X-XFCE-Module=linudexsearch
+X-XFCE-Internal=false
+X-XFCE-Unique=true
+X-XFCE-API=2.0

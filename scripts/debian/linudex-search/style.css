@@ -1,0 +1,59 @@
+/* LinuDex Search v0.5.1 — only affects the new search plugin.
+ * Reconstructed from v0.5.0 #launcher-arrow rules in the original v0.5.0 launcher rules.
+ * No changes to ~/.config/gtk-3.0/gtk.css are necessary. */
+
+#linudex-search {
+    background-image: none;
+    background-color: #343434;
+    color: #f1f1f1;
+    caret-color: #f1f1f1;
+    border: 1px solid #585858;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0 8px 0 36px;
+    font-size: 15px;
+}
+
+#linudex-search:focus {
+    background-color: #343434;
+    border-color: #0078d7;
+    box-shadow: none;
+}
+
+#linudex-search:hover {
+    background-color: #414141;
+    border-color: #777777;
+}
+
+#linudex-search-popup {
+    background-color: #252525;
+    background-image: none;
+    color: #f1f1f1;
+    border: 1px solid #585858;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+#linudex-search-popup .linudex-search-result {
+    background-color: #252525;
+    background-image: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    color: #f1f1f1;
+    padding: 0;
+}
+
+#linudex-search-popup .linudex-search-result:hover,
+#linudex-search-popup .linudex-search-result.linudex-result-selected {
+    background-color: #3b4855;
+    color: #ffffff;
+}
+
+/* The placeholder is a true GTK label, not the theme-muted GtkEntry hint. */
+#linudex-search-placeholder {
+    color: #f1f1f1;
+    font-size: 15px;
+    font-weight: normal;
+    opacity: 1;
+}
