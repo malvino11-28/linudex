@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Genmon XML output for the utilities chevron button.
+set -euo pipefail
+ICON="$HOME/.local/share/linudex/chevron-up.svg"
+MENU="$HOME/.local/bin/linudex-quickmenu"
+printf '<img>%s</img><click>%s</click><tool>Linudex utilities</tool>\n' "$ICON" "$MENU"

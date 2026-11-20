@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Add a click action to Wi-Fi status without changing linudex-status.
+set -euo pipefail
+STATUS="$HOME/.local/bin/linudex-status"
+ANDROID="$HOME/.local/bin/linudex-android-settings"
+
+if [ ! -x "$STATUS" ]; then
+    printf '[Linudex] linudex-status not found: %s\n' "$STATUS" >&2
+    exit 1
+fi
+
+# Keep the original Wi-Fi icon, tooltip, and connection state.
+output="$("$STATUS" wifi)"
+printf '%s<iconclick>%s wifi</iconclick>\n' "$output" "$ANDROID"

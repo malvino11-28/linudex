@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Linudex v0.5.1: open Android settings through TermuxAm.
+set -euo pipefail
+
+AM='/data/data/com.termux/files/usr/bin/am'
+case "${1:-}" in
+    wifi) ACTION='android.settings.WIFI_SETTINGS' ;;
+    bluetooth) ACTION='android.settings.BLUETOOTH_SETTINGS' ;;
+    *) printf 'Usage: %s wifi|bluetooth\n' "$0" >&2; exit 2 ;;
+esac
+
+if [ ! -x "$AM" ]; then
+    printf '[Linudex] TermuxAm not found or not executable: %s\n' "$AM" >&2
+    exit 1
+fi
+
+exec "$AM" start --user 0 -a "$ACTION"

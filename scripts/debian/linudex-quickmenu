@@ -1,0 +1,112 @@
+#!/usr/bin/env python3
+"""Linudex v0.5.1: on-demand menu with three desktop shortcuts.
+
+Run inside the Debian/Termux:X11 desktop session.
+No daemon remains running after the menu closes.
+"""
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+try:
+    import gi
+    gi.require_version("Gtk", "3.0")
+    gi.require_version("Gdk", "3.0")
+    from gi.repository import Gtk, Gdk, GLib
+except (ImportError, ValueError) as exc:
+    print(f"[Linudex] GTK 3 / python3-gi unavailable: {exc}", file=sys.stderr)
+    sys.exit(1)
+
+
+def apply_menu_theme():
+    """Load GTK CSS into this helper process only (not the XFCE panel)."""
+    path = Path.home() / ".config/linudex-quickmenu/style.css"
+    if not path.is_file():
+        return
+    try:
+        provider = Gtk.CssProvider()
+        provider.load_from_path(str(path))
+        screen = Gdk.Screen.get_default()
+        if screen is not None:
+            Gtk.StyleContext.add_provider_for_screen(
+                screen, provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+            )
+    except (GLib.Error, OSError) as exc:
+        print(f"[Linudex] Failed to load menu CSS: {exc}", file=sys.stderr)
+
+
+ANDROID_SETTINGS = str(Path.home() / ".local/bin/linudex-android-settings")
+ITEMS = (
+    ("Bluetooth", "bluetooth-symbolic", [ANDROID_SETTINGS, "bluetooth"]),
+    ("Photo Gallery", "image-x-generic", ["gthumb"]),
+    ("Settings", "preferences-system", ["xfce4-settings-manager"]),
+)
+
+
+def launch(command):
+    # All commands are fixed local executables; no untrusted input is passed to a shell.
+    try:
+        subprocess.Popen(command, stdin=subprocess.DEVNULL,
+                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                         start_new_session=True)
+    except OSError as exc:
+        print(f"[Linudex] Failed to launch {command[0]}: {exc}", file=sys.stderr)
+    Gtk.main_quit()
+
+
+def build_menu():
+    menu = Gtk.Menu()
+    menu.set_name("linudex-quickmenu")
+    for label, icon_name, command in ITEMS:
+        item = Gtk.MenuItem()
+        row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
+        row.set_border_width(7)
+        icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.MENU)
+        icon.set_pixel_size(20)
+        caption = Gtk.Label(label=label)
+        caption.set_xalign(0)
+        row.pack_start(icon, False, False, 0)
+        row.pack_start(caption, True, True, 0)
+        item.add(row)
+        item.connect("activate", lambda _item, cmd=command: launch(cmd))
+        if not (Path(command[0]).is_file() if command[0].startswith("/") else shutil.which(command[0])):
+            item.set_sensitive(False)
+            item.set_tooltip_text("Command unavailable")
+        menu.append(item)
+    menu.connect("deactivate", lambda *_: Gtk.main_quit())
+    menu.show_all()
+    return menu
+
+
+def popup_above_pointer(menu):
+    # Anchor the menu near the pointer and open it upward.
+    # Termux:X11 provides global coordinates through X11.
+    display = Gdk.Display.get_default()
+    if display is None:
+        raise RuntimeError("No graphical display detected")
+    device = display.get_default_seat().get_pointer()
+    screen, x, y = device.get_position()
+    root = screen.get_root_window()
+    rect = Gdk.Rectangle()
+    rect.x = int(x)
+    rect.y = int(y)
+    rect.width = 1
+    rect.height = 1
+    try:
+        menu.popup_at_rect(root, rect, Gdk.Gravity.NORTH_WEST,
+                           Gdk.Gravity.SOUTH_WEST, None)
+    except (TypeError, AttributeError):
+        # Fallback for GTK 3 builds exposing only popup_at_pointer.
+        menu.popup_at_pointer(None)
+
+
+def main():
+    apply_menu_theme()
+    menu = build_menu()
+    popup_above_pointer(menu)
+    Gtk.main()
+
+
+if __name__ == "__main__":
+    main()
