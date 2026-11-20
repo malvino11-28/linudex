@@ -276,3 +276,17 @@ flowchart TD
 - The XFCE session uses `DISPLAY=:1`, PulseAudio at `tcp:127.0.0.1`, and `dbus-launch` for its session bus. The hardware scancode preference lives in the Android Termux:X11 app, not in Debian XML settings.
 
 The `cleanup()` script typo must be corrected and tested before deployment; the exported script still refers to `adnroid-monitor-control.sh`. Chromium, Netflix, and YouTube run as Debian windows and can be associated with separate Docklike entries via their window classes. Running Chromium with `--no-sandbox` does **not** provide a security boundary under PRoot, regardless of whether an application has a separate XFCE window.
+
+## Debian-to-Android desktop actions
+
+v0.5.1 introduces a route to **open Android settings** from XFCE components without changing the startup architecture or v0.5.0 battery/Wi-Fi monitoring:
+
+```mermaid
+flowchart LR
+    A["XFCE: clickable Wi-Fi / QuickMenu"] --> B["Debian: linudex-android-settings"]
+    B --> C["TermuxAm: /data/data/com.termux/files/usr/bin/am"]
+    C --> D["Android: Wi-Fi / Bluetooth Settings"]
+    A --> E["Debian: gThumb / XFCE Settings"]
+```
+
+`linudex-wifi-click` adds `<iconclick>` to the existing `linudex-status wifi` output, preserving the read-only JSON monitoring described for v0.5.0. `linudex-quickmenu-indicator` renders an up-arrow and its click action; the GTK menu is launched on demand. Direct `/system/bin/am` calls raised a `SecurityException` because the package identity did not match the process UID, while the Termux executable worked from Debian. No root access, system permission changes, or additional resident service were required for these shortcuts.

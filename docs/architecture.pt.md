@@ -276,3 +276,17 @@ flowchart TD
 - A sessão usa `DISPLAY=:1`, PulseAudio via `tcp:127.0.0.1` e D-Bus de sessão iniciado com `dbus-launch`. A preferência física de scancodes pertence ao aplicativo Android Termux:X11, fora dos XML do Debian.
 
 A correção do nome do monitor na rotina `cleanup()` do script de inicialização deve ser publicada e validada; o backup exportado ainda contém `adnroid-monitor-control.sh`. Os WebApps Chromium/Netflix/YouTube rodam no Debian e são identificados no Docklike pelas classes das janelas. Executar Chromium com `--no-sandbox` não cria isolamento de segurança no PRoot, mesmo quando aparece como uma janela independente no XFCE.
+
+## Ações de interface entre Debian e Android
+
+A v0.5.1 adiciona uma rota de **abertura de configurações Android** a partir de componentes do XFCE, sem alterar a arquitetura de inicialização nem o monitor de bateria/Wi-Fi da v0.5.0:
+
+```mermaid
+flowchart LR
+    A["XFCE: Wi-Fi clicável / QuickMenu"] --> B["Debian: linudex-android-settings"]
+    B --> C["TermuxAm: /data/data/com.termux/files/usr/bin/am"]
+    C --> D["Android: Settings Wi-Fi / Bluetooth"]
+    A --> E["Debian: gThumb / XFCE Settings"]
+```
+
+O `linudex-wifi-click` adiciona `<iconclick>` à saída existente de `linudex-status wifi`, preservando a leitura passiva de JSON descrita na v0.5.0. O `linudex-quickmenu-indicator` produz a seta e sua ação de clique; o menu GTK é criado sob demanda. A chamada direta pelo `/system/bin/am` falhou com `SecurityException` por divergência entre pacote e UID, enquanto o executável do Termux funcionou dentro do Debian. Não foram necessários mudanças de permissões de sistema ou um serviço residente adicional.
