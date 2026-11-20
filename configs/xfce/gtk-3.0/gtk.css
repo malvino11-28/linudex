@@ -4,108 +4,77 @@
 .xfce4-panel.background button,
 .xfce4-panel.background #clock-button,
 .xfce4-panel.background #docklike-plugin .group {
-    background-image: none;
-    background-color: transparent;
+  background-image: none;
+  background-color: transparent;
 }
 
 .xfce4-panel.background button:hover,
 .xfce4-panel.background #docklike-plugin .hover_group {
-    background-color: rgba(255, 255, 255, 0.10);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .xfce4-panel.background button:checked,
 .xfce4-panel.background #docklike-plugin .active_group {
-    background-color: rgba(255, 255, 255, 0.14);
+  background-color: rgba(255, 255, 255, 0.14);
 }
 
 /* Docklike: ícones menores sem reduzir a área clicável. */
 #docklike-plugin button.group image {
-    -gtk-icon-transform: scale(0.72);
+  -gtk-icon-transform: scale(0.72);
 }
 
 /* Whisker: botão LX com a área clicável aprovada. */
 #whiskermenu-button {
-    min-width: 56px;
-    padding: 0;
-    background-image: url("/home/linudex/share/icons/linudex/lx.png");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: 38px 38px;
+  min-width: 56px;
+  padding: 0;
+  background-image: url("/home/linudex/share/icons/linudex/lx.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 38px 38px;
 }
 
 #whiskermenu-button image {
-    margin-left: 0;
-    margin-right: 0;
-    opacity: 0;
+  margin-left: 0;
+  margin-right: 0;
+  opacity: 0;
 }
 
 /* Volume e indicadores Android. */
 #pulseaudio-button > box > image {
-    -gtk-icon-transform: scale(0.70);
+  -gtk-icon-transform: scale(0.7);
 }
 
 .genmon_image {
-    -gtk-icon-transform: scale(0.60);
-}
-
-/* Pesquisa do Linudex (launcher do XFCE, não campo editável). */
-#launcher-arrow {
-    min-width: 280px;
-    min-height: 36px;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    padding: 0;
-    background-color: #343434;
-    background-image: url("/home/linudex/.local/share/linudex/search.svg");
-    background-repeat: no-repeat;
-    background-position: left center;
-    background-size: 280px 40px;
-    border: 1px solid #585858;
-    border-radius: 0;
-    box-shadow: none;
-}
-
-#launcher-arrow label {
-    opacity: 0;
-}
-
-#launcher-arrow:hover {
-    background-color: #414141;
-    border-color: #777777;
-}
-
-#launcher-arrow:active {
-    background-color: #505050;
-    border-color: #0078D7;
+  -gtk-icon-transform: scale(0.6);
 }
 
 /* Botão Mostrar Área de Trabalho: Genmon clicável. */
 .genmon_valuebutton {
-    min-width: 0;
-    min-height: 0;
-    padding: 0 3px;
-    border: 0;
-    background-image: none;
-    background-color: transparent;
+  min-width: 0;
+  min-height: 0;
+  padding: 0 3px;
+  border: 0;
+  background-image: none;
+  background-color: transparent;
 }
 
 .genmon_valuebutton:hover {
-    background-color: rgba(255,255,255,0.10);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Linudex v0.5.1 - wifi-clickable-icon */
 /* genmon-14 is the existing Wi-Fi indicator; battery and quick-menu are unaffected. */
 #genmon-14 .genmon_imagebutton {
-    padding: 0;
-    margin: 0;
-    border: 0;
-    min-height: 0;
-    min-width: 0;
-    background-image: none;
-    background-color: transparent;
-    box-shadow: none;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  min-height: 0;
+  min-width: 0;
+  background-image: none;
+  background-color: transparent;
+  box-shadow: none;
 }
 
 #genmon-14 .genmon_imagebutton image {
-    -gtk-icon-transform: scale(0.75);
+  -gtk-icon-transform: scale(0.75);
 }
