@@ -376,3 +376,13 @@ Android settings shortcuts use `linudex-android-settings` and TermuxAm at `/data
 ### Shared storage
 
 Access to `~/AndroidStorage` initially failed in both Termux and Debian even though the symbolic links existed. Enabling Android's **All files access** special permission for **Termux and Termux:API** restored storage access; Debian access was confirmed without changes to PRoot, `--bind`, or startup scripts. This permission fix does not expand the v0.5.1 scope into a deeper Android–Debian integration redesign. See [Troubleshooting v0.5.1](troubleshooting/troubleshooting-v0.5.1.md).
+
+## 16. Secure browsing and Android browser integration — v0.5.2
+
+Version v0.5.2 reviews the security limitations of browsing inside a Debian PRoot environment. Chromium and Brave in the tested setup needed `--no-sandbox` or could not operate reliably with their usual sandbox requirements. This flag disables important browser isolation and is not an acceptable general-purpose security solution. Chromium remains available for the already tested Netflix/YouTube WebApps, with this known risk.
+
+Firefox ESR was investigated using browser sandbox diagnostics and `/proc` process information. Some process observations included `NoNewPrivs: 1` and `Seccomp: 2`, but these findings were insufficient to establish that the full intended multi-process sandbox and namespace protections were functioning. Earlier diagnostics also indicated unavailable user namespaces. It is therefore **not accurate to claim either a fully validated sandbox or that all Firefox protections were absent**.
+
+GNOME Web with Bubblewrap was attempted, but the tested Bubblewrap invocation failed with `execvp /usr/bin/true: No such file or directory`. The cause was not conclusively isolated. LibreWolf launched but performed poorly on heavier sites such as ChatGPT, YouTube and GitHub. These outcomes led to prioritizing the **Samsung Internet Android app** running natively under Samsung DeX, rather than relying on an unvalidated Linux browser sandbox under PRoot.
+
+This is a practical deployment choice, not a certification or an audit of Samsung Internet. Android-side apps retain their own Android execution and security model; the XFCE launcher does not relocate the browser into Debian.

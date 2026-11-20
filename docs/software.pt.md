@@ -376,3 +376,13 @@ O **Thunar** recebeu um ícone de pasta convencional pelo editor de lançadores,
 ### Armazenamento compartilhado
 
 O acesso ao `~/AndroidStorage` estava bloqueado tanto no Termux quanto no Debian, embora os links simbólicos existissem. Foi restaurado ao ativar **Acesso a todos os arquivos** nas permissões especiais do Android para **Termux e Termux:API**. O acesso pelo Debian foi confirmado sem alterações no PRoot, em `--bind` ou nos scripts de inicialização. Esta correção pontual não amplia o escopo da v0.5.1 para uma reformulação da integração Android–Debian. Consulte [Troubleshooting v0.5.1](troubleshooting/troubleshooting-v0.5.1.pt.md).
+
+## 16. Segurança de navegação e integração com navegador Android — v0.5.2
+
+A v0.5.2 investiga as limitações de segurança dos navegadores executados no Debian por PRoot. Chromium e Brave, no ambiente testado, exigiam `--no-sandbox` ou não funcionavam de maneira confiável com os requisitos normais de isolamento. Esse parâmetro desabilita proteções importantes e não deve ser tratado como solução de segurança para navegação geral. O Chromium permanece como alternativa para os WebApps Netflix/YouTube já testados, com essa limitação conhecida.
+
+O Firefox ESR foi investigado por diagnósticos do navegador e dados de processos em `/proc`. Algumas observações mostraram `NoNewPrivs: 1` e `Seccomp: 2`, mas não comprovaram o funcionamento de todo o isolamento multiprocessos e das proteções de namespaces. Diagnósticos anteriores também indicaram indisponibilidade de user namespaces. Portanto, **não é correto afirmar nem que o sandbox completo foi validado nem que todas as proteções do Firefox estavam desativadas**.
+
+Tentou-se GNOME Web com Bubblewrap, mas a execução testada falhou com `execvp /usr/bin/true: No such file or directory`, sem diagnóstico definitivo da causa. O LibreWolf abriu, porém apresentou desempenho insatisfatório em sites pesados, como ChatGPT, YouTube e GitHub. Como resultado, priorizou-se o **Samsung Internet nativo do Android**, executado pelo Samsung DeX, em vez de depender de um sandbox de navegador Linux não validado no PRoot.
+
+Essa é uma escolha prática de implantação, não uma certificação de segurança do Samsung Internet. Aplicativos do Android continuam sujeitos ao modelo de execução e proteção do próprio Android; o launcher XFCE não transfere o navegador para o Debian.
