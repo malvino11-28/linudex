@@ -363,3 +363,18 @@ A v0.5.0 adiciona dois scripts do lado **Termux** (`android-monitor.sh` e `andro
 Os scripts Start/Stop locais já controlavam o monitor nos testes. A sessão Debian deve receber `LANG=pt_BR.UTF-8`; o Termux deve ter `termux-api` e o aplicativo Android Termux:API. O monitor e o serviço PulseAudio são recursos distintos: o primeiro é controlado pelos scripts Start/Stop, e o segundo continua sendo uma ponte TCP em loopback.
 
 **Segurança:** não publicar o wrapper Chromium como opção de navegação segura; `--no-sandbox` remove o isolamento de processos do navegador. A geração e aplicação de arquivos de configuração do XFCE pertencem ao diretório [`configs/`](../configs/README.pt.md), não a este README.
+
+## Auxiliares de usabilidade — v0.5.1
+
+Os novos auxiliares foram validados no **Debian** em `~/.local/bin/`; a publicação de seus arquivos-fonte no repositório deve preceder a tag da v0.5.1.
+
+| Arquivo                       | Função                                                                                               |
+| ----------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `linudex-android-settings`    | Abre as telas Wi-Fi e Bluetooth pelo TermuxAm, sem usar `/system/bin/am`                             |
+| `linudex-wifi-click`          | Acrescenta `<iconclick>` à saída de `linudex-status wifi`                                            |
+| `linudex-quickmenu-indicator` | Emite ícone SVG e comando de clique para o Genmon da seta                                            |
+| `linudex-quickmenu`           | Abre menu GTK sob demanda: Bluetooth, Photo Gallery (`gthumb`) e Settings (`xfce4-settings-manager`) |
+
+O TermuxAm encontra-se em `/data/data/com.termux/files/usr/bin/am`; as ações utilizadas são `android.settings.WIFI_SETTINGS` e `android.settings.BLUETOOTH_SETTINGS`. Não foi necessário executar um daemon adicional. No Debian, `linudex-quickmenu` depende de `python3-gi` e `gir1.2-gtk-3.0`, além do `gthumb` para a galeria. Todos os textos e mensagens do QuickMenu final estão em inglês. Não confundir esses utilitários com os scripts de inicialização do Linudex, que permaneceram inalterados.
+
+O LinuDex Search é um plugin compilado do XFCE, não um script de inicialização. Sua compilação requer `build-essential`, `pkg-config`, `libgtk-3-dev`, `libxfce4panel-2.0-dev` e `libxfce4ui-2-dev`. O código-fonte deverá ser publicado com o plugin antes da release; consultar [Software](../docs/software.pt.md) para o estado validado.

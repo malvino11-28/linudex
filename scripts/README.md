@@ -388,3 +388,18 @@ v0.5.0 adds two **Termux host** scripts (`android-monitor.sh`, `android-monitor-
 The local Start/Stop scripts already controlled the monitor during testing. The Debian desktop session uses `LANG=pt_BR.UTF-8`; the host requires both the `termux-api` package and the Android Termux:API app. The monitor and PulseAudio are separate components: Start/Stop controls the monitor; PulseAudio remains a loopback TCP bridge.
 
 **Security:** do not present Chromium's `--no-sandbox` wrapper as a secure general browsing option. XFCE configurations are managed under [`configs/`](../configs/README.md), not here.
+
+## Desktop usability helpers — v0.5.1
+
+The following helpers were validated in **Debian** under `~/.local/bin/`; their source files must be added to the repository before the v0.5.1 tag.
+
+| Helper                        | Purpose                                                                                                   |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `linudex-android-settings`    | Opens Wi-Fi/Bluetooth settings through TermuxAm, not `/system/bin/am`                                     |
+| `linudex-wifi-click`          | Adds `<iconclick>` to `linudex-status wifi` output                                                        |
+| `linudex-quickmenu-indicator` | Emits the SVG icon and click action for the up-arrow Genmon                                               |
+| `linudex-quickmenu`           | Opens an on-demand GTK menu: Bluetooth, Photo Gallery (`gthumb`), and Settings (`xfce4-settings-manager`) |
+
+TermuxAm lives at `/data/data/com.termux/files/usr/bin/am`; actions used are `android.settings.WIFI_SETTINGS` and `android.settings.BLUETOOTH_SETTINGS`. No extra persistent daemon was required. Inside Debian, `linudex-quickmenu` requires `python3-gi` and `gir1.2-gtk-3.0`; the gallery requires `gthumb`. The final QuickMenu labels and messages are in English. These helpers are distinct from the Linudex startup scripts, which remain unchanged.
+
+LinuDex Search is a compiled XFCE plugin, not a startup script. Building requires `build-essential`, `pkg-config`, `libgtk-3-dev`, `libxfce4panel-2.0-dev`, and `libxfce4ui-2-dev`. Its source must be published alongside the plugin before release; see [Software Setup](../docs/software.md) for the validated behavior.
