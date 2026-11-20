@@ -32,6 +32,10 @@ Os dois fans funcionam como **exaustores** e foram testados em conjunto. Durante
 
 A v0.5.0 moderniza a experiência do XFCE no Galaxy S10+, com tema e ícones Windows 10, logo LX no Whisker Menu, Docklike, pesquisa por Application Finder, indicadores de bateria/Wi-Fi do Android via Termux:API e botão Mostrar Área de Trabalho. O teclado ABNT2, os atalhos principais e a inicialização/persistência foram validados. A versão também documenta o Chromium ARM64 e WebApps Netflix/YouTube como recursos experimentais; a reprodução de um filme completo na Netflix foi observada no dispositivo testado.
 
+## v0.5.1 — Refinamentos de usabilidade do desktop
+
+A versão **v0.5.1** foca em refinamentos de usabilidade na interface do desktop, sem alterações profundas no sistema ou novos benchmarks. As melhorias incluem a integração da busca **LinuDex Search v3** à barra de tarefas (com ícones e navegação por teclado), a remoção do painel superior, a adição de um **QuickMenu** escuro e de um atalho clicável de Wi-Fi no painel inferior, além de um novo ícone de pasta para o Thunar. O acesso ao `AndroidStorage` também foi restaurado e validado no Galaxy S10+ ao habilitar a permissão de "Acesso a todos os arquivos" no Termux e Termux:API. Por fim, o Chromium sem sandbox segue como uma limitação conhecida e os arquivos-fonte testados localmente ainda precisam ser incluídos no repositório antes da criação da tag da versão.
+
 ### Concluído
 
 - Armazenamento compartilhado do Android integrado ao Debian.

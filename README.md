@@ -32,6 +32,10 @@ Both fans operate as **exhaust fans** and were tested together. During YouTube 1
 
 v0.5.0 updates XFCE on the Galaxy S10+ with Windows 10-like GTK/icon themes, an LX-branded Whisker Menu, Docklike taskbar, Application Finder search launcher, Android Wi-Fi/battery indicators via Termux:API, and a custom Show Desktop button. Brazilian ABNT2 typing, core shortcuts, and startup/persistence were validated. The release also documents ARM64 Chromium and experimental Netflix/YouTube WebApps; one full Netflix movie was played on the tested device.
 
+## v0.5.1 — Desktop usability refinements
+
+Version **v0.5.1** focuses on desktop interface usability refinements, with no deep system changes or new benchmarks. Improvements include integrating **LinuDex Search v3** into the taskbar (with icons and keyboard navigation), removing the top panel, adding a dark **QuickMenu** and a clickable Wi-Fi shortcut to the bottom panel, and updating Thunar with a new folder icon. Access to `AndroidStorage` was also restored and validated on a Galaxy S10+ by enabling the "All files access" permission for Termux and Termux:API. Finally, running Chromium without a sandbox remains a known limitation, and locally tested source files still need to be added to the repository before tagging the release.
+
 ### Completed
 
 - Android shared storage integrated with Debian.
