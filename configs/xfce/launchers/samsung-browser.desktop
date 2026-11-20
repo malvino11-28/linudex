@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Samsung Internet
+Comment=Open Samsung Internet on Android through LinuDex
+Exec=/home/linudex/.local/bin/linudex-samsung-browser
+Icon=web-browser
+Terminal=false
+Categories=Network;WebBrowser;
+StartupNotify=false
