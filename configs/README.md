@@ -84,6 +84,14 @@ Files under `xfce/` store the configuration used by the v0.2.0 graphical environ
 
 They include desktop, panel, keyboard shortcut, window manager, DPI and Whisker Menu settings.
 
+## Visual configurations — v0.5.1
+
+The final layout uses **only the lower XFCE panel**; the upper panel was removed. When exporting `xfce4-panel.xml`, retain current plugin IDs and do not restore the obsolete v0.5.0 upper panel. The original search launcher was replaced by **LinuDex Search v3**, whose separate CSS lives at `~/.config/linudex-search/style.css` alongside its dedicated magnifier SVG.
+
+The utilities menu is presented by a Genmon using `~/.local/share/linudex/chevron-up.svg`. Its dark stylesheet is `~/.config/linudex-quickmenu/style.css`. The Wi-Fi Genmon runs `linudex-wifi-click`; its clickable image is styled through `#genmon-14 .genmon_imagebutton image` with `-gtk-icon-transform: scale(0.75)` in the panel's GTK stylesheet. This plugin ID was validated locally and must be rechecked if a panel is recreated.
+
+**Thunar** was assigned a standard folder icon using the launcher editor. Version only the relevant local launcher rather than replacing system-wide icons. Gallery and settings icons remain theme-provided. Before release, export the final configuration **from the device**, not older pre-v0.5.1 development snapshots.
+
 ## Important
 
 These configurations are optional.

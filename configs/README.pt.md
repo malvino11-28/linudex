@@ -84,6 +84,14 @@ Os arquivos dentro de `xfce/` armazenam as configurações utilizadas pelo ambie
 
 Eles incluem configurações do desktop, painel, atalhos de teclado, gerenciador de janelas, DPI e Whisker Menu.
 
+## Configurações visuais — v0.5.1
+
+O estado final utiliza **somente o painel XFCE inferior**; o painel superior foi removido. Ao exportar `xfce4-panel.xml`, preserve os IDs atuais de plugin e não restaure o painel superior antigo da v0.5.0. A pesquisa original foi substituída pelo **LinuDex Search v3**; seu CSS é independente (`~/.config/linudex-search/style.css`) e utiliza SVG próprio da lupa.
+
+O novo menu de utilitários é exibido por Genmon com ícone de seta em `~/.local/share/linudex/chevron-up.svg`. O estilo escuro reside em `~/.config/linudex-quickmenu/style.css`. O Genmon do Wi-Fi chama `linudex-wifi-click`; seu ícone clicável é estilizado pelo seletor `#genmon-14 .genmon_imagebutton image` com `-gtk-icon-transform: scale(0.75)` no GTK CSS do painel. Esse ID foi validado no ambiente atual e deve ser conferido ao exportar para outro painel.
+
+O ícone do **Thunar** foi alterado pelo editor de lançadores para uma pasta comum; versionar apenas o lançador local pertinente, sem substituir ícones do sistema inteiro. Os ícones da galeria e das configurações continuam vindos do tema instalado. Ao preparar a release, exportar as configurações finais **do aparelho**, não os backups anteriores aos testes da v0.5.1.
+
 ## Importante
 
 Todas essas configurações são opcionais.
