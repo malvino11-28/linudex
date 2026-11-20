@@ -1,0 +1,6 @@
+# Template for the new utilities Genmon. The plugin ID is assigned by XFCE.
+Command=/home/linudex/.local/bin/linudex-quickmenu-indicator
+UseLabel=0
+Text=
+UpdatePeriod=3600000
+Font=Sans 10

@@ -1,0 +1,35 @@
+/* Linudex v0.5.1 — utility pop-up, matched to the XFCE bottom panel. */
+menu#linudex-quickmenu {
+    background-color: #202020;
+    background-image: none;
+    color: #eeeeee;
+    border: 1px solid #505050;
+    border-radius: 0;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.30);
+    padding: 4px;
+}
+
+menu#linudex-quickmenu menuitem {
+    background-color: transparent;
+    background-image: none;
+    color: #eeeeee;
+    border-radius: 0;
+    padding: 0;
+    min-height: 0;
+}
+
+menu#linudex-quickmenu menuitem:hover,
+menu#linudex-quickmenu menuitem:selected {
+    background-color: #383838;
+    background-image: none;
+    color: #ffffff;
+}
+
+menu#linudex-quickmenu menuitem label,
+menu#linudex-quickmenu menuitem image {
+    color: inherit;
+}
+
+menu#linudex-quickmenu menuitem:disabled {
+    color: #888888;
+}

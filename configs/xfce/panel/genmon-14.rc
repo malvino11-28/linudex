@@ -1,6 +1,5 @@
-Command=/home/linudex/.local/bin/linudex-status wifi
+Command=/home/linudex/.local/bin/linudex-wifi-click
 UseLabel=1
 Text=
 UpdatePeriod=15000
 Font=Sans 10
-
