@@ -36,6 +36,10 @@ A v0.5.0 moderniza a experiência do XFCE no Galaxy S10+, com tema e ícones Win
 
 A versão **v0.5.1** foca em refinamentos de usabilidade na interface do desktop, sem alterações profundas no sistema ou novos benchmarks. As melhorias incluem a integração da busca **LinuDex Search v3** à barra de tarefas (com ícones e navegação por teclado), a remoção do painel superior, a adição de um **QuickMenu** escuro e de um atalho clicável de Wi-Fi no painel inferior, além de um novo ícone de pasta para o Thunar. O acesso ao `AndroidStorage` também foi restaurado e validado no Galaxy S10+ ao habilitar a permissão de "Acesso a todos os arquivos" no Termux e Termux:API. Por fim, o Chromium sem sandbox segue como uma limitação conhecida e os arquivos-fonte testados localmente ainda precisam ser incluídos no repositório antes da criação da tag da versão.
 
+## v0.5.2 — Navegação segura e integração Android
+
+A versão **v0.5.2** prioriza o Samsung Internet como navegador principal do Galaxy S10+ no Samsung DeX após investigar as limitações de sandbox de navegadores Linux no Debian PRoot. O navegador Android exibiu sites em 1920×1080 em modo computador e permitiu tela cheia pelo `F11`. Um lançador Debian via TermuxAm possibilita sua abertura pelo menu XFCE e fixação no Docklike. **O navegador roda no Android sobre o desktop Debian, não dentro do XFCE**: clicar em outras janelas Linux pode trazer o Debian para a frente, e acionar o lançador novamente faz o navegador reaparecer. As regras CSS antigas da pesquisa foram removidas para evitar efeitos sobre outros lançadores XFCE. O Chromium continua disponível apenas para usos específicos nos WebApps Netflix/YouTube; o problema do `--no-sandbox` não foi resolvido nesta versão.
+
 ### Concluído
 
 - Armazenamento compartilhado do Android integrado ao Debian.
