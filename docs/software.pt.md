@@ -350,3 +350,29 @@ A Netflix utiliza User-Agent próprio no lançador, de forma que o navegador ger
 ### Recursos e instalação
 
 As configurações editáveis e recursos próprios do Linudex devem ser preservados em `configs/`. O wallpaper será disponibilizado separadamente em `images/`. Os ícones individuais de Netflix e YouTube são gerados pelo Chromium durante a instalação e não devem ser versionados como dependências fixas. Aplicar um CSS consolidado apenas depois de confirmar visualmente o resultado no dispositivo. Para instalação e recuperação das configurações, consulte [`configs/README.pt.md`](../configs/README.pt.md) e [`scripts/README.pt.md`](../scripts/README.pt.md).
+
+## 15. Refinamentos de usabilidade do desktop
+
+A v0.5.1 preserva a base Android/Termux/PRoot-Distro/Debian e concentra os ajustes no **painel inferior do XFCE**, que passou a ser o único painel utilizado. O painel superior foi removido por não ser mais necessário. A experiência do Docklike, do Whisker Menu e dos indicadores existentes foi mantida.
+
+### LinuDex Search
+
+O lançador visual da v0.5.0 foi substituído pelo **LinuDex Search v3**, plugin do XFCE Panel desenvolvido em C/GTK 3. O campo é editável diretamente na barra, com 280 px de largura e aproximadamente 36 px de altura; os resultados aparecem em uma janela GTK posicionada acima do painel, exibindo até oito aplicativos por busca, com nomes e ícones. Foi validada a pesquisa por nome, abertura por clique ou Enter, seleção por setas, fechamento com Esc e limpeza após executar um aplicativo. O menu de resultados também fecha ao perder o foco.
+
+A aparência conserva o fundo `#343434`, a borda `#585858`, a lupa vetorial e o texto _Pesquisar_ da versão anterior. O SVG da lupa e o texto real foram separados para evitar sobreposição e perda de contraste. Os ícones dos resultados são limitados proporcionalmente a **24 × 24 px**, corrigindo o tamanho excessivo observado no LocalSend. O CSS do plugin fica isolado em `~/.config/linudex-search/style.css`, sem substituir o GTK CSS do painel.
+
+Para compilar no Debian 13 ARM64, foram utilizados `build-essential`, `pkg-config`, `libgtk-3-dev`, `libxfce4panel-2.0-dev` e `libxfce4ui-2-dev`. O plugin utiliza os arquivos `linudexsearch.c`, `linudexsearch.desktop`, `search-icon.svg`, `style.css`, `build.sh` e `install.sh`. A instalação local coloca a biblioteca no diretório de plugins do XFCE e reinicia o painel com `xfce4-panel -r`. **O código-fonte e as configurações da v0.5.1 deverão ser integrados ao repositório antes de marcar a release.**
+
+### Menu de utilitários e atalhos Android
+
+Foi adicionado um Genmon com **seta para cima** para abrir o `linudex-quickmenu`, menu GTK sob demanda com três atalhos: **Bluetooth** (configurações do Android), **Photo Gallery** (`gthumb`) e **Settings** (`xfce4-settings-manager`). O menu usa fundo escuro `#202020`, destaque `#383838` e rótulos em inglês. Não mantém um daemon ativo após seu fechamento.
+
+O Genmon de Wi-Fi foi tornado clicável pelo script `linudex-wifi-click`, que reaproveita a saída de `linudex-status wifi` e acrescenta a ação `<iconclick>`. O ícone continua indicando o estado da rede; sua escala final foi ajustada para **0.75** com um seletor CSS restrito ao `genmon-14`. O clique abre as configurações **do Android**, sem instalar gerenciadores de rede Linux para controlar o dispositivo.
+
+Os atalhos do Android usam `linudex-android-settings` e o executável TermuxAm `/data/data/com.termux/files/usr/bin/am`, com as ações `android.settings.WIFI_SETTINGS` e `android.settings.BLUETOOTH_SETTINGS`. Foi validado o acionamento a partir do Debian. A chamada direta a `/system/bin/am` não funciona nessa sessão por rejeição de identidade/UID; ela não deve ser usada para esses atalhos.
+
+O **Thunar** recebeu um ícone de pasta convencional pelo editor de lançadores, sem substituição do gerenciador de arquivos. O **gThumb** foi instalado como galeria de imagens. A bateria, o relógio, o Docklike e a pesquisa foram preservados durante os ajustes finais.
+
+### Armazenamento compartilhado
+
+O acesso ao `~/AndroidStorage` estava bloqueado tanto no Termux quanto no Debian, embora os links simbólicos existissem. Foi restaurado ao ativar **Acesso a todos os arquivos** nas permissões especiais do Android para **Termux e Termux:API**. O acesso pelo Debian foi confirmado sem alterações no PRoot, em `--bind` ou nos scripts de inicialização. Esta correção pontual não amplia o escopo da v0.5.1 para uma reformulação da integração Android–Debian. Consulte [Troubleshooting v0.5.1](troubleshooting/troubleshooting-v0.5.1.pt.md).

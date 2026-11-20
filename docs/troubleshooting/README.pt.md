@@ -14,6 +14,7 @@ Este diretório reúne os registros de solução de problemas do Linudex, organi
 | v0.3.0 — Compatibilidade experimental x86/x86-64 | [Troubleshooting v0.3.0](troubleshooting-v0.3.0.pt.md) | .NET CoreCLR, SteamWebHelper, shaders WineD3D, exigências da Steam e encerramento seguro                       |
 | v0.4.0 — Integração física de hardware           | [Troubleshooting v0.4.0](troubleshooting-v0.4.0.pt.md) | Botões laterais, portas USB-C, fixação do P2, conectores dos fans e ruído da alimentação                       |
 | v0.5.0 — Interface inspirada no Windows 10       | [Problemas da v0.5.0](troubleshooting-v0.5.0.pt.md)    | ABNT2, teclado físico, navegadores ARM64, sandbox do Chromium, Cloudflare, Netflix, YouTube e monitor Android  |
+| v0.5.1 — Refinamentos de usabilidade do desktop  | [Problemas da v0.5.1](troubleshooting-v0.5.1.pt.md)    | AndroidStorage, compilação e foco da pesquisa, resultados GTK, TermuxAm, QuickMenu e ícone Wi-Fi               |
 
 ## Documentação relacionada
 
