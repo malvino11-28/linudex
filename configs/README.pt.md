@@ -81,7 +81,12 @@ Os arquivos dentro de `xfce/` armazenam as configurações utilizadas pelo ambie
 
 Eles incluem configurações do desktop, painel, atalhos de teclado, gerenciador de janelas, DPI e Whisker Menu.
 
-<<<<<<< HEAD
+## Personalização do XFCE
+
+A v0.5.0 acrescenta a configuração opcional da interface inspirada no Windows 10: arquivos Xfconf (painéis, atalhos, teclado, janela e tema), ajustes GTK CSS, configurações locais de Docklike e Genmon, SVGs e logo LX. Os arquivos locais são instalados normalmente em `~/.config/xfce4/xfconf/xfce-perchannel-xml/`, `~/.config/xfce4/panel/`, `~/.config/gtk-3.0/`, `~/.local/share/linudex/`, `~/.local/share/applications/` e `~/share/icons/linudex/`. Referências absolutas a `/home/linudex` pressupõem esse nome de usuário; devem ser ajustadas se necessário.
+
+Antes de substituir qualquer arquivo, faça backup das configurações atuais e encerre o painel/ a sessão ao aplicar XMLs. Não copie arquivos de sessão, perfis de navegadores ou credenciais. O backup do desenvolvimento antecede ajustes finais do YouTube, Netflix e Chromium; compare o estado final do aparelho antes de publicar tais lançadores. A opção **Prefer scancodes when possible** pertence às preferências Android do Termux:X11 e deve ser ativada manualmente, além de configurar XKB como `br` (variante vazia). O CSS consolidado está sujeito à validação visual; wallpaper e ícones WebApps não fazem parte do backup exportado (os ícones são criados pelo Chromium).
+
 ## Configurações visuais — v0.5.1
 
 O estado final utiliza **somente o painel XFCE inferior**; o painel superior foi removido. Ao exportar `xfce4-panel.xml`, preserve os IDs atuais de plugin e não restaure o painel superior antigo da v0.5.0. A pesquisa original foi substituída pelo **LinuDex Search v3**; seu CSS é independente (`~/.config/linudex-search/style.css`) e utiliza SVG próprio da lupa.
@@ -89,13 +94,6 @@ O estado final utiliza **somente o painel XFCE inferior**; o painel superior foi
 O novo menu de utilitários é exibido por Genmon com ícone de seta em `~/.local/share/linudex/chevron-up.svg`. O estilo escuro reside em `~/.config/linudex-quickmenu/style.css`. O Genmon do Wi-Fi chama `linudex-wifi-click`; seu ícone clicável é estilizado pelo seletor `#genmon-14 .genmon_imagebutton image` com `-gtk-icon-transform: scale(0.75)` no GTK CSS do painel. Esse ID foi validado no ambiente atual e deve ser conferido ao exportar para outro painel.
 
 O ícone do **Thunar** foi alterado pelo editor de lançadores para uma pasta comum; versionar apenas o lançador local pertinente, sem substituir ícones do sistema inteiro. Os ícones da galeria e das configurações continuam vindos do tema instalado. Ao preparar a release, exportar as configurações finais **do aparelho**, não os backups anteriores aos testes da v0.5.1.
-=======
-## Personalização do XFCE
-
-A v0.5.0 acrescenta a configuração opcional da interface inspirada no Windows 10: arquivos Xfconf (painéis, atalhos, teclado, janela e tema), ajustes GTK CSS, configurações locais de Docklike e Genmon, SVGs e logo LX. Os arquivos locais são instalados normalmente em `~/.config/xfce4/xfconf/xfce-perchannel-xml/`, `~/.config/xfce4/panel/`, `~/.config/gtk-3.0/`, `~/.local/share/linudex/`, `~/.local/share/applications/` e `~/share/icons/linudex/`. Referências absolutas a `/home/linudex` pressupõem esse nome de usuário; devem ser ajustadas se necessário.
-
-Antes de substituir qualquer arquivo, faça backup das configurações atuais e encerre o painel/ a sessão ao aplicar XMLs. Não copie arquivos de sessão, perfis de navegadores ou credenciais. O backup do desenvolvimento antecede ajustes finais do YouTube, Netflix e Chromium; compare o estado final do aparelho antes de publicar tais lançadores. A opção **Prefer scancodes when possible** pertence às preferências Android do Termux:X11 e deve ser ativada manualmente, além de configurar XKB como `br` (variante vazia). O CSS consolidado está sujeito à validação visual; wallpaper e ícones WebApps não fazem parte do backup exportado (os ícones são criados pelo Chromium).
->>>>>>> a6004d6ddcdec7b0e8d6d551f773d67cff7de8d0
 
 ## Importante
 
