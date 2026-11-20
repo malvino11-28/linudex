@@ -95,6 +95,12 @@ The utilities menu is presented by a Genmon using `~/.local/share/linudex/chevro
 
 **Thunar** was assigned a standard folder icon using the launcher editor. Version only the relevant local launcher rather than replacing system-wide icons. Gallery and settings icons remain theme-provided. Before release, export the final configuration **from the device**, not older pre-v0.5.1 development snapshots.
 
+## Samsung Internet launcher and legacy CSS cleanup — v0.5.2
+
+The optional `xfce/launchers/samsung-browser.desktop` entry opens the Debian-side helper `~/.local/bin/linudex-samsung-browser`, which in turn invokes Samsung Internet **on Android** through TermuxAm. The application is displayed by Samsung DeX above the Debian/XFCE surface; it is not a native XFCE window. Its launcher can be pinned in Docklike.
+
+The former v0.5.0 search launcher used broad `#launcher-arrow` selectors in `gtk.css`. These rules also affected the Samsung Internet launcher and mistakenly styled it like the old search bar. The validated fix was to remove only the obsolete selector blocks, preserving unrelated panel styles. The replacement LinuDex Search v3 plugin has its own CSS and remains unaffected. Export the current device CSS, not the outdated repository snapshot, before committing.
+
 ## Important
 
 These configurations are optional.

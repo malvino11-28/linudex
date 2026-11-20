@@ -95,6 +95,12 @@ O novo menu de utilitários é exibido por Genmon com ícone de seta em `~/.loca
 
 O ícone do **Thunar** foi alterado pelo editor de lançadores para uma pasta comum; versionar apenas o lançador local pertinente, sem substituir ícones do sistema inteiro. Os ícones da galeria e das configurações continuam vindos do tema instalado. Ao preparar a release, exportar as configurações finais **do aparelho**, não os backups anteriores aos testes da v0.5.1.
 
+## Lançador do Samsung Internet e limpeza do CSS antigo — v0.5.2
+
+O arquivo opcional `xfce/launchers/samsung-browser.desktop` chama o auxiliar Debian `~/.local/bin/linudex-samsung-browser`, que abre o Samsung Internet **no Android** por meio do TermuxAm. A interface é exibida pelo Samsung DeX sobre o Debian/XFCE; não se trata de uma janela nativa do XFCE. O lançador pode ser fixado no Docklike.
+
+A pesquisa antiga da v0.5.0 utilizava seletores abrangentes `#launcher-arrow` no `gtk.css`. Eles também afetaram o lançador do Samsung Internet, dando-lhe indevidamente a aparência da antiga barra de pesquisa. A correção validada removeu apenas esses blocos obsoletos, preservando os demais estilos. O plugin LinuDex Search v3 utiliza CSS próprio e não depende das regras removidas. Exportar o CSS atual do dispositivo, não o snapshot desatualizado do repositório, antes do commit.
+
 ## Importante
 
 Todas essas configurações são opcionais.
