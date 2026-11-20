@@ -290,3 +290,21 @@ flowchart LR
 ```
 
 O `linudex-wifi-click` adiciona `<iconclick>` à saída existente de `linudex-status wifi`, preservando a leitura passiva de JSON descrita na v0.5.0. O `linudex-quickmenu-indicator` produz a seta e sua ação de clique; o menu GTK é criado sob demanda. A chamada direta pelo `/system/bin/am` falhou com `SecurityException` por divergência entre pacote e UID, enquanto o executável do Termux funcionou dentro do Debian. Não foram necessários mudanças de permissões de sistema ou um serviço residente adicional.
+
+## Navegador Android acionado pelo desktop Debian — v0.5.2
+
+O lançador do Samsung Internet adiciona um **fluxo de controle**, não uma nova instalação de navegador Linux:
+
+```mermaid
+flowchart LR
+    A["Menu XFCE / Docklike"] --> B["Script no Debian"]
+    B --> C["TermuxAm: am start"]
+    C --> D["Android: Samsung Internet"]
+    D --> E["Samsung DeX: janela do aplicativo"]
+    F["Debian / Termux:X11 / XFCE"] --> G["Superfície de desktop no DeX"]
+    E --> G
+```
+
+O Samsung Internet executa como **aplicativo Android**. Sua janela é gerenciada pelo Samsung DeX e pode ficar à frente ou atrás da superfície do Debian conforme o foco muda. Assim, clicar em um aplicativo XFCE pode fazer o navegador desaparecer atrás do Debian, embora ele continue aberto. Clicar novamente no lançador traz o navegador de volta à frente no ambiente testado. Trata-se de um comportamento de foco/empilhamento de janelas, não de travamento do navegador e nem de uma tarefa XFCE dentro da sessão X11 do Debian.
+
+O launcher validado chama `/data/data/com.termux/files/usr/bin/am start --user 0 com.sec.android.app.sbrowser`. O parâmetro `--user 0` seleciona o usuário Android principal, sem conceder root. `F11` ativou a tela cheia e ocultou a barra superior da janela DeX nos testes com Galaxy S10+. O comportamento pode variar conforme a versão do Android/DeX.

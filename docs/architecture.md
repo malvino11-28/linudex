@@ -290,3 +290,21 @@ flowchart LR
 ```
 
 `linudex-wifi-click` adds `<iconclick>` to the existing `linudex-status wifi` output, preserving the read-only JSON monitoring described for v0.5.0. `linudex-quickmenu-indicator` renders an up-arrow and its click action; the GTK menu is launched on demand. Direct `/system/bin/am` calls raised a `SecurityException` because the package identity did not match the process UID, while the Termux executable worked from Debian. No root access, system permission changes, or additional resident service were required for these shortcuts.
+
+## Android browser launched from the Debian desktop — v0.5.2
+
+The Samsung Internet launcher adds a **control path**, not another Linux browser installation:
+
+```mermaid
+flowchart LR
+    A["XFCE menu / Docklike"] --> B["Debian launcher script"]
+    B --> C["TermuxAm: am start"]
+    C --> D["Android: Samsung Internet"]
+    D --> E["Samsung DeX: application window"]
+    F["Debian / Termux:X11 / XFCE"] --> G["DeX desktop surface"]
+    E --> G
+```
+
+Samsung Internet runs as an **Android application**. Its window is managed by Samsung DeX and can appear above or behind the Debian desktop surface as application focus changes. Clicking an XFCE application can therefore make the browser disappear behind Debian, even though it remains open. Clicking the same launcher again brings the app back to the foreground in the tested environment. This is a window stacking/focus behavior, not a crashed browser and not an XFCE task managed inside the Debian X11 session.
+
+The tested launcher calls `/data/data/com.termux/files/usr/bin/am start --user 0 com.sec.android.app.sbrowser`. The `--user 0` argument identifies the Android primary user; it does not grant root. `F11` activated full screen and hid the upper DeX window bar on the Galaxy S10+ test setup. Do not assume that the same behavior applies to every Android/DeX release.
