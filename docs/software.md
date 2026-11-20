@@ -350,3 +350,29 @@ Netflix's User-Agent override is scoped to its own launcher, leaving the regular
 ### Assets and deployment
 
 Store reproducible configurations and original Linudex artwork under `configs/`. The wallpaper will be supplied later under `images/`; it was not present in the exported backup. Chromium generates Netflix and YouTube icons on installation; these are not repository-provided dependencies. Apply the consolidated GTK CSS only after a visual comparison on-device. See [`configs/README.md`](../configs/README.md) and [`scripts/README.md`](../scripts/README.md) for deployment guidance.
+
+## 15. Desktop usability refinements
+
+v0.5.1 retains the Android/Termux/PRoot-Distro/Debian foundation and updates the **lower XFCE panel**, which is now the only panel in use. The redundant upper panel was removed. The existing Docklike, Whisker Menu and status indicators remain in place.
+
+### LinuDex Search
+
+The v0.5.0 visual launcher was replaced with **LinuDex Search v3**, a C/GTK 3 XFCE Panel plugin. Its editable taskbar field is 280 px wide and approximately 36 px high. Search results appear above the panel in a separate GTK window, showing up to eight matching applications with names and icons. Searching by application name, launching by click or Enter, navigating with arrow keys, closing with Esc, clearing after launch and dismissal on focus loss were validated.
+
+The appearance retains the original `#343434` background, `#585858` border, vector magnifier and _Pesquisar_ label. The icon and actual text label are separate to avoid overlap and reduced contrast. Result icons are proportionally constrained to **24 × 24 px**, correcting an oversized LocalSend icon. The plugin's CSS remains isolated under `~/.config/linudex-search/style.css` without replacing the panel's GTK stylesheet.
+
+Building on Debian 13 ARM64 required `build-essential`, `pkg-config`, `libgtk-3-dev`, `libxfce4panel-2.0-dev`, and `libxfce4ui-2-dev`. The local source bundle contains `linudexsearch.c`, `linudexsearch.desktop`, `search-icon.svg`, `style.css`, `build.sh`, and `install.sh`. Installation places the library in XFCE's panel plugin directory, followed by `xfce4-panel -r`. **The v0.5.1 source and configuration files must be committed to the repository before the release tag is created.**
+
+### Utilities menu and Android shortcuts
+
+A new **up-arrow** Genmon launches `linudex-quickmenu`, an on-demand GTK menu containing **Bluetooth** (Android settings), **Photo Gallery** (`gthumb`), and **Settings** (`xfce4-settings-manager`). The menu uses a dark `#202020` background, `#383838` highlight, and English labels. No persistent daemon is needed after the menu closes.
+
+The Wi-Fi Genmon became clickable through `linudex-wifi-click`, which reuses the output of `linudex-status wifi` and adds `<iconclick>`. The existing connection-status icon remains; its final scale is **0.75**, applied through a CSS selector scoped to `genmon-14`. Clicking opens **Android Wi-Fi settings**, rather than a Debian network manager without control over the phone's hardware.
+
+Android settings shortcuts use `linudex-android-settings` and TermuxAm at `/data/data/com.termux/files/usr/bin/am`, with `android.settings.WIFI_SETTINGS` and `android.settings.BLUETOOTH_SETTINGS`. Launching both activities from Debian was validated. Direct use of `/system/bin/am` was rejected because of a package/UID identity mismatch and must not be used by these shortcuts.
+
+**Thunar** was given a recognizable folder icon through the launcher editor, without replacing the file manager. **gThumb** was installed as the photo gallery. Battery, clock, Docklike, and search behavior were retained during the final adjustments.
+
+### Shared storage
+
+Access to `~/AndroidStorage` initially failed in both Termux and Debian even though the symbolic links existed. Enabling Android's **All files access** special permission for **Termux and Termux:API** restored storage access; Debian access was confirmed without changes to PRoot, `--bind`, or startup scripts. This permission fix does not expand the v0.5.1 scope into a deeper Android–Debian integration redesign. See [Troubleshooting v0.5.1](troubleshooting/troubleshooting-v0.5.1.md).
