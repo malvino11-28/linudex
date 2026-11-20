@@ -403,3 +403,14 @@ The following helpers were validated in **Debian** under `~/.local/bin/`; their 
 TermuxAm lives at `/data/data/com.termux/files/usr/bin/am`; actions used are `android.settings.WIFI_SETTINGS` and `android.settings.BLUETOOTH_SETTINGS`. No extra persistent daemon was required. Inside Debian, `linudex-quickmenu` requires `python3-gi` and `gir1.2-gtk-3.0`; the gallery requires `gthumb`. The final QuickMenu labels and messages are in English. These helpers are distinct from the Linudex startup scripts, which remain unchanged.
 
 LinuDex Search is a compiled XFCE plugin, not a startup script. Building requires `build-essential`, `pkg-config`, `libgtk-3-dev`, `libxfce4panel-2.0-dev`, and `libxfce4ui-2-dev`. Its source must be published alongside the plugin before release; see [Software Setup](../docs/software.md) for the validated behavior.
+
+## Samsung Internet Android launcher — v0.5.2
+
+`linudex-samsung-browser` is a small Debian-side helper installed at `~/.local/bin/`. It calls TermuxAm using the tested path `/data/data/com.termux/files/usr/bin/am` and Android package `com.sec.android.app.sbrowser`. The helper opens the **Android application**, not a Debian/X11 process. It can be launched from XFCE's application menu or a pinned Docklike launcher; reactivating it brings Samsung Internet back to the foreground in the tested DeX environment.
+
+```bash
+install -Dm755 scripts/debian/linudex-samsung-browser "$HOME/.local/bin/linudex-samsung-browser"
+"$HOME/.local/bin/linudex-samsung-browser"
+```
+
+The corresponding `.desktop` file is maintained under `configs/`, because it is an optional XFCE presentation setting.
