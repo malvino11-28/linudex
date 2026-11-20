@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# LinuDex v0.5.2 — Open Samsung Internet on Android via TermuxAm.
+# This does not run the browser inside Debian or Termux:X11.
+exec /data/data/com.termux/files/usr/bin/am start --user 0 com.sec.android.app.sbrowser
