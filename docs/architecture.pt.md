@@ -308,3 +308,19 @@ flowchart LR
 O Samsung Internet executa como **aplicativo Android**. Sua janela é gerenciada pelo Samsung DeX e pode ficar à frente ou atrás da superfície do Debian conforme o foco muda. Assim, clicar em um aplicativo XFCE pode fazer o navegador desaparecer atrás do Debian, embora ele continue aberto. Clicar novamente no lançador traz o navegador de volta à frente no ambiente testado. Trata-se de um comportamento de foco/empilhamento de janelas, não de travamento do navegador e nem de uma tarefa XFCE dentro da sessão X11 do Debian.
 
 O launcher validado chama `/data/data/com.termux/files/usr/bin/am start --user 0 com.sec.android.app.sbrowser`. O parâmetro `--user 0` seleciona o usuário Android principal, sem conceder root. `F11` ativou a tela cheia e ocultou a barra superior da janela DeX nos testes com Galaxy S10+. O comportamento pode variar conforme a versão do Android/DeX.
+
+## Caminho gráfico opcional e limites de recursos — v0.6.0
+
+O desktop mantém a sequência **Android/DeX → Termux:X11 → PRoot-Distro → Debian ARM64 → XFCE**, com `DISPLAY=:1` e `--shared-tmp`. O kernel do Android e o renderizador padrão do XFCE não foram substituídos.
+
+```text
+Aplicativo OpenGL Debian (GALLIUM_DRIVER=virpipe)
+  → socket compartilhado /tmp/.virgl_test
+  → virgl_test_server_android --angle-gl (Termux)
+  → ANGLE / driver OpenGL ES do Android
+  → Mali-G76 MP12
+```
+
+O servidor opcional é iniciado **manualmente** no Termux com `start-linux-gpu.sh`; `linudex-gpu <aplicativo> [argumentos]` seleciona `virpipe` apenas para o processo filho no Debian. Não foram adicionados overrides globais Mesa/EGL nem automação do ciclo de vida. Os testes de aceleração em aplicativos reais foram adiados.
+
+A inicialização agora aguarda o socket Unix do Termux:X11, em vez de depender apenas de esperas fixas, e corrige as tentativas de abertura da atividade Android. O PRoot preserva `--shared-tmp` e as opções anteriores de IPC e links: os testes com arquivos não justificaram mudanças nos bindings. As exceções de energia e o limite de processos phantom foram verificados, não implementados novamente na v0.6.0.

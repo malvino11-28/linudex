@@ -40,6 +40,10 @@ A versão **v0.5.1** foca em refinamentos de usabilidade na interface do desktop
 
 A versão **v0.5.2** prioriza o Samsung Internet como navegador principal do Galaxy S10+ no Samsung DeX após investigar as limitações de sandbox de navegadores Linux no Debian PRoot. O navegador Android exibiu sites em 1920×1080 em modo computador e permitiu tela cheia pelo `F11`. Um lançador Debian via TermuxAm possibilita sua abertura pelo menu XFCE e fixação no Docklike. **O navegador roda no Android sobre o desktop Debian, não dentro do XFCE**: clicar em outras janelas Linux pode trazer o Debian para a frente, e acionar o lançador novamente faz o navegador reaparecer. As regras CSS antigas da pesquisa foram removidas para evitar efeitos sobre outros lançadores XFCE. O Chromium continua disponível apenas para usos específicos nos WebApps Netflix/YouTube; o problema do `--no-sandbox` não foi resolvido nesta versão.
 
+## v0.6.0 — Desempenho e manutenção do sistema
+
+A versão **v0.6.0** investiga Android, Termux, Debian, RAM, processos e aceleração gráfica no Galaxy S10+ (Exynos 9820/Mali-G76). A inicialização do Termux:X11 recebeu verificações de disponibilidade; a aceleração VirGL + ANGLE foi disponibilizada **manualmente** pelos comandos `start-linux-gpu.sh` e `linudex-gpu`; o Debian foi atualizado para **13.8**, e caches de navegadores Linux não prioritários foram removidos. Foram investigados overhead do PRoot, memória, políticas de energia e temperaturas, sem comprovação de aumento geral de velocidade. Consulte [Benchmarks](docs/benchmarks.pt.md) e [Configuração de software](docs/software.pt.md).
+
 ### Concluído
 
 - Armazenamento compartilhado do Android integrado ao Debian.

@@ -389,3 +389,29 @@ install -Dm755 scripts/debian/linudex-samsung-browser "$HOME/.local/bin/linudex-
 ```
 
 O `.desktop` correspondente fica em `configs/`, pois se trata de uma configuração opcional da interface XFCE.
+
+## Gráficos manuais e verificação da inicialização — v0.6.0
+
+O `termux/start-linudex.sh` da v0.6.0 corrige as tentativas de abertura da atividade Android e aguarda o socket X11, removendo esperas fixas dessa etapa. A inicialização do PulseAudio e o comportamento de encerramento anteriores foram preservados.
+
+Os novos utilitários opcionais reproduzem o caminho VirGL/ANGLE **manual** validado no Galaxy S10+ Mali-G76:
+
+| Script | Ambiente | Função |
+| --- | --- | --- |
+| `termux/start-linux-gpu.sh` | Termux host | Iniciar `virgl_test_server_android --angle-gl` sob demanda e registrar `~/.linudex/logs/virgl.log` |
+| `debian/linudex-gpu` | Debian guest | Aplicar `GALLIUM_DRIVER=virpipe` somente ao aplicativo solicitado |
+
+Instale nos mesmos locais utilizados durante a validação no aparelho:
+
+```bash
+# Termux (a partir da raiz do repositório no host):
+cp scripts/termux/start-linux-gpu.sh "$HOME/start-linux-gpu.sh"
+chmod +x "$HOME/start-linux-gpu.sh"
+bash "$HOME/start-linux-gpu.sh"
+
+# Debian (de uma cópia do repositório acessível no Debian):
+install -Dm755 scripts/debian/linudex-gpu "$HOME/.local/bin/linudex-gpu"
+linudex-gpu glxgears -info
+```
+
+O `linudex-gpu` exige o servidor VirGL já ativo e o socket compartilhado `/tmp/.virgl_test`. Ele **não** inicia ou encerra o servidor automaticamente, não modifica o renderizador do XFCE nem configura o Mesa globalmente. Testes de desempenho em aplicativos reais foram adiados. O fluxo experimental `start-wine-gpu.sh` da v0.3.0 não foi substituído nem validado por esses scripts. Consulte [Benchmarks](../docs/benchmarks.pt.md).

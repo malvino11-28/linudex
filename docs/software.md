@@ -386,3 +386,17 @@ Firefox ESR was investigated using browser sandbox diagnostics and `/proc` proce
 GNOME Web with Bubblewrap was attempted, but the tested Bubblewrap invocation failed with `execvp /usr/bin/true: No such file or directory`. The cause was not conclusively isolated. LibreWolf launched but performed poorly on heavier sites such as ChatGPT, YouTube and GitHub. These outcomes led to prioritizing the **Samsung Internet Android app** running natively under Samsung DeX, rather than relying on an unvalidated Linux browser sandbox under PRoot.
 
 This is a practical deployment choice, not a certification or an audit of Samsung Internet. Android-side apps retain their own Android execution and security model; the XFCE launcher does not relocate the browser into Debian.
+
+## 17. Performance and maintenance — v0.6.0
+
+The tested Galaxy S10+ (`SM-G975F`) uses Exynos 9820/Mali-G76, Android 12, Termux 0.118.3 (F-Droid), Termux:X11 and Debian ARM64 in PRoot-Distro. Debian was updated from 13.6 to **13.8** (121 packages; simulation showed no additions/removals). After updating, `apt list --upgradable` and `dpkg --audit` reported no pending changes or inconsistencies.
+
+### Startup and graphics
+
+The existing `scripts/termux/start-linudex.sh` waits for the Termux:X11 socket with a bounded retry instead of a fixed initial two-second wait, fixes Android activity retries, and removes the redundant three-second delay before the status monitor. The modified startup passed `bash -n` and started the graphical session successfully. PulseAudio setup and broad stop behavior were preserved.
+
+On Termux, `scripts/termux/start-linux-gpu.sh` manually starts `virgl_test_server_android --angle-gl`. In Debian, install `scripts/debian/linudex-gpu` to `~/.local/bin/linudex-gpu` and invoke `linudex-gpu glxgears -info` while the server is running. The helper sets `GALLIUM_DRIVER=virpipe` for a **single process**. Tests identified `virgl (ANGLE (ARM, Mali-G76, ...))`; `glxinfo -B` produced `BadMatch (X_GetImage)` although `glxgears` rendered normally. Do not set `MESA_GL_VERSION_OVERRIDE`, `MOZ_X11_EGL`, or `LD_PRELOAD` globally. Automatic VirGL start/stop/status and per-app optimization were deferred.
+
+### Maintenance and preserved settings
+
+Selected Linux browser cache directories under `~/.cache` were removed (approximately 1.1 GB in total cache before cleanup); application profiles and Mesa/Box64/XFCE caches were preserved. This saves storage, not proven RAM or speed. RSS/PSS inspection did not reveal abnormal XFCE panel usage. PRoot tests did not justify changing `--shared-tmp`, `--sysvipc`, `--link2symlink` or bindings. Android ADB checks confirmed standby bucket 5, allowed background execution, Doze exemptions for Termux/Termux:X11/Termux:API and the previously set phantom-process limit of 2147483647. Thermal status remained 0 in the sampled idle and ten-minute video/multitab scenarios. No new global power, thermal or RAM Plus configuration was applied. See [Benchmarks](benchmarks.md).
