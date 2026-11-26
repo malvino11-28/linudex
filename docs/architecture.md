@@ -308,3 +308,19 @@ flowchart LR
 Samsung Internet runs as an **Android application**. Its window is managed by Samsung DeX and can appear above or behind the Debian desktop surface as application focus changes. Clicking an XFCE application can therefore make the browser disappear behind Debian, even though it remains open. Clicking the same launcher again brings the app back to the foreground in the tested environment. This is a window stacking/focus behavior, not a crashed browser and not an XFCE task managed inside the Debian X11 session.
 
 The tested launcher calls `/data/data/com.termux/files/usr/bin/am start --user 0 com.sec.android.app.sbrowser`. The `--user 0` argument identifies the Android primary user; it does not grant root. `F11` activated full screen and hid the upper DeX window bar on the Galaxy S10+ test setup. Do not assume that the same behavior applies to every Android/DeX release.
+
+## Optional graphics path and resource boundaries — v0.6.0
+
+The desktop still starts through **Android/DeX → Termux:X11 → PRoot-Distro → Debian ARM64 → XFCE**, with `DISPLAY=:1` and `--shared-tmp`. Neither the Android kernel nor XFCE's default renderer was replaced.
+
+```text
+Debian OpenGL application (GALLIUM_DRIVER=virpipe)
+  → shared /tmp/.virgl_test socket
+  → virgl_test_server_android --angle-gl (Termux)
+  → ANGLE / Android OpenGL ES driver
+  → Mali-G76 MP12
+```
+
+The optional server starts **manually** in Termux using `start-linux-gpu.sh`; `linudex-gpu <application> [arguments]` selects `virpipe` only for the Debian child process. Global Mesa/EGL overrides and automated lifecycle handling were not introduced. Real-world application acceleration testing is deferred.
+
+Startup now waits for the Termux:X11 Unix socket rather than relying solely on fixed delays and fixes the Android activity retry loop. PRoot retains its existing `--shared-tmp`, IPC, and link settings: file-operation comparisons did not justify changing bindings. Existing Android power exemptions and the phantom-process limit were verified, not newly introduced in v0.6.0.
