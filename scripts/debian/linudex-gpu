@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -eu
+
+if [ "$#" -eq 0 ]; then
+    echo "Usage: linudex-gpu <application> [arguments]"
+    exit 1
+fi
+
+if [ ! -S /tmp/.virgl_test ]; then
+    echo "[Linudex GPU] VirGL socket not found."
+    echo "Start the VirGL server in Termux first."
+    exit 1
+fi
+
+exec env -u LIBGL_ALWAYS_SOFTWARE \
+    GALLIUM_DRIVER=virpipe "$@"

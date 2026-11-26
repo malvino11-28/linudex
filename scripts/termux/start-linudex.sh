@@ -76,29 +76,58 @@ sleep 1
 
 log "Starting Termux:X11 on display $DISPLAY_NUMBER..."
 termux-x11 "$DISPLAY_NUMBER" &
+X11_PID=$!
 
-sleep 2
+X11_DISPLAY="${DISPLAY_NUMBER#:}"
+X11_DISPLAY="${X11_DISPLAY%%.*}"
+X11_SOCKET="$TMPDIR/.X11-unix/X${X11_DISPLAY}"
+
+log 'Waiting for Termux:X11 socket...'
+X11_READY=false
+for ((attempt=1; attempt<=40; attempt++)); do
+    if [ -S "$X11_SOCKET" ]; then
+        X11_READY=true
+        break
+    fi
+    if ! kill -0 "$X11_PID" 2>/dev/null; then
+        break
+    fi
+    sleep 0.25
+done
+
+if [ "$X11_READY" != true ]; then
+    log 'Error: Termux:X11 socket was not created.'
+    exit 1
+fi
+
+log 'Termux:X11 socket detected.'
 
 if command -v am >/dev/null 2>&1; then
     log 'Opening Termux:X11 Android activity...'
 
-	for attempt in 1 2 3; do
-	log "Termux:X11 activity attempt $attempt/3..."
-    if am start \
-        --user 0 \
-        -W \
-        -n com.termux.x11/com.termux.x11.MainActivity \
-        >/dev/null 2>&1
-    then
-        break
+    X11_ACTIVITY_STARTED=false
+
+    for attempt in 1 2 3; do
+        log "Termux:X11 activity attempt $attempt/3..."
+
+        if am start \
+            --user 0 \
+            -W \
+            -n com.termux.x11/com.termux.x11.MainActivity
+        then
+            X11_ACTIVITY_STARTED=true
+            break
+        fi
+
+        if [ "$attempt" -lt 3 ]; then
+            sleep 3
+        fi
+    done
+
+    if [ "$X11_ACTIVITY_STARTED" != true ]; then
+        log 'Warning: failed to open Termux:X11 activity.'
     fi
-    log 'Warning: failed to open Termux:X11 activity.' 
-
-	sleep 3
-	done
 fi
-
-sleep 3
 
 # v0.5
 log 'Starting Android status monitor...'
