@@ -156,3 +156,49 @@ The v0.5.0 interface was exercised on the Galaxy S10+ running Debian 13 ARM64, X
 | Startup / persistence   | Validated after restarting Linudex                                |
 
 **Limitations:** the memory range denotes **available memory**, not XFCE memory usage or average RAM consumption. CPU values were snapshots, not one-hour averages; the `main` process was not identified by executable path. FPS, SoC temperature, Wi-Fi quality, CPU frequency, and isolated GPU acceleration effects were not measured.
+
+## v0.6.0 — Graphics, PRoot and Android resource measurements
+
+**Test device:** Galaxy S10+ `SM-G975F`, Exynos 9820 / Mali-G76, Android 12, Debian 13 ARM64 under PRoot and Termux:X11 (`DISPLAY=:1`). These are observations of one device, not a general-purpose performance rating.
+
+### Software OpenGL versus manual VirGL + ANGLE
+
+| Measurement | Mesa llvmpipe (CPU) | VirGL/ANGLE (Mali-G76) |
+| --- | ---: | ---: |
+| `glxgears`, isolated observed range | 59–92 FPS | 109–150 FPS |
+| `glxgears`, typical observed value | ~70 FPS | ~140 FPS |
+| `glmark2`, identical three-scene run | 58 points | 75 points |
+
+The typical `glxgears` observations suggest about **2× FPS**, while `glmark2` scored **29.3% higher** with VirGL. Neither figure is an overall system gain. With both `glxgears` instances running together, Mali was about 6–14 FPS ahead; shared-resource contention makes simultaneous tests less suitable for comparison. Approximately ten minutes of earlier graphics tests showed no observed artifacts, freezes or perceptible warming. `glxinfo` with `virpipe` returned X11 `BadMatch (X_GetImage)`, while `glxgears -info` successfully identified `virgl (ANGLE (ARM, Mali-G76, ...))`. Full real-application performance validation remains pending.
+
+### PRoot microbenchmarks
+
+| Operation (average, three runs) | Termux native | Debian/PRoot |
+| --- | ---: | ---: |
+| Launch 100 `true` processes | 1,337 ms | 614 ms |
+| Create 250 small files + check 250 paths | 54.7 ms | 340.3 ms |
+
+These runs use different binaries and runtimes; the differences cannot be attributed solely to PRoot. A follow-up inside Debian separated file creation from existence checks:
+
+| Location | 250 creates, average | 250 checks, average | Combined |
+| --- | ---: | ---: | ---: |
+| Shared `/tmp` | 324.3 ms | 54.0 ms | 378.3 ms |
+| Debian `$HOME` | 310.7 ms | 69.7 ms | 380.3 ms |
+
+The similar combined times do not support changing the current `/tmp` binding. Five fresh `proot-distro login linudex --user linudex --shared-tmp -- /usr/bin/true` runs took **382, 362, 367, 359 and 372 ms** (average **368.4 ms**), without errors.
+
+### Android memory, CPU and thermals
+
+An Android memory snapshot with Chromium open showed **3.4 GiB available RAM** and approximately **978 MiB used swap**, while a later mostly idle measurement showed **3.8 GiB available** and **1.3 GiB swap in use**. Swap occupancy alone is not evidence of active swapping. PSS estimates were smaller than individual process RSS values because of shared pages.
+
+| Sample | Initial | After 10 minutes of video/multitab use |
+| --- | ---: | ---: |
+| Android total CPU (snapshot) | 6.6% | 11% |
+| PRoot process CPU (snapshot) | 10% | 14% |
+| Termux:X11 process CPU (snapshot) | 2.4% | 6.5% |
+| AP thermal sensor | 33.2 °C | 35.6 °C |
+| Battery sensor | 30.2 °C | 32.1 °C |
+| Skin sensor | 30.1 °C | 32.0 °C |
+| Android thermal status | 0 | 0 |
+
+These are two CPU snapshots, **not ten-minute averages**; thermal status 0 does not rule out every form of frequency management. The device used an enabled 85% battery charge limit. No new kernel, GPU-frequency or thermal-threshold modification was required.
