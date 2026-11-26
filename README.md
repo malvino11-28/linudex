@@ -40,6 +40,10 @@ Version **v0.5.1** focuses on desktop interface usability refinements, with no d
 
 Version **v0.5.2** prioritizes Samsung Internet as the main browser for the Galaxy S10+ in Samsung DeX after evaluating Linux browser sandbox limitations under Debian PRoot. The Android browser automatically presented desktop sites at 1920×1080 and supported `F11` full-screen mode. A Debian-side TermuxAm launcher allows opening it from the XFCE menu and pinning it to Docklike. **It runs on Android above the Debian desktop rather than inside XFCE**: clicking other Linux windows can place Debian in front, and activating the launcher again returns the browser to the foreground. Legacy search-launcher CSS was removed to prevent it from styling unrelated XFCE launchers. Chromium remains a limited-use option for Netflix/YouTube WebApps; its `--no-sandbox` limitation is not resolved by this release.
 
+## v0.6.0 — Performance and system maintenance
+
+Version **v0.6.0** investigates Android, Termux, Debian, RAM, process management and graphics acceleration on the Galaxy S10+ (Exynos 9820/Mali-G76). It improves Termux:X11 startup checks, introduces **manual** VirGL + ANGLE acceleration through `start-linux-gpu.sh` and `linudex-gpu`, updates Debian to **13.8**, and removes obsolete Linux browser caches. Tests covered PRoot overhead, process memory, Android energy restrictions and thermal behavior; no broad system-wide speedup was established. See [Benchmarks](docs/benchmarks.md) and [Software Setup](docs/software.md).
+
 ### Completed
 
 - Android shared storage integrated with Debian.
